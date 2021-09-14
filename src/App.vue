@@ -1,17 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <ThreeCanvas />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ThreeCanvas from "./components/ThreeCanvas.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    ThreeCanvas,
+  },
+};
 </script>
 
 <style>
