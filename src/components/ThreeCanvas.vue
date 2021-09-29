@@ -27,7 +27,7 @@
 
 <script >
 import * as Three from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // import { GUI } from "three/examples/jsm/libs/dat.gui.module";
 
 // import "../assets/mathjax/es5/tex-chtml.js";
@@ -76,8 +76,8 @@ export default {
         50
       );
       // Position Camera and point it to the origin
-      this.camera.position.set(0, 0, 10);
-      this.camera.lookAt(this.scene.position);
+      this.camera.position.set(-2, -1, 10);
+      // this.camera.lookAt(this.scene.position);
 
       // Arrow Helper
       const dir = new Three.Vector3(0, 1, 0);
@@ -98,16 +98,16 @@ export default {
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
       // Create orbit controls
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.controls.maxDistance = 15;
-      this.controls.minDistance = 1.3;
-      this.controls.minAzimuthAngle = 3;
-      this.controls.maxAzimuthAngle = 2;
-      this.controls.target.set(-3, -3, 0);
-      this.controls.enablePan = false;
-      this.controls.autoRotate = true;
-      this.controls.autoRotateSpeed = 0.1;
-      this.controls.update();
+      // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      // this.controls.maxDistance = 15;
+      // this.controls.minDistance = 1.3;
+      // this.controls.minAzimuthAngle = 3;
+      // this.controls.maxAzimuthAngle = 2;
+      // this.controls.target.set(-3, -3, 0);
+      // this.controls.enablePan = false;
+      // this.controls.autoRotate = true;
+      // this.controls.autoRotateSpeed = 0.1;
+      // this.controls.update();
 
       // Label renderer
 
@@ -393,6 +393,20 @@ export default {
         this.scene.add(cone);
 
         sceneObjects.push(cone.name);
+
+        let text3 = document.createElement("div");
+        text3.className = "label";
+        text3.style.color = "rgb(0,0,0)";
+
+        text3.textContent = `$$\vec{r}$$`;
+
+        let label3 = new CSS2DObject(text3);
+        label3.name = "angle2";
+        sceneObjects.push(label3.name);
+
+        label3.position.set(-0.3, -0.3, 0);
+
+        this.scene.add(label3);
       };
 
       const loadSVG = () => {
@@ -429,7 +443,9 @@ export default {
                 group.add(mesh);
               }
             }
+
             group.position.set(-5, -5, 0.1);
+            // group.rotateX(3.14159);
 
             self.scene.add(group);
           },
@@ -548,7 +564,7 @@ export default {
   padding-right: 1.5rem;
 }
 .slider-styling {
-  width: 400px;
+  width: 200px;
   margin-top: 4rem;
 
   --slider-tooltip-bg: #003e74;
