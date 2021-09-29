@@ -5447,6 +5447,16 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+mathjax-vue3@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/mathjax-vue3/-/mathjax-vue3-0.0.1.tgz#c21c66a02f9ca98c8a9e31b9842ab46d795fd78c"
+  integrity sha512-BTsxm5ttjdMWTaScLmha/GRs+Eo6yli2+eR17jTGQM7P3Yzp2Fqm8jt/Zf97aKTtnm84aGOYWQI9c95m8eUKow==
+
+mathjax@3:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/mathjax/-/mathjax-3.2.0.tgz#ea7c317f8c81776ecfc83b294fc313046bf7f726"
+  integrity sha512-PL+rdYRK4Wxif+SQ94zP/L0sv6/oW/1WdQiIx0Jvn9FZaU5W9E6nlIv8liYAXBNPL2Fw/i+o/mZ1212eSzn0Cw==
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"

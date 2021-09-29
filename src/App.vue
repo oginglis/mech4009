@@ -1,18 +1,15 @@
 <template>
   <div id="app">
     <TitleSection />
-    <ThreeCanvas />
   </div>
 </template>
 
 <script>
-import ThreeCanvas from "./components/ThreeCanvas.vue";
 import TitleSection from "./components/TitleSection.vue";
 
 export default {
   name: "App",
   components: {
-    ThreeCanvas,
     TitleSection,
   },
 };
