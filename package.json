@@ -12,7 +12,8 @@
     "core-js": "^3.6.5",
     "three": "^0.132.2",
     "three.meshline": "^1.3.0",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue-meta": "^2.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

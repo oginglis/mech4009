@@ -1,6 +1,8 @@
 <template>
-  <TitleSection />
-  <ThreeCanvas />
+  <div id="app">
+    <TitleSection />
+    <ThreeCanvas />
+  </div>
 </template>
 
 <script>
