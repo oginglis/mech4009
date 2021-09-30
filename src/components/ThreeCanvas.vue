@@ -3,15 +3,15 @@
     <div class="viz-controls-wrap">
       <p>
         The moment vector of the force
-        <math-jax latex="$$\vec{F}$$"></math-jax> about point A will be equal to
+        <math-jax latex="$$\vec{F}$$"></math-jax> about point P will be equal to
         the cross products of the
         <math-jax latex="$$\vec{r}$$"></math-jax> vector and the force vector
         <math-jax latex="$$\vec{F}$$"></math-jax>. The
         <math-jax latex="$$\vec{r}$$"></math-jax> vector is a vector from point
-        A to any point along the line of action of the force.
+        P to any point along the line of action of the force.
       </p>
       <h3>
-        <math-jax latex="$$\vec{F}$$"></math-jax> and Line of Action Angle:
+        Angle of <math-jax latex="$$\vec{F}$$"></math-jax> and Line of Action:
       </h3>
       <Slider
         v-model="length"
@@ -71,12 +71,7 @@ export default {
       this.scene = new Three.Scene();
       let sceneObjects = [];
       // Create a camera and set its position
-      this.camera = new Three.PerspectiveCamera(
-        70,
-        container.clientWidth / container.clientHeight,
-        0.01,
-        50
-      );
+      this.camera = new Three.PerspectiveCamera(70, 2, 0.01, 50);
       // Position Camera and point it to the origin
       this.camera.position.set(-2, -1, 10);
       // this.camera.lookAt(this.scene.position);
@@ -126,13 +121,47 @@ export default {
       this.scene.add(this.gridHelper);
       // Create an axis helper
       this.axesHelper = new Three.AxesHelper(1);
-      // this.gridHelper.translateX(-3);
-      // this.gridHelper.translateZ(3);
-
-      // this.scene.add(this.axesHelper);
-
-      // Attach rendered to Dom Element
       container.appendChild(this.renderer.domElement);
+
+      // obj - your object (THREE.Object3D or derived)
+      // point - the point of rotation (THREE.Vector3)
+      // axis - the axis of rotation (normalized THREE.Vector3)
+      // theta - radian value of rotation
+      // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+      const rotateAboutPoint = (obj, point, axis, theta, pointIsWorld) => {
+        pointIsWorld = pointIsWorld === undefined ? false : pointIsWorld;
+
+        if (pointIsWorld) {
+          obj.parent.localToWorld(obj.position); // compensate for world coordinate
+        }
+
+        obj.position.sub(point); // remove the offset
+        obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
+        obj.position.add(point); // re-add the offset
+
+        if (pointIsWorld) {
+          obj.parent.worldToLocal(obj.position); // undo world coordinates compensation
+        }
+
+        obj.rotateOnAxis(axis, theta); // rotate the OBJECT
+      };
+
+      const resizeCanvasToDisplaySize = () => {
+        const canvas = this.renderer.domElement;
+        // look up the size the canvas is being displayed
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        // you must pass false here or three.js sadly fights the browser
+        this.renderer.setSize(width, height, false);
+        this.camera.aspect = width / height;
+        this.labelRenderer.render(this.scene, this.camera, false);
+        this.camera.updateProjectionMatrix();
+
+        // update any render target sizes here
+      };
+      const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
+      resizeObserver.observe(this.renderer.domElement, { box: "content-box" });
 
       const removeObjectFromScene = (objectName) => {
         objectName.forEach((object) => {
@@ -217,24 +246,22 @@ export default {
         label3.position.set(-1, -0.7, 0);
 
         this.scene.add(label3);
-
-        let text8 = document.createElement("div");
-        text8.className = "label";
-        text8.style.color = "rgb(0,0,0)";
-        // text8.style.backgroundColor = `#ffffff`;
-        text8.style.padding = `.5px 1px 2px 3px`;
-
-        text8.textContent = `P`;
-
-        let label8 = new CSS2DObject(text8);
-        label8.name = "P";
-        sceneObjects.push(label8.name);
-
-        label8.position.set(-2.8, -2.5, 0);
-
-        this.scene.add(label8);
       };
+      let text8 = document.createElement("div");
+      text8.className = "label";
+      text8.style.color = "rgb(0,0,0)";
+      // text8.style.backgroundColor = `#ffffff`;
+      text8.style.padding = `.5px 1px 2px 3px`;
 
+      text8.textContent = `P`;
+
+      let label8 = new CSS2DObject(text8);
+      label8.name = "P";
+      sceneObjects.push(label8.name);
+
+      label8.position.set(-2.8, -2.5, 0);
+
+      this.scene.add(label8);
       const createMomentVector = (
         vecBottom,
         vecTop,
@@ -466,12 +493,12 @@ export default {
         let self = this;
         loader.load(
           // resource URL
-          "./arrows.svg",
+          "./rotatearrow.svg",
           // called when the resource is loaded
           function (data) {
             const paths = data.paths;
             const group = new Three.Group();
-            group.scale.multiplyScalar(0.01);
+            group.scale.multiplyScalar(0.008);
 
             for (let i = 0; i < paths.length; i++) {
               const path = paths[i];
@@ -547,6 +574,7 @@ export default {
       let createAction = true;
       createVectorGeometry(vec1, vec2, vecColor, false);
 
+      let oldValue = -1;
       // let finishedSpin = false;
       this.updateSlider = () => {
         let selectedObject = this.scene.getObjectByName("first arrow");
@@ -568,7 +596,32 @@ export default {
 
         let rVec = new Three.Vector3(3, 2, 0);
         let momentVec = rVec.cross(fVector);
-        console.log(momentVec);
+
+        if (
+          (oldValue >= 0 && momentVec.z <= 0) ||
+          (oldValue <= 0 && momentVec.z >= 0)
+        ) {
+          let arrowsSVG = this.scene.getObjectByName("arrowss");
+          // point - the point of rotation (THREE.Vector3)
+          let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
+          // axis - the axis of rotation (normalized THREE.Vector3)
+          let svgAxis = new Three.Vector3(0, 1, 0).normalize();
+          // theta - radian value of rotation
+          let theta = Math.PI;
+          // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+          let pointIsWorld = true;
+
+          rotateAboutPoint(
+            arrowsSVG,
+            rotateSVGaxis,
+            svgAxis,
+            theta,
+            pointIsWorld
+          );
+        }
+        // obj - your object (THREE.Object3D or derived)
+        oldValue = momentVec.z;
+
         createMomentVector(
           new Three.Vector3(-3, -2, 0),
           new Three.Vector3(-3, -2, 2 * momentVec.z),
@@ -608,12 +661,12 @@ export default {
       this.renderer.render(this.scene, this.camera);
       this.labelRenderer.render(this.scene, this.camera);
     },
-    onWindowResize: function () {
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      this.camera.aspect = window.innerWidth / window.innerHeight;
-      this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
-      this.camera.updateProjectionMatrix();
-    },
+    // onWindowResize: function () {
+    //   this.renderer.setSize(window.innerWidth, window.innerHeight);
+    //   this.camera.aspect = window.innerWidth / window.innerHeight;
+    //   this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    //   this.camera.updateProjectionMatrix();
+    // },
   },
   created() {
     window.addEventListener("resize", this.onWindowResize, false);
@@ -631,6 +684,8 @@ export default {
 #container {
   position: relative;
   flex: 1;
+  width: 500px;
+  height: 500px;
 }
 
 .viz-controls-wrap {
