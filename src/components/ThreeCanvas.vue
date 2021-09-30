@@ -514,6 +514,7 @@ export default {
               for (let j = 0; j < shapes.length; j++) {
                 const shape = shapes[j];
                 const geometry = new Three.ShapeGeometry(shape);
+
                 const mesh = new Three.Mesh(geometry, material);
 
                 group.add(mesh);
@@ -522,7 +523,8 @@ export default {
 
             group.position.set(-5, -4, 0.1);
             group.name = "arrowss";
-            // group.rotateX(3.14159);
+            // group.rotateX(3.14159)
+            // group.translate(1, 1, 0);
 
             self.scene.add(group);
           },
@@ -576,6 +578,7 @@ export default {
 
       let oldValue = -1;
       // let finishedSpin = false;
+      // let theta2 = 0.01;
       this.updateSlider = () => {
         let selectedObject = this.scene.getObjectByName("first arrow");
         this.scene.remove(selectedObject);
@@ -619,6 +622,36 @@ export default {
             pointIsWorld
           );
         }
+        // let arrowsSVG2 = this.scene.getObjectByName("arrowss");
+
+        // point - the point of rotation (THREE.Vector3)
+        // arrowsSVG2.rotateZ(0.01);
+        // let rotateSVGaxis2 = new Three.Vector3(-3, -2, 0);
+        // // axis - the axis of rotation (normalized THREE.Vector3)
+        // let svgAxis2 = new Three.Vector3(0, 0, 1).normalize();
+        // // theta - radian value of rotation
+
+        // // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+        // let pointIsWorld2 = false;
+        // if (oldValue > 0) {
+        //   theta2 = 0.05;
+        //   rotateAboutPoint(
+        //     arrowsSVG2,
+        //     rotateSVGaxis2,
+        //     svgAxis2,
+        //     theta2,
+        //     pointIsWorld2
+        //   );
+        // } else {
+        //   theta2 = 0.05;
+        //   rotateAboutPoint(
+        //     arrowsSVG2,
+        //     rotateSVGaxis2,
+        //     svgAxis2,
+        //     theta2,
+        //     pointIsWorld2
+        //   );
+        // }
         // obj - your object (THREE.Object3D or derived)
         oldValue = momentVec.z;
 
