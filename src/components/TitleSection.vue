@@ -6,17 +6,7 @@
       body that does not travel through that point, then that force will cause a
       moment about that point. A moment is a force's tendency to cause rotation.
     </p>
-    <h2>The Vector Method in 2 and 3 Dimensions</h2>
-    <p class="text-block">
-      An alternative to calculating the moment via scalar quantities is to use
-      the vector method or cross product method. For simple two dimensional
-      problems, using scalar quantities is usually easier, but for more complex
-      problems, using the cross product method is usually easier. The cross
-      product method for calculating moments says that the moment vector of a
-      force about a point will be equal to the cross product of a vector
-      <math-jax latex="$$\vec{r}$$"></math-jax> from the point to anywhere on
-      the line of action of the force and the force vector itself.
-    </p>
+
     <math-jax
       class="biggerlate"
       latex="$$\vec{M} = \vec{r} \times \vec{F}$$"
@@ -78,5 +68,6 @@ export default {
 
 .biggerlate {
   font-size: 3rem;
+  margin-bottom: 5rem;
 }
 </style>
