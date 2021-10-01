@@ -8,6 +8,7 @@
     </p>
 
     <ThreeCanvas2 />
+
     <p class="text-block">
       It is important to note here that all quantities (<math-jax
         latex="$$\vec{r}$$"

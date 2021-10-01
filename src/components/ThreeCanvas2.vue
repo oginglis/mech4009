@@ -29,10 +29,7 @@
     </div>
 
     <div id="container"></div>
-    <div class="split">
-      <div id="view1" tabindex="1"></div>
-      <div id="view2" tabindex="2"></div>
-    </div>
+
     <figcaption>
       The result of <math-jax latex="$$\vec{r}$$"></math-jax> cross
       <math-jax latex="$$\vec{F}$$"></math-jax> will give us the moment vector
@@ -92,8 +89,11 @@ export default {
       let sceneObjects = [];
       // Create a camera and set its position
       this.camera = new Three.PerspectiveCamera(70, 2, 0.01, 50);
+      this.camera2 = new Three.PerspectiveCamera(70, 2, 0.01, 50);
       // Position Camera and point it to the origin
       this.camera.position.set(-2, -1, 10);
+      this.camera2.position.set(6, -1, 10);
+      this.camera2.rotateY(0.8);
       // this.camera.lookAt(this.scene.position);
 
       // Arrow Helper
@@ -115,25 +115,20 @@ export default {
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
 
-      // Create orbit controls
-      // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      // this.controls.maxDistance = 15;
-      // this.controls.minDistance = 1.3;
-      // this.controls.minAzimuthAngle = 3;
-      // this.controls.maxAzimuthAngle = 2;
-      // this.controls.target.set(-3, -3, 0);
-      // this.controls.enablePan = false;
-      // this.controls.autoRotate = true;
-      // this.controls.autoRotateSpeed = 0.1;
-      // this.controls.update();
-
-      // Label renderer
-
       this.labelRenderer = new CSS2DRenderer();
-      this.labelRenderer.setSize(container.clientWidth, container.clientHeight);
+      this.labelRenderer.setSize(450, 500);
       this.labelRenderer.domElement.style.position = "absolute";
       this.labelRenderer.domElement.style.top = "0px";
+      this.labelRenderer.domElement.style.left = "0px";
       this.labelRenderer.domElement.style.pointerEvents = "none";
+      container.appendChild(this.labelRenderer.domElement);
+
+      this.labelRenderer2 = new CSS2DRenderer();
+      this.labelRenderer2.setSize(450, 500);
+      this.labelRenderer2.domElement.style.position = "absolute";
+      this.labelRenderer2.domElement.style.top = "0px";
+      this.labelRenderer2.domElement.style.left = "450px";
+      this.labelRenderer2.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer.domElement);
 
       // Create a grid
@@ -726,8 +721,29 @@ export default {
       requestAnimationFrame(this.animate);
       this.updateSlider();
 
+      this.renderer.setScissorTest(true);
+      this.renderer.setViewport(0, 0, 450, 500);
+      this.renderer.setScissor(0, 0, 450, 500);
       this.renderer.render(this.scene, this.camera);
+      this.camera.aspect = 450 / 500;
+      this.camera.updateProjectionMatrix();
+      this.renderer.render(this.scene, this.camera);
+
       this.labelRenderer.render(this.scene, this.camera);
+
+      this.renderer.setScissorTest(true);
+      this.renderer.setViewport(450, 0, 450, 500);
+      this.renderer.setScissor(450, 0, 450, 500);
+      this.renderer.clearColor(255, 255, 0);
+      this.renderer.render(this.scene, this.camera2);
+      this.camera2.aspect = 450 / 500;
+      this.camera2.updateProjectionMatrix();
+      this.renderer.render(this.scene, this.camera2);
+
+      this.labelRenderer.render(this.scene, this.camera);
+      // this.rendlabelRenderererer.setViewport(450, 0, 450, 500);
+
+      this.labelRenderer2.render(this.scene, this.camera2);
     },
     // onWindowResize: function () {
     //   this.renderer.setSize(window.innerWidth, window.innerHeight);
