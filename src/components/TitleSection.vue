@@ -7,11 +7,7 @@
       moment about that point. A moment is a force's tendency to cause rotation.
     </p>
 
-    <math-jax
-      class="biggerlate"
-      latex="$$\vec{M} = \vec{r} \times \vec{F}$$"
-    ></math-jax>
-    <ThreeCanvas />
+    <ThreeCanvas2 />
     <p class="text-block">
       It is important to note here that all quantities (<math-jax
         latex="$$\vec{r}$$"
@@ -47,10 +43,10 @@
 </template>
 
 <script >
-import ThreeCanvas from "./ThreeCanvas.vue";
+import ThreeCanvas2 from "./ThreeCanvas2.vue";
 export default {
   name: "TitleSection",
-  components: { ThreeCanvas },
+  components: { ThreeCanvas2 },
   data: function () {
     return {
       formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",

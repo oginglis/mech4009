@@ -10,6 +10,10 @@
         <math-jax latex="$$\vec{r}$$"></math-jax> vector is a vector from point
         P to any point along the line of action of the force.
       </p>
+      <math-jax
+        class="biggerlate"
+        latex="$$\vec{M} = \vec{r} \times \vec{F}$$"
+      ></math-jax>
       <h3>
         Angle between <math-jax latex="$$\vec{r}$$"></math-jax> and Line of
         Action:
@@ -25,6 +29,20 @@
     </div>
 
     <div id="container"></div>
+    <div class="split">
+      <div id="view1" tabindex="1"></div>
+      <div id="view2" tabindex="2"></div>
+    </div>
+    <figcaption>
+      The result of <math-jax latex="$$\vec{r}$$"></math-jax> cross
+      <math-jax latex="$$\vec{F}$$"></math-jax> will give us the moment vector
+      <math-jax latex="$$\vec{M}$$"></math-jax>. We can use the right hand rule
+      to determine the direction of rotation from the moment (line our right
+      thumb up with the moment vector
+      <math-jax latex="$$\vec{M}$$"></math-jax>
+      and our curled fingers will point in the direction of rotation from the
+      moment).
+    </figcaption>
   </div>
 </template>
 
@@ -42,7 +60,7 @@ import {
 } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 export default {
-  name: "ThreeCanvas",
+  name: "ThreeCanvas2",
 
   data() {
     return {
@@ -61,6 +79,7 @@ export default {
     },
     formatToRadians: function (value) {
       let pi = Math.PI;
+
       return `${Math.round((value + 2.158638) * (180 / pi))} degrees ${(
         value + 2.158638
       ).toFixed(2)} Radians`;
@@ -730,10 +749,16 @@ export default {
 <style src="@vueform/slider/themes/default.css">
 </style>
 <style scoped  >
+figcaption {
+  width: clamp(45ch, 70%, 75ch);
+  margin: 0 auto;
+  margin-top: 2rem;
+}
 #container {
   position: relative;
+  margin-top: 2rem;
   flex: 1;
-  width: 490px;
+  width: 100%;
   height: 500px;
 }
 
@@ -754,13 +779,14 @@ export default {
 }
 
 .viz-wrap {
-  display: flex;
-  justify-content: space-between;
   width: 900px;
-  height: 500px;
+
   margin: 0 auto;
   background-color: #ebeeee;
   padding: 1.5rem;
   margin-top: 3rem;
+}
+.biggerlate {
+  font-size: 3rem;
 }
 </style>
