@@ -17,7 +17,7 @@
         v-model="length"
         class="slider-styling"
         :min="-Math.PI"
-        :max="Math.PI"
+        :max="Math.PI + 0.5"
         :format="formatToRadians"
         :step="-1"
       />
@@ -116,8 +116,9 @@ export default {
       container.appendChild(this.labelRenderer.domElement);
 
       // Create a grid
-      this.gridHelper = new Three.GridHelper(15, 8, 0x444444, 0xd3d3d3);
+      this.gridHelper = new Three.GridHelper(18, 18, 0x444444, 0xd3d3d3);
       this.gridHelper.rotateX((90 * Math.PI) / 180);
+      this.gridHelper.position.set(-3, -2, 0);
       this.scene.add(this.gridHelper);
       // Create an axis helper
       this.axesHelper = new Three.AxesHelper(1);
@@ -236,6 +237,7 @@ export default {
         text3.style.color = "rgb(0,0,0)";
         text3.style.backgroundColor = `#ffffff`;
         text3.style.padding = `4px 3px 4px 3px`;
+        text3.style.fontWeight = "900";
 
         text3.textContent = `r`;
 
@@ -243,7 +245,7 @@ export default {
         label3.name = "angle2";
         sceneObjects.push(label3.name);
 
-        label3.position.set(-1, -0.7, 0);
+        label3.position.set(-1.2, -0.8, 0);
 
         this.scene.add(label3);
       };
@@ -251,6 +253,7 @@ export default {
       text8.className = "label";
       text8.style.color = "rgb(0,0,0)";
       // text8.style.backgroundColor = `#ffffff`;
+      text8.style.fontWeight = "900";
       text8.style.padding = `.5px 1px 2px 3px`;
 
       text8.textContent = `P`;
@@ -363,6 +366,7 @@ export default {
         text5.style.borderRadius = "25%";
         text5.style.padding = `2px 2px 2px 2px`;
         text5.fontWeight = `bold`;
+        text5.style.fontWeight = "900";
         text5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
 
         let label5 = new CSS2DObject(text5);
@@ -466,7 +470,7 @@ export default {
         text4.textContent = `F`;
         text4.style.backgroundColor = `#ffffff`;
         text4.style.padding = `3px 2px 3px 2px`;
-        text4.fontWeight = `bold`;
+        text4.style.fontWeight = "900";
 
         let label4 = new CSS2DObject(text4);
         label4.name = "F";
@@ -547,12 +551,12 @@ export default {
           0.03,
           16,
           100,
-          this.length
+          this.length + 2.18166
         );
         const materialTorus = new Three.MeshBasicMaterial({ color: 0x0acbee });
         const torus = new Three.Mesh(geometryTorus, materialTorus);
 
-        torus.rotateZ((-90 * Math.PI) / 180);
+        torus.rotateZ(0.610865);
         torus.rotateY(Math.PI);
         torus.name = "angle torus";
         sceneObjects.push(torus.name);
@@ -561,8 +565,11 @@ export default {
         let text2 = document.createElement("div");
         text2.className = "label";
         text2.style.color = "rgb(0,0,0)";
-        text2.textContent = `${Math.round(this.length * (180 / Math.PI))}°`;
+        text2.textContent = `${Math.round(
+          ((this.length + 2.158638) * 180) / Math.PI
+        )}°`;
         let label2 = new CSS2DObject(text2);
+        text2.style.fontWeight = "900";
         label2.name = "angle";
         sceneObjects.push(label2.name);
         label2.position.set(0.3, 0.3, 0);
@@ -745,5 +752,6 @@ export default {
   margin: 0 auto;
   background-color: #ebeeee;
   padding: 1.5rem;
+  margin-top: 3rem;
 }
 </style>
