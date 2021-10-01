@@ -743,7 +743,7 @@ export default {
       this.labelRenderer.render(this.scene, this.camera);
       // this.rendlabelRenderererer.setViewport(450, 0, 450, 500);
 
-      this.labelRenderer2.render(this.scene, this.camera2);
+      // this.labelRenderer2.render(this.scene, this.camera2);
     },
     // onWindowResize: function () {
     //   this.renderer.setSize(window.innerWidth, window.innerHeight);
