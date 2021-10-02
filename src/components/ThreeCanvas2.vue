@@ -45,15 +45,11 @@
 
 <script >
 import * as Three from "three";
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// import { GUI } from "three/examples/jsm/libs/dat.gui.module";
-
-// import "../assets/mathjax/es5/tex-chtml.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Slider from "@vueform/slider";
 import {
   CSS2DRenderer,
-  CSS2DObject,
+  // CSS2DObject,
 } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 export default {
@@ -84,8 +80,10 @@ export default {
     init: function () {
       // Find Container To Mount To
       let container = document.getElementById("container");
+
       // Create a scene
       this.scene = new Three.Scene();
+      this.scene2 = new Three.Scene();
       let sceneObjects = [];
       // Create a camera and set its position
       this.camera = new Three.PerspectiveCamera(70, 2, 0.01, 50);
@@ -94,26 +92,13 @@ export default {
       this.camera.position.set(-2, -1, 10);
       this.camera2.position.set(6, -1, 10);
       this.camera2.rotateY(0.8);
-      // this.camera.lookAt(this.scene.position);
-
-      // Arrow Helper
-      const dir = new Three.Vector3(0, 1, 0);
-
-      //normalize the direction vector (convert to vector of length 1)
-      dir.normalize();
-
-      const origin = new Three.Vector3(0, 3, 0);
-
-      const hex = 0x003e74;
-
-      const arrowHelper = new Three.ArrowHelper(dir, origin, this.length, hex);
-      arrowHelper.name = "first arrow";
-      this.scene.add(arrowHelper);
 
       this.renderer = new Three.WebGLRenderer({ antialias: true });
       this.renderer.setSize(container.clientWidth, container.clientHeight);
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
+
+      container.appendChild(this.renderer.domElement);
 
       this.labelRenderer = new CSS2DRenderer();
       this.labelRenderer.setSize(450, 500);
@@ -129,17 +114,96 @@ export default {
       this.labelRenderer2.domElement.style.top = "0px";
       this.labelRenderer2.domElement.style.left = "450px";
       this.labelRenderer2.domElement.style.pointerEvents = "none";
-      container.appendChild(this.labelRenderer.domElement);
+      container.appendChild(this.labelRenderer2.domElement);
 
       // Create a grid
       this.gridHelper = new Three.GridHelper(18, 18, 0x444444, 0xd3d3d3);
       this.gridHelper.rotateX((90 * Math.PI) / 180);
       this.gridHelper.position.set(-3, -2, 0);
       this.scene.add(this.gridHelper);
-      // Create an axis helper
-      this.axesHelper = new Three.AxesHelper(1);
-      container.appendChild(this.renderer.domElement);
 
+      // Create Labels Here
+
+      // let rTextScene1 = document.createElement("div");
+      // rTextScene1.className = "label";
+      // rTextScene1.style.color = "rgb(0,0,0)";
+      // rTextScene1.style.backgroundColor = `#ffffff`;
+      // rTextScene1.style.padding = `4px 3px 4px 3px`;
+      // rTextScene1.style.fontWeight = "900";
+      // rTextScene1.textContent = `r`;
+      // let rLabelScene1 = new CSS2DObject(rTextScene1);
+      // rLabelScene1.name = "angle2";
+      // sceneObjects.push(rLabelScene1.name);
+      // rLabelScene1.position.set(-1.2, -0.8, 0);
+      // this.scene.add(rLabelScene1);
+
+      // let tex = document.createElement("div");
+      // tex.className = "label";
+      // tex.style.color = "rgb(0,0,0)";
+      // tex.style.backgroundColor = `#ffffff`;
+      // tex.style.padding = `4px 3px 4px 3px`;
+      // tex.style.fontWeight = "900";
+      // tex.textContent = `OLLIE NEW LABEL`;
+      // let lab = new CSS2DObject(tex);
+      // lab.name = "angle2";
+      // sceneObjects.push(lab.name);
+      // lab.position.set(-1.2, -0.8, 0);
+      // this.scene2.add(lab);
+
+      // let pTextScene1 = document.createElement("div");
+      // pTextScene1.className = "label";
+      // pTextScene1.style.color = "rgb(0,0,0)";
+      // pTextScene1.style.fontWeight = "900";
+      // pTextScene1.style.padding = `.5px 1px 2px 3px`;
+      // pTextScene1.textContent = `P`;
+      // let pLabelScene1 = new CSS2DObject(pTextScene1);
+      // pLabelScene1.name = "pLabelScene1";
+      // sceneObjects.push(pLabelScene1.name);
+      // pLabelScene1.position.set(-2.8, -2.5, 0);
+      // this.scene.add(pLabelScene1);
+
+      // let mTextScene1 = document.createElement("div");
+      // mTextScene1.className = "label";
+      // mTextScene1.style.color = "rgb(0,0,0)";
+      // mTextScene1.textContent = `M`;
+      // mTextScene1.style.backgroundColor = `#ffffff`;
+      // mTextScene1.style.borderRadius = "25%";
+      // mTextScene1.style.padding = `2px 2px 2px 2px`;
+      // mTextScene1.fontWeight = `bold`;
+      // mTextScene1.style.fontWeight = "900";
+      // mTextScene1.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
+      // let mLabelScene1 = new CSS2DObject(mTextScene1);
+      // mLabelScene1.name = "mLabelScene1";
+      // sceneObjects.push(mLabelScene1.name);
+      // mLabelScene1.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
+      // this.scene.add(mLabelScene1);
+
+      // let fTextScene1 = document.createElement("div");
+      // fTextScene1.className = "label";
+      // fTextScene1.style.color = "rgb(0,0,0)";
+      // fTextScene1.textContent = `F`;
+      // fTextScene1.style.backgroundColor = `#ffffff`;
+      // fTextScene1.style.padding = `3px 2px 3px 2px`;
+      // fTextScene1.style.fontWeight = "900";
+      // let fLabelScene1 = new CSS2DObject(fTextScene1);
+      // fLabelScene1.name = "fLabelScene1";
+      // sceneObjects.push(fLabelScene1.name);
+      // let newPosition = newBottomVector.add(newTopVector).divideScalar(2);
+      // fLabelScene1.position.set(newPosition.x, newPosition.y, newPosition.z);
+      // this.scene.add(fLabelScene1);
+
+      // let angleTextScene1 = document.createElement("div");
+      // angleTextScene1.className = "label";
+      // angleTextScene1.style.color = "rgb(0,0,0)";
+      // angleTextScene1.textContent = `${Math.round(
+      //   ((this.length + 2.158638) * 180) / Math.PI
+      // )}°`;
+      // let angleLabelScene1 = new CSS2DObject(angleTextScene1);
+      // angleTextScene1.style.fontWeight = "900";
+      // angleLabelScene1.name = "angleLabelScene1";
+      // sceneObjects.push(angleLabelScene1.name);
+
+      // Create an axis helper
       // obj - your object (THREE.Object3D or derived)
       // point - the point of rotation (THREE.Vector3)
       // axis - the axis of rotation (normalized THREE.Vector3)
@@ -147,19 +211,15 @@ export default {
       // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
       const rotateAboutPoint = (obj, point, axis, theta, pointIsWorld) => {
         pointIsWorld = pointIsWorld === undefined ? false : pointIsWorld;
-
         if (pointIsWorld) {
           obj.parent.localToWorld(obj.position); // compensate for world coordinate
         }
-
         obj.position.sub(point); // remove the offset
         obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
         obj.position.add(point); // re-add the offset
-
         if (pointIsWorld) {
           obj.parent.worldToLocal(obj.position); // undo world coordinates compensation
         }
-
         obj.rotateOnAxis(axis, theta); // rotate the OBJECT
       };
 
@@ -168,15 +228,13 @@ export default {
         // look up the size the canvas is being displayed
         const width = canvas.clientWidth;
         const height = canvas.clientHeight;
-
         // you must pass false here or three.js sadly fights the browser
         this.renderer.setSize(width, height, false);
         this.camera.aspect = width / height;
         this.labelRenderer.render(this.scene, this.camera, false);
         this.camera.updateProjectionMatrix();
-
-        // update any render target sizes here
       };
+
       const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
       resizeObserver.observe(this.renderer.domElement, { box: "content-box" });
 
@@ -187,211 +245,165 @@ export default {
         });
       };
 
-      const createStillLine = (vecBottom, vecTop, color) => {
-        let points2 = [];
-        points2.push(vecBottom);
-        points2.push(vecTop);
-        const lineMaterial = new Three.MeshBasicMaterial({ color: color });
-        let tubeGeometry = new Three.TubeGeometry(
-          new Three.CatmullRomCurve3(points2),
-          512, // path segments
-          0.02, // THICKNESS
-          30, //Roundness of Tube
-          true //closed
-        );
-        let line = new Three.Line(tubeGeometry, lineMaterial);
-        line.name = "r";
-        // line.position.set(vecBottom);
-
-        const geometrySphere = new Three.SphereGeometry(0.3, 32, 16);
-        const materialSphere = new Three.MeshBasicMaterial({ color: 0x000000 });
-        const sphere = new Three.Mesh(geometrySphere, materialSphere);
-        sphere.position.set(vecBottom.x, vecBottom.y, 0);
-        this.scene.add(sphere);
-
-        this.scene.add(line);
-        sceneObjects.push(line.name);
-
-        let newVec2 = new Three.Vector3();
-        newVec2.subVectors(vecTop, vecBottom);
-        let materialcone = new Three.MeshBasicMaterial({ color: color });
-        let conegeometry = new Three.ConeGeometry(0.1, 0.4, 32);
-        let cone = new Three.Mesh(conegeometry, materialcone);
-        var axis = new Three.Vector3(0, 1, 0);
-        cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
-
-        let rotatedFXTOP =
-          Math.cos(this.length) * vecTop.x - Math.sin(this.length) * vecTop.y;
-        let rotateFYTOP =
-          Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
-        let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
-
-        let rotatedFXBOTTOM =
-          Math.cos(this.length) * vecBottom.x -
-          Math.sin(this.length) * vecBottom.y;
-        let rotateFYBOTTOM =
-          Math.sin(this.length) * vecBottom.x -
-          Math.cos(this.length) * vecBottom.y;
-        let newBottomVector = new Three.Vector3(
-          -rotatedFXBOTTOM,
-          -rotateFYBOTTOM
-        );
-        let newVecBetweenPoints = new Three.Vector3();
-        newVecBetweenPoints.subVectors(newTopVector, newBottomVector);
-
-        cone.position.copy(vecTop);
-
-        // cone.position.set((0, 1, 1));
-        cone.name = "arrow head";
-        // cone.rotateZ(-this.length);
-        this.scene.add(cone);
-
-        sceneObjects.push(cone.name);
-
-        let text3 = document.createElement("div");
-        text3.className = "label";
-        text3.style.color = "rgb(0,0,0)";
-        text3.style.backgroundColor = `#ffffff`;
-        text3.style.padding = `4px 3px 4px 3px`;
-        text3.style.fontWeight = "900";
-
-        text3.textContent = `r`;
-
-        let label3 = new CSS2DObject(text3);
-        label3.name = "angle2";
-        sceneObjects.push(label3.name);
-
-        label3.position.set(-1.2, -0.8, 0);
-
-        this.scene.add(label3);
-      };
-      let text8 = document.createElement("div");
-      text8.className = "label";
-      text8.style.color = "rgb(0,0,0)";
-      // text8.style.backgroundColor = `#ffffff`;
-      text8.style.fontWeight = "900";
-      text8.style.padding = `.5px 1px 2px 3px`;
-
-      text8.textContent = `P`;
-
-      let label8 = new CSS2DObject(text8);
-      label8.name = "P";
-      sceneObjects.push(label8.name);
-
-      label8.position.set(-2.8, -2.5, 0);
-
-      this.scene.add(label8);
-      const createMomentVector = (
-        vecBottom,
-        vecTop,
-        color,
-        hasLineOfAction
-      ) => {
-        let points2 = [];
-        points2.push(vecBottom);
-        points2.push(vecTop);
-        const lineMaterial = new Three.MeshBasicMaterial({ color: color });
-        let tubeGeometry = new Three.TubeGeometry(
-          new Three.CatmullRomCurve3(points2),
-          512, // path segments
-          0.07, // THICKNESS
-          30, //Roundness of Tube
-          true //closed
-        );
-        let line = new Three.Line(tubeGeometry, lineMaterial);
-        line.name = "r";
-        // line.position.set(vecBottom);
-
-        const geometrySphere = new Three.SphereGeometry(0.1, 32, 16);
-        const materialSphere = new Three.MeshBasicMaterial({ color: 0x000000 });
-        const sphere = new Three.Mesh(geometrySphere, materialSphere);
-        sphere.position.set(vecBottom.x, vecBottom.y, 0);
-        this.scene.add(sphere);
-
-        this.scene.add(line);
-        sceneObjects.push(line.name);
-
-        if (hasLineOfAction == true) {
-          let newVec = new Three.Vector3();
-          newVec.subVectors(vecTop, vecBottom);
-          let lineofaction = [];
-          // let clone = Object.assign({}, newVec);
-          let clone2 = Object.assign({}, newVec);
-          // let cloneVec = new Three.Vector3(...Object.values(clone));
-          let cloneVec2 = new Three.Vector3(...Object.values(clone2));
-          // lineofaction.push(cloneVec);
-          lineofaction.push(cloneVec2.multiplyScalar(-200));
-          lineofaction.push(newVec.multiplyScalar(200));
-          const dashedmaterial = new Three.LineDashedMaterial({
-            color: 0x000000,
-            dashSize: 0.2,
-            gapSize: 0.2,
-          });
-          const linegeometry = new Three.BufferGeometry().setFromPoints(
-            lineofaction
-          );
-          let dashedline = new Three.Line(linegeometry, dashedmaterial);
-          dashedline.computeLineDistances();
-
-          dashedline.name = "dashed-line";
-          this.scene.add(dashedline);
-          sceneObjects.push(dashedline.name);
+      class StillLine {
+        constructor(vecBottom, vecTop, color, scene) {
+          this.vecBottom = vecBottom;
+          this.vecTop = vecTop;
+          this.color = color;
+          this.points2 = [];
+          this._scene = scene;
         }
-        let newVec2 = new Three.Vector3();
-        newVec2.subVectors(vecTop, vecBottom);
-        let materialcone = new Three.MeshBasicMaterial({ color: color });
-        let conegeometry = new Three.ConeGeometry(0.2, 0.4, 32);
-        let cone = new Three.Mesh(conegeometry, materialcone);
-        var axis = new Three.Vector3(0, 1, 0);
-        cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
+        createLine() {
+          console.log(this._scene);
+          this.points2.push(this.vecBottom);
+          this.points2.push(this.vecTop);
+          const lineMaterial = new Three.MeshBasicMaterial({
+            color: this.color,
+          });
+          let tubeGeometry = new Three.TubeGeometry(
+            new Three.CatmullRomCurve3(this.points2),
+            512, // path segments
+            0.02, // THICKNESS
+            30, //Roundness of Tube
+            true //closed
+          );
+          let line = new Three.Line(tubeGeometry, lineMaterial);
+          line.name = "r";
+          const geometrySphere = new Three.SphereGeometry(0.3, 32, 16);
+          const materialSphere = new Three.MeshBasicMaterial({
+            color: 0x000000,
+          });
+          const sphere = new Three.Mesh(geometrySphere, materialSphere);
+          sphere.position.set(this.vecBottom.x, this.vecBottom.y, 0);
+          this._scene.add(sphere);
+          this._scene.add(line);
+          sceneObjects.push(line.name);
+          let newVec2 = new Three.Vector3();
+          newVec2.subVectors(this.vecTop, this.vecBottom);
+          let materialcone = new Three.MeshBasicMaterial({ color: this.color });
+          let conegeometry = new Three.ConeGeometry(0.1, 0.4, 32);
+          let cone = new Three.Mesh(conegeometry, materialcone);
+          var axis = new Three.Vector3(0, 1, 0);
+          cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
+          let rotatedFXTOP =
+            Math.cos(this.length) * this.vecTop.x -
+            Math.sin(this.length) * this.vecTop.y;
+          let rotateFYTOP =
+            Math.sin(this.length) * this.vecTop.x -
+            Math.cos(this.length) * this.vecTop.y;
+          let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
+          let rotatedFXBOTTOM =
+            Math.cos(this.length) * this.vecBottom.x -
+            Math.sin(this.length) * this.vecBottom.y;
+          let rotateFYBOTTOM =
+            Math.sin(this.length) * this.vecBottom.x -
+            Math.cos(this.length) * this.vecBottom.y;
+          let newBottomVector = new Three.Vector3(
+            -rotatedFXBOTTOM,
+            -rotateFYBOTTOM
+          );
+          let newVecBetweenPoints = new Three.Vector3();
+          newVecBetweenPoints.subVectors(newTopVector, newBottomVector);
+          cone.position.copy(this.vecTop);
+          cone.name = "arrow head";
+          this._scene.add(cone);
+          sceneObjects.push(cone.name);
+          console.log("Create Line finished");
+        }
+      }
 
-        let rotatedFXTOP =
-          Math.cos(this.length) * vecTop.x - Math.sin(this.length) * vecTop.y;
-        let rotateFYTOP =
-          Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
-        let newTopVector = new Three.Vector3(rotatedFXTOP, rotateFYTOP);
+      class MomentVector {
+        constructor(vecBottom, vecTop, color, hasLineOfAction) {
+          this.vecBottom = vecBottom;
+          this.vecTop = vecTop;
+          this.color = color;
+          this.hasLineOfAction = hasLineOfAction;
+        }
+        createMoment() {
+          let points2 = [];
+          points2.push(vecBottom);
+          points2.push(vecTop);
+          const lineMaterial = new Three.MeshBasicMaterial({ color: color });
+          let tubeGeometry = new Three.TubeGeometry(
+            new Three.CatmullRomCurve3(points2),
+            512, // path segments
+            0.07, // THICKNESS
+            30, //Roundness of Tube
+            true //closed
+          );
+          let line = new Three.Line(tubeGeometry, lineMaterial);
+          line.name = "r";
+          // line.position.set(vecBottom);
+          const geometrySphere = new Three.SphereGeometry(0.1, 32, 16);
+          const materialSphere = new Three.MeshBasicMaterial({
+            color: 0x000000,
+          });
+          const sphere = new Three.Mesh(geometrySphere, materialSphere);
+          sphere.position.set(this.vecBottom.x, this.vecBottom.y, 0);
+          this.scene.add(sphere);
+          this.scene.add(line);
+          sceneObjects.push(line.name);
+          if (this.hasLineOfAction == true) {
+            let newVec = new Three.Vector3();
+            newVec.subVectors(this.vecTop, this.vecBottom);
+            let lineofaction = [];
+            // let clone = Object.assign({}, newVec);
+            let clone2 = Object.assign({}, newVec);
+            // let cloneVec = new Three.Vector3(...Object.values(clone));
+            let cloneVec2 = new Three.Vector3(...Object.values(clone2));
+            // lineofaction.push(cloneVec);
+            lineofaction.push(cloneVec2.multiplyScalar(-200));
+            lineofaction.push(newVec.multiplyScalar(200));
+            const dashedmaterial = new Three.LineDashedMaterial({
+              color: 0x000000,
+              dashSize: 0.2,
+              gapSize: 0.2,
+            });
+            const linegeometry = new Three.BufferGeometry().setFromPoints(
+              lineofaction
+            );
+            let dashedline = new Three.Line(linegeometry, dashedmaterial);
+            dashedline.computeLineDistances();
+            dashedline.name = "dashed-line";
+            this.scene.add(dashedline);
+            sceneObjects.push(dashedline.name);
+          }
+          let newVec2 = new Three.Vector3();
+          newVec2.subVectors(this.vecTop, this.vecBottom);
+          let materialcone = new Three.MeshBasicMaterial({ color: this.color });
+          let conegeometry = new Three.ConeGeometry(0.2, 0.4, 32);
+          let cone = new Three.Mesh(conegeometry, materialcone);
+          var axis = new Three.Vector3(0, 1, 0);
+          cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
 
-        let rotatedFXBOTTOM =
-          Math.cos(this.length) * vecBottom.x -
-          Math.sin(this.length) * vecBottom.y;
-        let rotateFYBOTTOM =
-          Math.sin(this.length) * vecBottom.x -
-          Math.cos(this.length) * vecBottom.y;
-        let newBottomVector = new Three.Vector3(
-          -rotatedFXBOTTOM,
-          -rotateFYBOTTOM
-        );
-        let newVecBetweenPoints = new Three.Vector3();
-        newVecBetweenPoints.subVectors(newBottomVector, newTopVector);
+          let rotatedFXTOP =
+            Math.cos(this.length) * this.vecTop.x -
+            Math.sin(this.length) * this.vecTop.y;
+          let rotateFYTOP =
+            Math.sin(this.length) * this.vecTop.x -
+            Math.cos(this.length) * this.vecTop.y;
+          let newTopVector = new Three.Vector3(rotatedFXTOP, rotateFYTOP);
 
-        cone.position.copy(vecTop);
-
-        // cone.position.set((0, 1, 1));
-        cone.name = "arrow head";
-        // cone.rotateZ(-this.length);
-        this.scene.add(cone);
-
-        sceneObjects.push(cone.name);
-
-        let text5 = document.createElement("div");
-        text5.className = "label";
-        text5.style.color = "rgb(0,0,0)";
-
-        text5.textContent = `M`;
-        text5.style.backgroundColor = `#ffffff`;
-        text5.style.borderRadius = "25%";
-        text5.style.padding = `2px 2px 2px 2px`;
-        text5.fontWeight = `bold`;
-        text5.style.fontWeight = "900";
-        text5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
-
-        let label5 = new CSS2DObject(text5);
-        label5.name = "M";
-        sceneObjects.push(label5.name);
-
-        label5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
-        this.scene.add(label5);
-      };
+          let rotatedFXBOTTOM =
+            Math.cos(this.length) * this.vecBottom.x -
+            Math.sin(this.length) * this.vecBottom.y;
+          let rotateFYBOTTOM =
+            Math.sin(this.length) * this.vecBottom.x -
+            Math.cos(this.length) * this.vecBottom.y;
+          let newBottomVector = new Three.Vector3(
+            -rotatedFXBOTTOM,
+            -rotateFYBOTTOM
+          );
+          let newVecBetweenPoints = new Three.Vector3();
+          newVecBetweenPoints.subVectors(newBottomVector, newTopVector);
+          cone.position.copy(this.vecTop);
+          // cone.position.set((0, 1, 1));
+          cone.name = "arrow head";
+          // cone.rotateZ(-this.length);
+          this.scene.add(cone);
+          sceneObjects.push(cone.name);
+        }
+      }
 
       let fVector;
       const createVectorGeometry = (
@@ -457,7 +469,6 @@ export default {
         let rotateFYTOP =
           Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
         let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
-
         let rotatedFXBOTTOM =
           Math.cos(this.length) * vecBottom.x -
           Math.sin(this.length) * vecBottom.y;
@@ -476,26 +487,7 @@ export default {
           newVecBetweenPoints.clone().normalize()
         );
         cone.position.copy(newTopVector);
-
         newVecBetweenPoints.multiplyScalar(0.5);
-
-        let text4 = document.createElement("div");
-        text4.className = "label";
-        text4.style.color = "rgb(0,0,0)";
-
-        text4.textContent = `F`;
-        text4.style.backgroundColor = `#ffffff`;
-        text4.style.padding = `3px 2px 3px 2px`;
-        text4.style.fontWeight = "900";
-
-        let label4 = new CSS2DObject(text4);
-        label4.name = "F";
-        sceneObjects.push(label4.name);
-
-        let newPosition = newBottomVector.add(newTopVector).divideScalar(2);
-
-        label4.position.set(newPosition.x, newPosition.y, newPosition.z);
-        this.scene.add(label4);
 
         // cone.position.set((0, 1, 1));
         cone.name = "arrow head";
@@ -508,7 +500,6 @@ export default {
       const loadSVG = () => {
         // instantiate a loader
         const loader = new SVGLoader();
-
         // load a SVG resource
         let self = this;
         loader.load(
@@ -578,24 +569,13 @@ export default {
         sceneObjects.push(torus.name);
         this.scene.add(torus);
 
-        let text2 = document.createElement("div");
-        text2.className = "label";
-        text2.style.color = "rgb(0,0,0)";
-        text2.textContent = `${Math.round(
-          ((this.length + 2.158638) * 180) / Math.PI
-        )}°`;
-        let label2 = new CSS2DObject(text2);
-        text2.style.fontWeight = "900";
-        label2.name = "angle";
-        sceneObjects.push(label2.name);
+        // if (((this.length + 2.158638) * 180) / Math.PI > 0) {
+        //   label2.position.set(0.3, 0.3, 0);
+        // } else {
+        //   label2.position.set(0.3, -0.5, 0);
+        // }
 
-        if (((this.length + 2.158638) * 180) / Math.PI > 0) {
-          label2.position.set(0.3, 0.3, 0);
-        } else {
-          label2.position.set(0.3, -0.5, 0);
-        }
-
-        this.scene.add(label2);
+        // this.scene.add(label2);
       };
       createAngleArcGeometry();
       // Draw Force Vector
@@ -608,7 +588,17 @@ export default {
       let oldValue = -1;
       // let finishedSpin = false;
       // let theta2 = 0.01;
-      this.updateSlider = () => {
+
+      const stillLineR = new StillLine(
+        new Three.Vector3(-3, -2, 0),
+        new Three.Vector3(-0.15, -0.15, 0),
+        0x000000,
+        this.scene
+      );
+
+      stillLineR.createLine();
+
+      this.updateSceneObjects = () => {
         let selectedObject = this.scene.getObjectByName("first arrow");
         this.scene.remove(selectedObject);
 
@@ -618,12 +608,12 @@ export default {
         let vec2 = new Three.Vector3(0, 3, 0);
         let vecColor = 0x0acbee;
         createVectorGeometry(vec1, vec2, vecColor, createAction);
-        createStillLine(
-          new Three.Vector3(-3, -2, 0),
-          new Three.Vector3(-0.15, -0.15, 0),
-          0x000000,
-          false
-        );
+        // createStillLine(
+        //   new Three.Vector3(-3, -2, 0),
+        //   new Three.Vector3(-0.15, -0.15, 0),
+        //   0x000000,
+        //   false
+        // );
         createAngleArcGeometry();
 
         let rVec = new Three.Vector3(3, 2, 0);
@@ -651,37 +641,7 @@ export default {
             pointIsWorld
           );
         }
-        // let arrowsSVG2 = this.scene.getObjectByName("arrowss");
 
-        // point - the point of rotation (THREE.Vector3)
-        // arrowsSVG2.rotateZ(0.01);
-        // let rotateSVGaxis2 = new Three.Vector3(-3, -2, 0);
-        // // axis - the axis of rotation (normalized THREE.Vector3)
-        // let svgAxis2 = new Three.Vector3(0, 0, 1).normalize();
-        // // theta - radian value of rotation
-
-        // // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
-        // let pointIsWorld2 = false;
-        // if (oldValue > 0) {
-        //   theta2 = 0.05;
-        //   rotateAboutPoint(
-        //     arrowsSVG2,
-        //     rotateSVGaxis2,
-        //     svgAxis2,
-        //     theta2,
-        //     pointIsWorld2
-        //   );
-        // } else {
-        //   theta2 = 0.05;
-        //   rotateAboutPoint(
-        //     arrowsSVG2,
-        //     rotateSVGaxis2,
-        //     svgAxis2,
-        //     theta2,
-        //     pointIsWorld2
-        //   );
-        // }
-        // obj - your object (THREE.Object3D or derived)
         oldValue = momentVec.z;
 
         createMomentVector(
@@ -690,26 +650,6 @@ export default {
           0xff064a,
           false
         );
-        // let selectArrows = this.scene.getObjectByName("arrowss");
-        // console.log(momentVec.z);
-        // if (momentVec.z > 0 && !finishedSpin) {
-        //   finishedSpin = true;
-        // } else if (momentVec.z < 0 && finishedSpin) {
-        //   selectArrows.rotateY(3.14159);
-        //   selectedObject.position.set = (2, 2, 2);
-        //   finishedSpin = false;
-        // }
-
-        // const arrowHelper = new Three.ArrowHelper(
-        //   dir,
-        //   origin,
-        //   this.length,
-        //   hex
-        // );
-        // arrowHelper.name = "first arrow";
-        // this.scene.add(arrowHelper);
-        // let selectedObject2 = this.scene.getObjectByName("Ollie thick line");
-        // this.scene.remove(selectedObject2);
       };
 
       // Add action line to Vector Geometry
@@ -719,7 +659,7 @@ export default {
     },
     animate: function () {
       requestAnimationFrame(this.animate);
-      this.updateSlider();
+      this.updateSceneObjects();
 
       this.renderer.setScissorTest(true);
       this.renderer.setViewport(0, 0, 450, 500);
@@ -740,17 +680,11 @@ export default {
       this.camera2.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera2);
 
-      this.labelRenderer.render(this.scene, this.camera);
+      this.labelRenderer.render(this.scene2, this.camera);
       // this.rendlabelRenderererer.setViewport(450, 0, 450, 500);
 
-      // this.labelRenderer2.render(this.scene, this.camera2);
+      // this.labelRenderer2.render(this.scene2, this.camera2);
     },
-    // onWindowResize: function () {
-    //   this.renderer.setSize(window.innerWidth, window.innerHeight);
-    //   this.camera.aspect = window.innerWidth / window.innerHeight;
-    //   this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
-    //   this.camera.updateProjectionMatrix();
-    // },
   },
   created() {
     window.addEventListener("resize", this.onWindowResize, false);
