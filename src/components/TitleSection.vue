@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page">
     <h1>Moment About a Point (Vector Calculations)</h1>
     <p class="text-block">
       Given any point on an extended body, if there is a force acting on that
@@ -7,7 +7,7 @@
       moment about that point. A moment is a force's tendency to cause rotation.
     </p>
 
-    <ThreeCanvas2 />
+    <ThreeCanvas3 />
 
     <p class="text-block">
       It is important to note here that all quantities (<math-jax
@@ -44,10 +44,10 @@
 </template>
 
 <script >
-import ThreeCanvas2 from "./ThreeCanvas2.vue";
+import ThreeCanvas3 from "./ThreeCanvas3.vue";
 export default {
   name: "TitleSection",
-  components: { ThreeCanvas2 },
+  components: { ThreeCanvas3 },
   data: function () {
     return {
       formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",
@@ -59,7 +59,7 @@ export default {
 <style  scoped>
 .text-block {
   width: clamp(45ch, 50%, 75ch);
-  margin: 3rem auto;
+  /* margin: 3rem auto; */
   text-align: left;
 }
 

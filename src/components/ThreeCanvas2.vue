@@ -313,17 +313,20 @@ export default {
       }
 
       class MomentVector {
-        constructor(vecBottom, vecTop, color, hasLineOfAction) {
+        constructor(vecBottom, vecTop, color, hasLineOfAction, scene) {
           this.vecBottom = vecBottom;
           this.vecTop = vecTop;
           this.color = color;
           this.hasLineOfAction = hasLineOfAction;
+          this._scene = scene;
         }
         createMoment() {
           let points2 = [];
-          points2.push(vecBottom);
-          points2.push(vecTop);
-          const lineMaterial = new Three.MeshBasicMaterial({ color: color });
+          points2.push(this.vecBottom);
+          points2.push(this.vecTop);
+          const lineMaterial = new Three.MeshBasicMaterial({
+            color: this.color,
+          });
           let tubeGeometry = new Three.TubeGeometry(
             new Three.CatmullRomCurve3(points2),
             512, // path segments
@@ -333,47 +336,25 @@ export default {
           );
           let line = new Three.Line(tubeGeometry, lineMaterial);
           line.name = "r";
-          // line.position.set(vecBottom);
+          this._scene.add(line);
+          sceneObjects.push(line.name);
+
           const geometrySphere = new Three.SphereGeometry(0.1, 32, 16);
           const materialSphere = new Three.MeshBasicMaterial({
             color: 0x000000,
           });
           const sphere = new Three.Mesh(geometrySphere, materialSphere);
           sphere.position.set(this.vecBottom.x, this.vecBottom.y, 0);
-          this.scene.add(sphere);
-          this.scene.add(line);
-          sceneObjects.push(line.name);
-          if (this.hasLineOfAction == true) {
-            let newVec = new Three.Vector3();
-            newVec.subVectors(this.vecTop, this.vecBottom);
-            let lineofaction = [];
-            // let clone = Object.assign({}, newVec);
-            let clone2 = Object.assign({}, newVec);
-            // let cloneVec = new Three.Vector3(...Object.values(clone));
-            let cloneVec2 = new Three.Vector3(...Object.values(clone2));
-            // lineofaction.push(cloneVec);
-            lineofaction.push(cloneVec2.multiplyScalar(-200));
-            lineofaction.push(newVec.multiplyScalar(200));
-            const dashedmaterial = new Three.LineDashedMaterial({
-              color: 0x000000,
-              dashSize: 0.2,
-              gapSize: 0.2,
-            });
-            const linegeometry = new Three.BufferGeometry().setFromPoints(
-              lineofaction
-            );
-            let dashedline = new Three.Line(linegeometry, dashedmaterial);
-            dashedline.computeLineDistances();
-            dashedline.name = "dashed-line";
-            this.scene.add(dashedline);
-            sceneObjects.push(dashedline.name);
-          }
+          this._scene.add(sphere);
+
           let newVec2 = new Three.Vector3();
           newVec2.subVectors(this.vecTop, this.vecBottom);
+
           let materialcone = new Three.MeshBasicMaterial({ color: this.color });
           let conegeometry = new Three.ConeGeometry(0.2, 0.4, 32);
           let cone = new Three.Mesh(conegeometry, materialcone);
           var axis = new Three.Vector3(0, 1, 0);
+
           cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
 
           let rotatedFXTOP =
@@ -400,102 +381,115 @@ export default {
           // cone.position.set((0, 1, 1));
           cone.name = "arrow head";
           // cone.rotateZ(-this.length);
-          this.scene.add(cone);
+          this._scene.add(cone);
           sceneObjects.push(cone.name);
+        }
+
+        updateMomentPosition() {
+          // Scale Cyclinder in Z Axis
+          // Position - set to the .z of the second argument. This is the position in 3d space
         }
       }
 
       let fVector;
-      const createVectorGeometry = (
-        vecBottom,
-        vecTop,
-        color,
-        hasLineOfAction
-      ) => {
-        let points2 = [];
-        points2.push(vecBottom);
-        points2.push(vecTop);
-        const lineMaterial = new Three.MeshBasicMaterial({ color: color });
-        let tubeGeometry = new Three.TubeGeometry(
-          new Three.CatmullRomCurve3(points2),
-          512, // path segments
-          0.05, // THICKNESS
-          30, //Roundness of Tube
-          true //closed
-        );
-        let line = new Three.Line(tubeGeometry, lineMaterial);
-        line.name = "Ollie thick line";
-        // line.position.set(vecBottom);
-        line.rotateZ(-this.length);
-        this.scene.add(line);
-        sceneObjects.push(line.name);
-
-        if (hasLineOfAction == true) {
-          let newVec = new Three.Vector3();
-          newVec.subVectors(vecTop, vecBottom);
-          let lineofaction = [];
-          // let clone = Object.assign({}, newVec);
-          let clone2 = Object.assign({}, newVec);
-          // let cloneVec = new Three.Vector3(...Object.values(clone));
-          let cloneVec2 = new Three.Vector3(...Object.values(clone2));
-          // lineofaction.push(cloneVec);
-          lineofaction.push(cloneVec2.multiplyScalar(-200));
-          lineofaction.push(newVec.multiplyScalar(200));
-          const dashedmaterial = new Three.LineDashedMaterial({
-            color: 0x0acbee,
-            dashSize: 0.2,
-            gapSize: 0.2,
-          });
-          const linegeometry = new Three.BufferGeometry().setFromPoints(
-            lineofaction
-          );
-          let dashedline = new Three.Line(linegeometry, dashedmaterial);
-          dashedline.computeLineDistances();
-          dashedline.rotateZ(-this.length);
-          dashedline.name = "dashed-line";
-          this.scene.add(dashedline);
-          sceneObjects.push(dashedline.name);
+      class ForceVector {
+        constructor(vecBottom, vecTop, color, hasLineOfAction, scene) {
+          this.vecBottom = vecBottom;
+          this.vecTop = vecTop;
+          this.color = color;
+          this.hasLineOfAction = hasLineOfAction;
+          this._scene = scene;
         }
-        let newVec2 = new Three.Vector3();
-        newVec2.subVectors(vecTop, vecBottom);
-        let materialcone = new Three.MeshBasicMaterial({ color: color });
-        let conegeometry = new Three.ConeGeometry(0.2, 0.4, 32);
-        let cone = new Three.Mesh(conegeometry, materialcone);
-        var axis = new Three.Vector3(0, 1, 0);
-        cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
+        createForceVector() {
+          let points2 = [];
+          points2.push(this.vecBottom);
+          points2.push(this.vecTop);
+          const lineMaterial = new Three.MeshBasicMaterial({
+            color: this.color,
+          });
+          let tubeGeometry = new Three.TubeGeometry(
+            new Three.CatmullRomCurve3(points2),
+            512, // path segments
+            0.05, // THICKNESS
+            30, //Roundness of Tube
+            true //closed
+          );
+          let line = new Three.Line(tubeGeometry, lineMaterial);
+          line.name = "Ollie thick line";
+          // line.position.set(vecBottom);
+          line.rotateZ(-this.length);
+          this._scene.add(line);
+          sceneObjects.push(line.name);
 
-        let rotatedFXTOP =
-          Math.cos(this.length) * vecTop.x - Math.sin(this.length) * vecTop.y;
-        let rotateFYTOP =
-          Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
-        let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
-        let rotatedFXBOTTOM =
-          Math.cos(this.length) * vecBottom.x -
-          Math.sin(this.length) * vecBottom.y;
-        let rotateFYBOTTOM =
-          Math.sin(this.length) * vecBottom.x -
-          Math.cos(this.length) * vecBottom.y;
-        let newBottomVector = new Three.Vector3(
-          -rotatedFXBOTTOM,
-          -rotateFYBOTTOM
-        );
-        let newVecBetweenPoints = new Three.Vector3();
-        newVecBetweenPoints.subVectors(newTopVector, newBottomVector);
-        fVector = newVecBetweenPoints;
-        cone.quaternion.setFromUnitVectors(
-          axis,
-          newVecBetweenPoints.clone().normalize()
-        );
-        cone.position.copy(newTopVector);
-        newVecBetweenPoints.multiplyScalar(0.5);
+          if (this.hasLineOfAction == true) {
+            let newVec = new Three.Vector3();
+            newVec.subVectors(this.vecTop, this.vecBottom);
+            let lineofaction = [];
+            // let clone = Object.assign({}, newVec);
+            let clone2 = Object.assign({}, newVec);
+            // let cloneVec = new Three.Vector3(...Object.values(clone));
+            let cloneVec2 = new Three.Vector3(...Object.values(clone2));
+            // lineofaction.push(cloneVec);
+            lineofaction.push(cloneVec2.multiplyScalar(-200));
+            lineofaction.push(newVec.multiplyScalar(200));
+            const dashedmaterial = new Three.LineDashedMaterial({
+              color: 0x0acbee,
+              dashSize: 0.2,
+              gapSize: 0.2,
+            });
+            const linegeometry = new Three.BufferGeometry().setFromPoints(
+              lineofaction
+            );
+            let dashedline = new Three.Line(linegeometry, dashedmaterial);
+            dashedline.computeLineDistances();
+            dashedline.rotateZ(-this.length);
+            dashedline.name = "dashed-line";
+            this._scene.add(dashedline);
+            sceneObjects.push(dashedline.name);
+          }
+          let newVec2 = new Three.Vector3();
+          newVec2.subVectors(this.vecTop, this.vecBottom);
+          let materialcone = new Three.MeshBasicMaterial({ color: this.color });
+          let conegeometry = new Three.ConeGeometry(0.2, 0.4, 32);
+          let cone = new Three.Mesh(conegeometry, materialcone);
+          var axis = new Three.Vector3(0, 1, 0);
+          cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
 
-        // cone.position.set((0, 1, 1));
-        cone.name = "arrow head";
-        // cone.rotateZ(-this.length);
-        this.scene.add(cone);
+          let rotatedFXTOP =
+            Math.cos(this.length) * this.vecTop.x -
+            Math.sin(this.length) * this.vecTop.y;
+          let rotateFYTOP =
+            Math.sin(this.length) * this.vecTop.x -
+            Math.cos(this.length) * this.vecTop.y;
+          let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
+          let rotatedFXBOTTOM =
+            Math.cos(this.length) * this.vecBottom.x -
+            Math.sin(this.length) * this.vecBottom.y;
+          let rotateFYBOTTOM =
+            Math.sin(this.length) * this.vecBottom.x -
+            Math.cos(this.length) * this.vecBottom.y;
+          let newBottomVector = new Three.Vector3(
+            -rotatedFXBOTTOM,
+            -rotateFYBOTTOM
+          );
+          let newVecBetweenPoints = new Three.Vector3();
+          newVecBetweenPoints.subVectors(newTopVector, newBottomVector);
+          fVector = newVecBetweenPoints;
+          cone.quaternion.setFromUnitVectors(
+            axis,
+            newVecBetweenPoints.clone().normalize()
+          );
+          cone.position.copy(newTopVector);
+          newVecBetweenPoints.multiplyScalar(0.5);
 
-        sceneObjects.push(cone.name);
-      };
+          // cone.position.set((0, 1, 1));
+          cone.name = "arrow head";
+          // cone.rotateZ(-this.length);
+          this._scene.add(cone);
+
+          sceneObjects.push(cone.name);
+        }
+      }
 
       const loadSVG = () => {
         // instantiate a loader
@@ -582,9 +576,16 @@ export default {
       let vec1 = new Three.Vector3(0, this.length, 0);
       let vec2 = new Three.Vector3(0, 0, 0);
       let vecColor = 0x0acbee;
-      let createAction = true;
-      createVectorGeometry(vec1, vec2, vecColor, false);
-
+      // let createAction = true;
+      // createVectorGeometry(vec1, vec2, vecColor, false);
+      let forceVector = new ForceVector(
+        vec1,
+        vec2,
+        vecColor,
+        false,
+        this.scene
+      );
+      forceVector.createForceVector();
       let oldValue = -1;
       // let finishedSpin = false;
       // let theta2 = 0.01;
@@ -604,10 +605,17 @@ export default {
 
         removeObjectFromScene(sceneObjects);
         sceneObjects = [];
-        let vec1 = new Three.Vector3(0, 1, 0);
-        let vec2 = new Three.Vector3(0, 3, 0);
-        let vecColor = 0x0acbee;
-        createVectorGeometry(vec1, vec2, vecColor, createAction);
+        // let vec1 = new Three.Vector3(0, 1, 0);
+        // let vec2 = new Three.Vector3(0, 3, 0);
+        // let vecColor = 0x0acbee;
+        // forceVector.createForceVector();
+        // forceVector.createForceVector(
+        //   vec1,
+        //   vec2,
+        //   vecColor,
+        //   createAction,
+        //   this.scene
+        // );
         // createStillLine(
         //   new Three.Vector3(-3, -2, 0),
         //   new Three.Vector3(-0.15, -0.15, 0),
@@ -644,12 +652,21 @@ export default {
 
         oldValue = momentVec.z;
 
-        createMomentVector(
+        let moment = new MomentVector(
           new Three.Vector3(-3, -2, 0),
           new Three.Vector3(-3, -2, 2 * momentVec.z),
           0xff064a,
-          false
+          false,
+          this.scene
         );
+
+        moment.createMoment();
+        // createMomentVector(
+        //   new Three.Vector3(-3, -2, 0),
+        //   new Three.Vector3(-3, -2, 2 * momentVec.z),
+        //   0xff064a,
+        //   false
+        // );
       };
 
       // Add action line to Vector Geometry
