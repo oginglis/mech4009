@@ -94,7 +94,7 @@ export default {
       this.camera2 = new Three.PerspectiveCamera(70, 2, 0.01, 50);
       // Position Camera and point it to the origin
       this.camera.position.set(-2, -2, 10);
-      this.camera2.position.set(4, 3, 8);
+      this.camera2.position.set(4, 5, 8);
       this.camera2.lookAt(-2, -1.5, 0);
       // this.camera2.rotateY(0.8);
       // this.camera.lookAt(this.scene.position);
@@ -265,8 +265,11 @@ export default {
         text3.className = "label";
         text3.style.color = "rgb(0,0,0)";
         text3.style.backgroundColor = `#ffffff`;
-        text3.style.padding = `-2px -2px -2px -2px`;
-        text3.style.fontWeight = "900";
+        text3.style.padding = `0px 2px 0px 2px`;
+        text3.style.fontWeight = "700";
+        text3.style.fontStyle = "italic";
+
+        text3.style.fontFamily = "Times New Roman";
         text3.textContent = `r`;
         let label3 = new CSS2DObject(text3);
         label3.name = "angle2";
@@ -280,8 +283,11 @@ export default {
         text3_5.className = "label";
         text3_5.style.color = "rgb(0,0,0)";
         text3_5.style.backgroundColor = `#ffffff`;
-        text3_5.style.padding = `-2px -2px -2px -2px`;
-        text3_5.style.fontWeight = "900";
+        text3_5.style.padding = `0px 2px 0px 2px`;
+        text3_5.style.fontWeight = "700";
+        text3_5.style.fontFamily = "Times New Roman";
+
+        text3_5.style.fontStyle = "italic";
         text3_5.textContent = `r`;
         let label3_5 = new CSS2DObject(text3_5);
         label3_5.name = "angle2";
@@ -293,32 +299,92 @@ export default {
       text8.className = "label";
       text8.style.color = "rgb(0,0,0)";
       // text8.style.backgroundColor = `#ffffff`;
-      text8.style.fontWeight = "900";
+      // text8.style.fontWeight = "900";
       text8.style.padding = `.5px 1px 2px 3px`;
+      text8.style.fontFamily = "Times New Roman";
       text8.textContent = `P`;
       let label8 = new CSS2DObject(text8);
       label8.name = "P";
-      label8.position.set(0, 0, 0);
-      sceneObjects.push(label8.name);
-      // label8.position.set(-2.8, -2.5, 0);
+
+      label8.position.set(-2.7, -2.5, 0);
       this.scene.add(label8);
 
       let text8_5 = document.createElement("div");
       text8_5.className = "label";
       text8_5.style.color = "rgb(0,0,0)";
+      text8_5.style.fontFamily = "Times New Roman";
       // text8_5.style.backgroundColor = `#ffffff`;
-      text8_5.style.fontWeight = "900";
+      // text8_5.style.fontWeight = "900";
+
       text8_5.style.padding = `.5px 1px 2px 3px`;
       text8_5.textContent = `P`;
       let label8_5 = new CSS2DObject(text8_5);
       label8_5.name = "P";
       sceneObjects2.push(label8_5.name);
-      // label8_5.position.set(-2.8, -2.5, 0);
-      label8.position.set(0, 0, 0);
+      label8_5.position.set(-2.6, -2.5, 0);
+      // label8.position.set(0, 0, 0);
       this.scene2.add(label8_5);
 
       label8_5.name = "angle44";
-      sceneObjects2.push(label8_5.name);
+
+      let text8_5ylabel = document.createElement("div");
+      text8_5ylabel.className = "label";
+      text8_5ylabel.style.color = " #d3d3d3";
+      // text8_5ylabel.style.backgroundColor = `#ffffff`;
+      // text8_5ylabel.style.fontWeight = "900";
+      text8_5ylabel.style.padding = `.5px 1px 2px 3px`;
+      text8_5ylabel.style.fontFamily = "Times New Roman";
+      text8_5ylabel.style.fontStyle = "italic";
+      text8_5ylabel.textContent = `y`;
+      let label8_5ylabel = new CSS2DObject(text8_5ylabel);
+      label8_5ylabel.name = "y";
+      sceneObjects2.push(label8_5ylabel.name);
+      label8_5ylabel.position.set(-3, 3.5, 0);
+      // label8.position.set(0, 0, 0);
+      this.scene.add(label8_5ylabel);
+
+      let ytext2 = document.createElement("div");
+      ytext2.className = "label";
+      ytext2.style.color = " #d3d3d3";
+      // ytext2.style.backgroundColor = `#ffffff`;
+      // ytext2.style.fontWeight = "900";
+      ytext2.style.padding = `.5px 1px 2px 3px`;
+      ytext2.style.fontFamily = "Times New Roman";
+      ytext2.textContent = `y`;
+      let ylabel2 = new CSS2DObject(ytext2);
+      ylabel2.name = "2y";
+
+      ylabel2.position.set(-3, 3.5, 0);
+      // label8.position.set(0, 0, 0);
+      this.scene2.add(ylabel2);
+
+      let xtext = document.createElement("div");
+      xtext.className = "label";
+      xtext.style.color = " #d3d3d3";
+      // xtext.style.backgroundColor = `#ffffff`;
+      // xtext.style.fontWeight = "900";
+      xtext.style.padding = `.5px 1px 2px 3px`;
+      xtext.style.fontFamily = "Times New Roman";
+      xtext.textContent = `x`;
+      let xlabel = new CSS2DObject(xtext);
+      xlabel.name = "xy";
+      xlabel.position.set(2.3, -1.9, 0);
+      // label8.position.set(0, 0, 0);
+      this.scene.add(xlabel);
+
+      let xtext2 = document.createElement("div");
+      xtext2.className = "label";
+      xtext2.style.color = " #d3d3d3";
+      // xtext2.style.backgroundColor = `#ffffff`;
+      // xtext2.style.fontWeight = "900";
+      xtext2.style.padding = `.5px 1px 2px 3px`;
+      xtext2.style.fontFamily = "Times New Roman";
+      xtext2.textContent = `x`;
+      let xlabel2 = new CSS2DObject(xtext2);
+      xlabel2.name = "x2y";
+      xlabel2.position.set(2.3, -1.9, 0);
+      // label8.position.set(0, 0, 0);
+      this.scene2.add(xlabel2);
 
       const createMomentVector = (
         vecBottom,
@@ -416,12 +482,14 @@ export default {
         let text5 = document.createElement("div");
         text5.className = "label";
         text5.style.color = "rgb(0,0,0)";
+        text5.style.fontFamily = "Times New Roman";
+        text5.style.fontStyle = "italic";
         text5.textContent = `M`;
         text5.style.backgroundColor = `#ffffff`;
         text5.style.borderRadius = "25%";
-        text5.style.padding = `2px 2px 2px 2px`;
+        text5.style.padding = `0px 2px 0px 2px`;
         text5.fontWeight = `bold`;
-        text5.style.fontWeight = "900";
+        text5.style.fontWeight = "600";
         text5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
         let label5 = new CSS2DObject(text5);
         label5.name = "M";
@@ -433,11 +501,13 @@ export default {
         text5_5.className = "label";
         text5_5.style.color = "rgb(0,0,0)";
         text5_5.textContent = `M`;
+        text5_5.style.fontFamily = "Times New Roman";
+        text5_5.style.fontStyle = "italic";
         text5_5.style.backgroundColor = `#ffffff`;
         text5_5.style.borderRadius = "25%";
-        text5_5.style.padding = `2px 2px 2px 2px`;
+        text5_5.style.padding = `0px 2px 0px 2px`;
         text5_5.fontWeight = `bold`;
-        text5_5.style.fontWeight = "900";
+        text5_5.style.fontWeight = "600";
         text5_5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
         let label5_5 = new CSS2DObject(text5_5);
         label5_5.name = "M";
@@ -540,7 +610,9 @@ export default {
         text4.textContent = `F`;
         text4.style.backgroundColor = `#ffffff`;
         text4.style.padding = `3px 2px 3px 2px`;
-        text4.style.fontWeight = "900";
+        text4.style.fontFamily = "Times New Roman";
+        text4.style.fontStyle = "italic";
+        text4.style.fontWeight = "700";
         let label4 = new CSS2DObject(text4);
         label4.name = "F";
         sceneObjects.push(label4.name);
@@ -552,6 +624,7 @@ export default {
         text4_5.className = "label";
         text4_5.style.color = "rgb(0,0,0)";
         text4_5.textContent = `F`;
+        text4_5.style.fontFamily = "Times New Roman";
         text4_5.style.backgroundColor = `#ffffff`;
         text4_5.style.padding = `3px 2px 3px 2px`;
         text4_5.style.fontWeight = "900";
@@ -613,11 +686,27 @@ export default {
             // group.translate(1, 1, 0);
 
             self.scene.add(group);
+
+            // point - the point of rotation (THREE.Vector3)
+            let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
+            // axis - the axis of rotation (normalized THREE.Vector3)
+            let svgAxis = new Three.Vector3(0, 1, 0).normalize();
+            // theta - radian value of rotation
+            let theta = Math.PI;
+            // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+            let pointIsWorld = true;
+
+            rotateAboutPoint(
+              group,
+              rotateSVGaxis,
+              svgAxis,
+              theta,
+              pointIsWorld
+            );
           },
+
           // called when loading is in progresses
-          function (xhr) {
-            console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-          },
+          function () {},
           // called when loading has errors
           function (error) {
             console.log("An error happened");
@@ -625,9 +714,8 @@ export default {
           }
         );
       };
-      console.log("Load SVG ABOUT TO BE CALLED");
+
       loadSVG();
-      console.log("Load SVG FINISHED");
 
       const createAngleArcGeometry = () => {
         const geometryTorus = new Three.TorusGeometry(
@@ -649,6 +737,7 @@ export default {
         let text2 = document.createElement("div");
         text2.className = "label";
         text2.style.color = "rgb(0,0,0)";
+        text2.style.fontFamily = "Times New Roman";
         text2.textContent = `${Math.round(
           ((this.length + 2.158638) * 180) / Math.PI
         )}°`;
@@ -666,6 +755,7 @@ export default {
         let text2_5 = document.createElement("div");
         text2_5.className = "label";
         text2_5.style.color = "rgb(0,0,0)";
+        text2_5.style.fontFamily = "Times New Roman";
         text2_5.textContent = `${Math.round(
           ((this.length + 2.158638) * 180) / Math.PI
         )}°`;
@@ -739,45 +829,15 @@ export default {
             pointIsWorld
           );
 
-          rotateAboutPoint(
-            arrowsSVG,
-            rotateSVGaxis,
-            new Three.Vector3(0, 0, 1).normalize(),
-            -theta,
-            pointIsWorld
-          );
+          // rotateAboutPoint(
+          //   arrowsSVG,
+          //   rotateSVGaxis,
+          //   new Three.Vector3(0, 0, 1).normalize(),
+          //   -theta,
+          //   pointIsWorld
+          // );
         }
-        // let arrowsSVG2 = this.scene.getObjectByName("arrowss");
 
-        // point - the point of rotation (THREE.Vector3)
-        // arrowsSVG2.rotateZ(0.01);
-        // let rotateSVGaxis2 = new Three.Vector3(-3, -2, 0);
-        // // axis - the axis of rotation (normalized THREE.Vector3)
-        // let svgAxis2 = new Three.Vector3(0, 0, 1).normalize();
-        // // theta - radian value of rotation
-
-        // // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
-        // let pointIsWorld2 = false;
-        // if (oldValue > 0) {
-        //   theta2 = 0.05;
-        //   rotateAboutPoint(
-        //     arrowsSVG2,
-        //     rotateSVGaxis2,
-        //     svgAxis2,
-        //     theta2,
-        //     pointIsWorld2
-        //   );
-        // } else {
-        //   theta2 = 0.05;
-        //   rotateAboutPoint(
-        //     arrowsSVG2,
-        //     rotateSVGaxis2,
-        //     svgAxis2,
-        //     theta2,
-        //     pointIsWorld2
-        //   );
-        // }
-        // obj - your object (THREE.Object3D or derived)
         oldValue = momentVec.z;
 
         createMomentVector(
@@ -786,26 +846,6 @@ export default {
           0xff064a,
           false
         );
-        // let selectArrows = this.scene.getObjectByName("arrowss");
-        // console.log(momentVec.z);
-        // if (momentVec.z > 0 && !finishedSpin) {
-        //   finishedSpin = true;
-        // } else if (momentVec.z < 0 && finishedSpin) {
-        //   selectArrows.rotateY(3.14159);
-        //   selectedObject.position.set = (2, 2, 2);
-        //   finishedSpin = false;
-        // }
-
-        // const arrowHelper = new Three.ArrowHelper(
-        //   dir,
-        //   origin,
-        //   this.length,
-        //   hex
-        // );
-        // arrowHelper.name = "first arrow";
-        // this.scene.add(arrowHelper);
-        // let selectedObject2 = this.scene.getObjectByName("Ollie thick line");
-        // this.scene.remove(selectedObject2);
       };
 
       // Add action line to Vector Geometry
