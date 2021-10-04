@@ -93,9 +93,10 @@ export default {
       this.camera = new Three.PerspectiveCamera(70, 2, 0.01, 50);
       this.camera2 = new Three.PerspectiveCamera(70, 2, 0.01, 50);
       // Position Camera and point it to the origin
-      this.camera.position.set(-2, -1, 10);
-      this.camera2.position.set(6, -1, 10);
-      this.camera2.rotateY(0.8);
+      this.camera.position.set(-2, -2, 10);
+      this.camera2.position.set(4, 3, 8);
+      this.camera2.lookAt(-2, -1.5, 0);
+      // this.camera2.rotateY(0.8);
       // this.camera.lookAt(this.scene.position);
 
       // Arrow Helper
@@ -116,9 +117,10 @@ export default {
       this.renderer.setSize(container.clientWidth, container.clientHeight);
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
+      this.renderer.sortObjects = true;
 
       this.labelRenderer = new CSS2DRenderer();
-      this.labelRenderer.setSize(450, 500);
+      this.labelRenderer.setSize(450, 400);
       this.labelRenderer.domElement.style.position = "absolute";
       this.labelRenderer.domElement.style.top = "0px";
       this.labelRenderer.domElement.style.left = "0px";
@@ -126,7 +128,7 @@ export default {
       container.appendChild(this.labelRenderer.domElement);
 
       this.labelRenderer2 = new CSS2DRenderer();
-      this.labelRenderer2.setSize(450, 500);
+      this.labelRenderer2.setSize(450, 400);
       this.labelRenderer2.domElement.style.position = "absolute";
       this.labelRenderer2.domElement.style.top = "0px";
       this.labelRenderer2.domElement.style.left = "450px";
@@ -134,7 +136,7 @@ export default {
       container.appendChild(this.labelRenderer2.domElement);
 
       // Create a grid
-      this.gridHelper = new Three.GridHelper(18, 18, 0x444444, 0xd3d3d3);
+      this.gridHelper = new Three.GridHelper(10, 10, 0x444444, 0xd3d3d3);
       this.gridHelper.rotateX((90 * Math.PI) / 180);
       this.gridHelper.position.set(-3, -2, 0);
       this.scene.add(this.gridHelper);
@@ -151,16 +153,18 @@ export default {
         // if (pointIsWorld) {
         //   obj.parent.localToWorld(obj.position); // compensate for world coordinate
         // }
+        if (obj) {
+          obj.position.sub(point); // remove the offset
+          obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
+          obj.position.add(point); // re-add the offset
 
-        obj.position.sub(point); // remove the offset
-        obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
-        obj.position.add(point); // re-add the offset
+          // if (pointIsWorld) {
+          //   obj.parent.worldToLocal(obj.position); // undo world coordinates compensation
+          // }
 
-        // if (pointIsWorld) {
-        //   obj.parent.worldToLocal(obj.position); // undo world coordinates compensation
-        // }
-
-        obj.rotateOnAxis(axis, theta); // rotate the OBJECT
+          obj.rotateOnAxis(axis, theta);
+        }
+        // rotate the OBJECT
       };
 
       const resizeCanvasToDisplaySize = () => {
@@ -261,7 +265,7 @@ export default {
         text3.className = "label";
         text3.style.color = "rgb(0,0,0)";
         text3.style.backgroundColor = `#ffffff`;
-        text3.style.padding = `4px 3px 4px 3px`;
+        text3.style.padding = `-2px -2px -2px -2px`;
         text3.style.fontWeight = "900";
         text3.textContent = `r`;
         let label3 = new CSS2DObject(text3);
@@ -276,7 +280,7 @@ export default {
         text3_5.className = "label";
         text3_5.style.color = "rgb(0,0,0)";
         text3_5.style.backgroundColor = `#ffffff`;
-        text3_5.style.padding = `4px 3px 4px 3px`;
+        text3_5.style.padding = `-2px -2px -2px -2px`;
         text3_5.style.fontWeight = "900";
         text3_5.textContent = `r`;
         let label3_5 = new CSS2DObject(text3_5);
@@ -294,8 +298,9 @@ export default {
       text8.textContent = `P`;
       let label8 = new CSS2DObject(text8);
       label8.name = "P";
+      label8.position.set(0, 0, 0);
       sceneObjects.push(label8.name);
-      label8.position.set(-2.8, -2.5, 0);
+      // label8.position.set(-2.8, -2.5, 0);
       this.scene.add(label8);
 
       let text8_5 = document.createElement("div");
@@ -307,9 +312,11 @@ export default {
       text8_5.textContent = `P`;
       let label8_5 = new CSS2DObject(text8_5);
       label8_5.name = "P";
-      sceneObjects.push(label8_5.name);
-      label8_5.position.set(-2.8, -2.5, 0);
+      sceneObjects2.push(label8_5.name);
+      // label8_5.position.set(-2.8, -2.5, 0);
+      label8.position.set(0, 0, 0);
       this.scene2.add(label8_5);
+
       label8_5.name = "angle44";
       sceneObjects2.push(label8_5.name);
 
@@ -595,7 +602,7 @@ export default {
                 const geometry = new Three.ShapeGeometry(shape);
 
                 const mesh = new Three.Mesh(geometry, material);
-
+                mesh.renderOrder = 999;
                 group.add(mesh);
               }
             }
@@ -618,7 +625,9 @@ export default {
           }
         );
       };
+      console.log("Load SVG ABOUT TO BE CALLED");
       loadSVG();
+      console.log("Load SVG FINISHED");
 
       const createAngleArcGeometry = () => {
         const geometryTorus = new Three.TorusGeometry(
@@ -729,6 +738,14 @@ export default {
             theta,
             pointIsWorld
           );
+
+          rotateAboutPoint(
+            arrowsSVG,
+            rotateSVGaxis,
+            new Three.Vector3(0, 0, 1).normalize(),
+            -theta,
+            pointIsWorld
+          );
         }
         // let arrowsSVG2 = this.scene.getObjectByName("arrowss");
 
@@ -765,7 +782,7 @@ export default {
 
         createMomentVector(
           new Three.Vector3(-3, -2, 0),
-          new Three.Vector3(-3, -2, 2 * momentVec.z),
+          new Three.Vector3(-3, -2, 1.8 * momentVec.z),
           0xff064a,
           false
         );
@@ -801,21 +818,21 @@ export default {
       this.updateSlider();
 
       this.renderer.setScissorTest(true);
-      this.renderer.setViewport(0, 0, 450, 500);
-      this.renderer.setScissor(0, 0, 450, 500);
+      this.renderer.setViewport(0, 0, 450, 400);
+      this.renderer.setScissor(0, 0, 450, 400);
       this.renderer.render(this.scene, this.camera);
-      this.camera.aspect = 450 / 500;
+      this.camera.aspect = 450 / 400;
       this.camera.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera);
 
       this.labelRenderer.render(this.scene, this.camera);
 
       this.renderer.setScissorTest(true);
-      this.renderer.setViewport(450, 0, 450, 500);
-      this.renderer.setScissor(450, 0, 450, 500);
+      this.renderer.setViewport(450, 0, 450, 400);
+      this.renderer.setScissor(450, 0, 450, 400);
       this.renderer.clearColor(255, 255, 0);
       this.renderer.render(this.scene, this.camera2);
-      this.camera2.aspect = 450 / 500;
+      this.camera2.aspect = 450 / 400;
       this.camera2.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera2);
 
@@ -854,7 +871,7 @@ figcaption {
   margin-top: 2rem;
   flex: 1;
   width: 100%;
-  height: 500px;
+  height: 400px;
 }
 
 .viz-controls-wrap {
