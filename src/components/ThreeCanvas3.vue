@@ -938,6 +938,7 @@ figcaption {
   margin-top: 2rem;
   flex: 1;
   width: 100%;
+  overflow: scroll;
   height: 400px;
 }
 
@@ -963,7 +964,7 @@ figcaption {
 }
 
 .viz-wrap {
-  width: 900px;
+  max-width: 900px;
 
   background-color: #ebeeee;
   padding: 1.5rem;
