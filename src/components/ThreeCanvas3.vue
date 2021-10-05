@@ -24,7 +24,7 @@
         :min="-Math.PI"
         :max="Math.PI + 0.5"
         :format="formatToRadians"
-        :step="-1"
+        :step="0.1"
       />
     </div>
 
@@ -40,6 +40,12 @@
       and our curled fingers will point in the direction of rotation from the
       moment).
     </figcaption>
+    <p class="disclaimer">
+      Words from
+      http://mechanicsmap.psu.edu/websites/3_equilibrium_rigid_body/3-4_moment_vector/momentvector.html
+      <br />
+      Image from https://en.wikipedia.org/wiki/Right-hand_rule
+    </p>
   </div>
 </template>
 
@@ -971,5 +977,11 @@ figcaption {
 }
 .biggerlate {
   font-size: 3rem;
+}
+
+.disclaimer {
+  margin-top: 3rem;
+  opacity: 0.5;
+  font-size: 0.5rem;
 }
 </style>
