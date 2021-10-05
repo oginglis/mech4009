@@ -29,7 +29,7 @@
     </div>
 
     <div id="container"></div>
-
+    <img src="@/assets/rhr.png" class="newimages" />
     <figcaption>
       The result of <math-jax latex="$$\vec{r}$$"></math-jax> cross
       <math-jax latex="$$\vec{F}$$"></math-jax> will give us the moment vector
@@ -61,7 +61,7 @@ export default {
 
   data() {
     return {
-      length: 0,
+      length: -0.4,
 
       formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",
     };
@@ -774,78 +774,108 @@ export default {
         sceneObjects2.push(label2_5.name);
       };
       createAngleArcGeometry();
+      let vec11 = new Three.Vector3(0, 1, 0);
+      let vec22 = new Three.Vector3(0, 3, 0);
+      let vecColor3 = 0x0acbee;
+      createVectorGeometry(vec11, vec22, vecColor3, true);
       // Draw Force Vector
-      let vec1 = new Three.Vector3(0, this.length, 0);
-      let vec2 = new Three.Vector3(0, 0, 0);
-      let vecColor = 0x0acbee;
+      // let vec1 = new Three.Vector3(0, this.length, 0);
+      // let vec2 = new Three.Vector3(0, 0, 0);
+      // let vecColor = 0x0acbee;
       let createAction = true;
-      createVectorGeometry(vec1, vec2, vecColor, false);
+      // createVectorGeometry(vec1, vec2, vecColor, true);
 
       let oldValue = -1;
       // let finishedSpin = false;
       // let theta2 = 0.01;
-      this.updateSlider = () => {
-        let selectedObject = this.scene.getObjectByName("first arrow");
-        this.scene.remove(selectedObject);
+      let oldSlider = this.length;
 
-        removeObjectFromScene(sceneObjects);
-        removeObjectFromScene2(sceneObjects2);
-        sceneObjects = [];
-        sceneObjects2 = [];
-        let vec1 = new Three.Vector3(0, 1, 0);
-        let vec2 = new Three.Vector3(0, 3, 0);
-        let vecColor = 0x0acbee;
-        createVectorGeometry(vec1, vec2, vecColor, createAction);
-        createStillLine(
-          new Three.Vector3(-3, -2, 0),
-          new Three.Vector3(-0.15, -0.15, 0),
-          0x000000,
-          false
-        );
-        createAngleArcGeometry();
+      let rVec2 = new Three.Vector3(3, 2, 0);
+      let momentVec2 = rVec2.cross(fVector);
+
+      createMomentVector(
+        new Three.Vector3(-3, -2, 0),
+        new Three.Vector3(-3, -2, 1.8 * momentVec2.z),
+        0xff064a,
+        false
+      );
+
+      createStillLine(
+        new Three.Vector3(-3, -2, 0),
+        new Three.Vector3(-0.15, -0.15, 0),
+        0x000000,
+        false
+      );
+
+      this.updateSlider = () => {
+        if (oldSlider !== this.length) {
+          console.log(oldSlider, this.length);
+          removeObjectFromScene(sceneObjects);
+          removeObjectFromScene2(sceneObjects2);
+          sceneObjects = [];
+          sceneObjects2 = [];
+          let vec1 = new Three.Vector3(0, 1, 0);
+          let vec2 = new Three.Vector3(0, 3, 0);
+          let vecColor = 0x0acbee;
+          createVectorGeometry(vec1, vec2, vecColor, createAction);
+          createStillLine(
+            new Three.Vector3(-3, -2, 0),
+            new Three.Vector3(-0.15, -0.15, 0),
+            0x000000,
+            false
+          );
+        }
 
         let rVec = new Three.Vector3(3, 2, 0);
         let momentVec = rVec.cross(fVector);
 
-        if (
-          (oldValue >= 0 && momentVec.z <= 0) ||
-          (oldValue <= 0 && momentVec.z >= 0)
-        ) {
-          let arrowsSVG = this.scene.getObjectByName("arrowss");
-          // point - the point of rotation (THREE.Vector3)
-          let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
-          // axis - the axis of rotation (normalized THREE.Vector3)
-          let svgAxis = new Three.Vector3(0, 1, 0).normalize();
-          // theta - radian value of rotation
-          let theta = Math.PI;
-          // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
-          let pointIsWorld = true;
-
-          rotateAboutPoint(
-            arrowsSVG,
-            rotateSVGaxis,
-            svgAxis,
-            theta,
-            pointIsWorld
-          );
-
-          // rotateAboutPoint(
-          //   arrowsSVG,
-          //   rotateSVGaxis,
-          //   new Three.Vector3(0, 0, 1).normalize(),
-          //   -theta,
-          //   pointIsWorld
-          // );
+        if (oldSlider !== this.length) {
+          console.log(momentVec.z, oldValue);
+          console.log("New Geo");
+          createAngleArcGeometry();
         }
+        if (oldSlider !== this.length) {
+          if (
+            (oldValue >= 0 && momentVec.z <= 0) ||
+            (oldValue <= 0 && momentVec.z >= 0)
+          ) {
+            let arrowsSVG = this.scene.getObjectByName("arrowss");
+            // point - the point of rotation (THREE.Vector3)
+            let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
+            // axis - the axis of rotation (normalized THREE.Vector3)
+            let svgAxis = new Three.Vector3(0, 1, 0).normalize();
+            // theta - radian value of rotation
+            let theta = Math.PI;
+            // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+            let pointIsWorld = true;
 
+            rotateAboutPoint(
+              arrowsSVG,
+              rotateSVGaxis,
+              svgAxis,
+              theta,
+              pointIsWorld
+            );
+
+            // rotateAboutPoint(
+            //   arrowsSVG,
+            //   rotateSVGaxis,
+            //   new Three.Vector3(0, 0, 1).normalize(),
+            //   -theta,
+            //   pointIsWorld
+            // );
+          }
+        }
         oldValue = momentVec.z;
-
-        createMomentVector(
-          new Three.Vector3(-3, -2, 0),
-          new Three.Vector3(-3, -2, 1.8 * momentVec.z),
-          0xff064a,
-          false
-        );
+        if (oldSlider !== this.length) {
+          createMomentVector(
+            new Three.Vector3(-3, -2, 0),
+            new Three.Vector3(-3, -2, 1.8 * momentVec.z),
+            0xff064a,
+            false
+          );
+        }
+        oldSlider = this.length;
       };
 
       // Add action line to Vector Geometry
@@ -912,6 +942,11 @@ figcaption {
   flex: 1;
   width: 100%;
   height: 400px;
+}
+
+.newimages {
+  width: 200px;
+  margin-top: 2rem;
 }
 
 .viz-controls-wrap {

@@ -51,6 +51,7 @@ import {
   CSS2DRenderer,
   // CSS2DObject,
 } from "three/examples/jsm/renderers/CSS2DRenderer.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export default {
   name: "ThreeCanvas2",
@@ -121,6 +122,17 @@ export default {
       this.gridHelper.rotateX((90 * Math.PI) / 180);
       this.gridHelper.position.set(-3, -2, 0);
       this.scene.add(this.gridHelper);
+
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.maxDistance = 1.5;
+      this.controls.minDistance = 1.3;
+      this.controls.minAzimuthAngle = 3;
+      this.controls.maxAzimuthAngle = 2;
+      this.controls.target.set(0, 0, 0);
+      this.controls.enablePan = false;
+      this.controls.autoRotate = true;
+      this.controls.autoRotateSpeed = 0.1;
+      this.controls.update();
 
       // Create Labels Here
 
