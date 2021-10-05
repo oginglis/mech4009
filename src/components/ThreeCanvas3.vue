@@ -809,7 +809,6 @@ export default {
 
       this.updateSlider = () => {
         if (oldSlider !== this.length) {
-          console.log(oldSlider, this.length);
           removeObjectFromScene(sceneObjects);
           removeObjectFromScene2(sceneObjects2);
           sceneObjects = [];
@@ -830,8 +829,6 @@ export default {
         let momentVec = rVec.cross(fVector);
 
         if (oldSlider !== this.length) {
-          console.log(momentVec.z, oldValue);
-          console.log("New Geo");
           createAngleArcGeometry();
         }
         if (oldSlider !== this.length) {
@@ -970,7 +967,6 @@ figcaption {
 
   background-color: #ebeeee;
   padding: 1.5rem;
-  margin-top: 3rem;
 }
 .biggerlate {
   font-size: 3rem;
