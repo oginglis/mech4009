@@ -24,7 +24,7 @@
         :min="-Math.PI"
         :max="Math.PI + 0.5"
         :format="formatToRadians"
-        :step="0.4"
+        :step="0.1"
       />
     </div>
 
