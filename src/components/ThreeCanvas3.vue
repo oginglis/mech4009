@@ -24,7 +24,7 @@
         :min="-Math.PI"
         :max="Math.PI + 0.5"
         :format="formatToRadians"
-        :step="0.1"
+        :step="0.5"
       />
     </div>
 
@@ -227,7 +227,7 @@ export default {
         const sphere = new Three.Mesh(geometrySphere, materialSphere);
         sphere.position.set(vecBottom.x, vecBottom.y, 0);
         this.scene.add(sphere);
-
+        line.renderOrder = 1005;
         this.scene.add(line);
         sceneObjects.push(line.name);
 
@@ -270,10 +270,12 @@ export default {
         let text3 = document.createElement("div");
         text3.className = "label";
         text3.style.color = "rgb(0,0,0)";
-        text3.style.backgroundColor = `#ffffff`;
+
         text3.style.padding = `0px 2px 0px 2px`;
         text3.style.fontWeight = "700";
+        text3.style.color = "#85CB33";
         text3.style.fontStyle = "italic";
+        text3.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
 
         text3.style.fontFamily = "Times New Roman";
         text3.textContent = `r`;
@@ -291,8 +293,9 @@ export default {
         text3_5.style.backgroundColor = `#ffffff`;
         text3_5.style.padding = `0px 2px 0px 2px`;
         text3_5.style.fontWeight = "700";
+        text3_5.style.color = "#85CB33";
         text3_5.style.fontFamily = "Times New Roman";
-
+        text3_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
         text3_5.style.fontStyle = "italic";
         text3_5.textContent = `r`;
         let label3_5 = new CSS2DObject(text3_5);
@@ -491,7 +494,8 @@ export default {
         text5.style.fontFamily = "Times New Roman";
         text5.style.fontStyle = "italic";
         text5.textContent = `M`;
-        text5.style.backgroundColor = `#ffffff`;
+        text5.style.color = "hsl(344, 100%, 51%)";
+        text5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
         text5.style.borderRadius = "25%";
         text5.style.padding = `0px 2px 0px 2px`;
         text5.fontWeight = `bold`;
@@ -507,9 +511,11 @@ export default {
         text5_5.className = "label";
         text5_5.style.color = "rgb(0,0,0)";
         text5_5.textContent = `M`;
+        text5_5.style.color = "hsl(344, 100%, 51%)";
         text5_5.style.fontFamily = "Times New Roman";
         text5_5.style.fontStyle = "italic";
-        text5_5.style.backgroundColor = `#ffffff`;
+
+        text5_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
         text5_5.style.borderRadius = "25%";
         text5_5.style.padding = `0px 2px 0px 2px`;
         text5_5.fontWeight = `bold`;
@@ -542,7 +548,9 @@ export default {
           30, //Roundness of Tube
           true //closed
         );
+
         let line = new Three.Line(tubeGeometry, lineMaterial);
+        line.renderOrder = 1000;
         line.name = "Ollie thick line";
         // line.position.set(vecBottom);
         line.rotateZ(-this.length);
@@ -572,6 +580,7 @@ export default {
           dashedline.computeLineDistances();
           dashedline.rotateZ(-this.length);
           dashedline.name = "dashed-line";
+          dashedline.renderOrder = 1001;
           this.scene.add(dashedline);
           sceneObjects.push(dashedline.name);
         }
@@ -614,8 +623,9 @@ export default {
         text4.className = "label";
         text4.style.color = "rgb(0,0,0)";
         text4.textContent = `F`;
-        text4.style.backgroundColor = `#ffffff`;
-        text4.style.padding = `3px 2px 3px 2px`;
+        text4.style.color = "hsl(189, 92%, 49%)";
+        text4.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // text4.style.padding = `3px 2px 3px 2px`;
         text4.style.fontFamily = "Times New Roman";
         text4.style.fontStyle = "italic";
         text4.style.fontWeight = "700";
@@ -630,9 +640,10 @@ export default {
         text4_5.className = "label";
         text4_5.style.color = "rgb(0,0,0)";
         text4_5.textContent = `F`;
+        text4_5.style.color = "hsl(189, 92%, 49%)";
         text4_5.style.fontFamily = "Times New Roman";
-        text4_5.style.backgroundColor = `#ffffff`;
-        text4_5.style.padding = `3px 2px 3px 2px`;
+        text4_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // text4_5.style.padding = `3px 2px 3px 2px`;
         text4_5.style.fontWeight = "900";
         let label4_5 = new CSS2DObject(text4_5);
         label4_5.name = "F";
@@ -645,6 +656,7 @@ export default {
         // cone.position.set((0, 1, 1));
         cone.name = "arrow head";
         // cone.rotateZ(-this.length);
+        cone.renderOrder = 1002;
         this.scene.add(cone);
 
         sceneObjects.push(cone.name);
@@ -669,7 +681,7 @@ export default {
               const path = paths[i];
 
               const material = new Three.MeshBasicMaterial({
-                color: 0x808080,
+                color: 0xff0548,
                 side: Three.DoubleSide,
                 depthWrite: false,
               });
@@ -809,7 +821,7 @@ export default {
       createStillLine(
         new Three.Vector3(-3, -2, 0),
         new Three.Vector3(-0.15, -0.15, 0),
-        0x000000,
+        0x85cb33,
         false
       );
 
@@ -826,7 +838,7 @@ export default {
           createStillLine(
             new Three.Vector3(-3, -2, 0),
             new Three.Vector3(-0.15, -0.15, 0),
-            0x000000,
+            0x85cb33,
             false
           );
         }
