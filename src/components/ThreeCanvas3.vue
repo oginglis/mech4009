@@ -51,6 +51,7 @@
 
 <script >
 import * as Three from "three";
+
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // import { GUI } from "three/examples/jsm/libs/dat.gui.module";
 
@@ -72,7 +73,7 @@ export default {
       formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",
     };
   },
-
+  inject: ["mq"],
   components: {
     Slider,
   },
@@ -90,6 +91,8 @@ export default {
     init: function () {
       // Find Container To Mount To
       let container = document.getElementById("container");
+      this.width = container.clientWidth;
+      this.height = container.clientHeight;
       // Create a scene
       this.scene = new Three.Scene();
       this.scene2 = new Three.Scene();
@@ -104,6 +107,16 @@ export default {
       this.camera2.lookAt(-2, -1.5, 0);
       // this.camera2.rotateY(0.8);
       // this.camera.lookAt(this.scene.position);
+      this.ollieViewports = [
+        { view: 1, x: 0, y: 0, width: 400, height: 400 },
+        {
+          view: 2,
+          x: 400,
+          y: 0,
+          width: 400,
+          height: 400,
+        },
+      ];
 
       // Arrow Helper
       const dir = new Three.Vector3(0, 1, 0);
@@ -126,18 +139,18 @@ export default {
       this.renderer.sortObjects = true;
 
       this.labelRenderer = new CSS2DRenderer();
-      this.labelRenderer.setSize(450, 400);
+      this.labelRenderer.setSize(400, 400);
       this.labelRenderer.domElement.style.position = "absolute";
-      this.labelRenderer.domElement.style.top = "0px";
+      this.labelRenderer.domElement.style.bottom = "0px";
       this.labelRenderer.domElement.style.left = "0px";
       this.labelRenderer.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer.domElement);
 
       this.labelRenderer2 = new CSS2DRenderer();
-      this.labelRenderer2.setSize(450, 400);
+      this.labelRenderer2.setSize(400, 400);
       this.labelRenderer2.domElement.style.position = "absolute";
-      this.labelRenderer2.domElement.style.top = "0px";
-      this.labelRenderer2.domElement.style.left = "450px";
+      this.labelRenderer2.domElement.style.bottom = "0px";
+      this.labelRenderer2.domElement.style.left = "400px";
       this.labelRenderer2.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer2.domElement);
 
@@ -174,15 +187,29 @@ export default {
       };
 
       const resizeCanvasToDisplaySize = () => {
-        const canvas = this.renderer.domElement;
+        console.log("canvas size changed");
+        // const canvas = this.renderer.domElement;
         // look up the size the canvas is being displayed
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
+        this.width = container.clientWidth;
+        this.height = container.clientHeight;
+        console.log("width", this.width, "height", this.height);
+
+        if (this.mq.current === "md") {
+          this.ollieViewports[0].x = 0;
+          this.ollieViewports[0].y = 0;
+          this.ollieViewports[1].x = 400;
+          this.ollieViewports[1].y = 0;
+        } else {
+          this.ollieViewports[0].x = 0;
+          this.ollieViewports[0].y = 400;
+          this.ollieViewports[1].x = 0;
+          this.ollieViewports[1].y = 0;
+        }
 
         // you must pass false here or three.js sadly fights the browser
-        this.renderer.setSize(width, height, false);
-        this.camera.aspect = width / height;
-        this.camera2.aspect = width / height;
+        this.renderer.setSize(this.width, this.height);
+        this.camera.aspect = this.width / this.height;
+        this.camera2.aspect = this.width / this.height;
         this.labelRenderer.render(this.scene, this.camera, false);
         this.labelRenderer.render(this.scene2, this.camera2, false);
         this.camera.updateProjectionMatrix();
@@ -190,8 +217,10 @@ export default {
 
         // update any render target sizes here
       };
+
+      resizeCanvasToDisplaySize();
       const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
-      resizeObserver.observe(this.renderer.domElement, { box: "content-box" });
+      resizeObserver.observe(container, { box: "content-box" });
 
       const removeObjectFromScene = (objectName) => {
         objectName.forEach((object) => {
@@ -903,21 +932,43 @@ export default {
       this.updateSlider();
 
       this.renderer.setScissorTest(true);
-      this.renderer.setViewport(0, 0, 450, 400);
-      this.renderer.setScissor(0, 0, 450, 400);
+      let firstView = this.ollieViewports[0];
+      this.renderer.setViewport(
+        firstView.x,
+        firstView.y,
+        firstView.width,
+        firstView.height
+      );
+      this.renderer.setScissor(
+        firstView.x,
+        firstView.y,
+        firstView.width,
+        firstView.height
+      );
       this.renderer.render(this.scene, this.camera);
-      this.camera.aspect = 450 / 400;
+      this.camera.aspect = firstView.width / firstView.height;
       this.camera.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera);
 
       this.labelRenderer.render(this.scene, this.camera);
 
       this.renderer.setScissorTest(true);
-      this.renderer.setViewport(450, 0, 450, 400);
-      this.renderer.setScissor(450, 0, 450, 400);
+      let secondView = this.ollieViewports[1];
+      this.renderer.setViewport(
+        secondView.x,
+        secondView.y,
+        secondView.width,
+        400
+      );
+      this.renderer.setScissor(
+        secondView.x,
+        secondView.y,
+        secondView.width,
+        400
+      );
       this.renderer.clearColor(255, 255, 0);
       this.renderer.render(this.scene, this.camera2);
-      this.camera2.aspect = 450 / 400;
+      this.camera2.aspect = secondView.width / secondView.height;
       this.camera2.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera2);
 
@@ -955,9 +1006,17 @@ figcaption {
   position: relative;
   margin-top: 2rem;
   flex: 1;
-  width: 100%;
+  width: 800px;
   overflow: scroll;
   height: 400px;
+}
+
+@media only screen and (max-width: 768px) {
+  #container {
+    height: 800px;
+    width: 400px;
+    background-color: pink;
+  }
 }
 
 .newimages {
