@@ -29,7 +29,7 @@
     </div>
 
     <div id="container"></div>
-    <img src="@/assets/rhr.png" class="newimages" />
+    <img src="@/assets/rhr.png" class="newimages" width="200px" height="auto" />
     <figcaption>
       The result of <math-jax latex="$$\vec{r}$$"></math-jax> cross
       <math-jax latex="$$\vec{F}$$"></math-jax> will give us the moment vector
@@ -1061,6 +1061,7 @@ figcaption {
 
 .viz-wrap {
   max-width: 900px;
+  width: 100vw;
 
   background-color: #ebeeee;
   padding: 1.5rem;
