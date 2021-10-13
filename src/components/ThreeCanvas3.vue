@@ -108,13 +108,13 @@ export default {
       // this.camera2.rotateY(0.8);
       // this.camera.lookAt(this.scene.position);
       this.ollieViewports = [
-        { view: 1, x: 0, y: 0, width: 400, height: 400 },
+        { view: 1, x: 0, y: 0, width: this.width / 2, height: this.height / 2 },
         {
           view: 2,
-          x: 400,
+          x: this.width / 2,
           y: 0,
-          width: 400,
-          height: 400,
+          width: this.width / 2,
+          height: this.height / 2,
         },
       ];
 
@@ -139,7 +139,7 @@ export default {
       this.renderer.sortObjects = true;
 
       this.labelRenderer = new CSS2DRenderer();
-      this.labelRenderer.setSize(400, 400);
+      this.labelRenderer.setSize(this.width / 2, this.height);
       this.labelRenderer.domElement.style.position = "absolute";
       this.labelRenderer.domElement.style.bottom = "0px";
       this.labelRenderer.domElement.style.left = "0px";
@@ -147,10 +147,10 @@ export default {
       container.appendChild(this.labelRenderer.domElement);
 
       this.labelRenderer2 = new CSS2DRenderer();
-      this.labelRenderer2.setSize(400, 400);
+      this.labelRenderer2.setSize(this.width / 2, this.height);
       this.labelRenderer2.domElement.style.position = "absolute";
       this.labelRenderer2.domElement.style.bottom = "0px";
-      this.labelRenderer2.domElement.style.left = "400px";
+      this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
       this.labelRenderer2.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer2.domElement);
 
@@ -193,23 +193,41 @@ export default {
         this.width = container.clientWidth;
         this.height = container.clientHeight;
         console.log("width", this.width, "height", this.height);
-
-        if (this.mq.current === "md") {
-          this.ollieViewports[0].x = 0;
-          this.ollieViewports[0].y = 0;
-          this.ollieViewports[1].x = 400;
-          this.ollieViewports[1].y = 0;
-        } else {
-          this.ollieViewports[0].x = 0;
-          this.ollieViewports[0].y = 400;
-          this.ollieViewports[1].x = 0;
-          this.ollieViewports[1].y = 0;
-        }
+        this.labelRenderer.setSize(this.width / 2, this.height);
+        this.labelRenderer2.setSize(this.width / 2, this.height);
+        this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
+        this.ollieViewports = [
+          {
+            view: 1,
+            x: 0,
+            y: 0,
+            width: this.width / 2,
+            height: this.height,
+          },
+          {
+            view: 2,
+            x: this.width / 2,
+            y: 0,
+            width: this.width / 2,
+            height: this.height,
+          },
+        ];
+        // if (this.mq.current === "md") {
+        //   this.ollieViewports[0].x = 0;
+        //   this.ollieViewports[0].y = 0;
+        //   this.ollieViewports[1].x = this.width / 2;
+        //   this.ollieViewports[1].y = 0;
+        // } else {
+        //   this.ollieViewports[0].x = 0;
+        //   this.ollieViewports[0].y = 400;
+        //   this.ollieViewports[1].x = 0;
+        //   this.ollieViewports[1].y = 0;
+        // }
 
         // you must pass false here or three.js sadly fights the browser
         this.renderer.setSize(this.width, this.height);
-        this.camera.aspect = this.width / this.height;
-        this.camera2.aspect = this.width / this.height;
+        this.camera.aspect = this.width / 2 / this.height;
+        this.camera2.aspect = this.width / 2 / this.height;
         this.labelRenderer.render(this.scene, this.camera, false);
         this.labelRenderer.render(this.scene2, this.camera2, false);
         this.camera.updateProjectionMatrix();
@@ -958,13 +976,13 @@ export default {
         secondView.x,
         secondView.y,
         secondView.width,
-        400
+        secondView.height
       );
       this.renderer.setScissor(
         secondView.x,
         secondView.y,
         secondView.width,
-        400
+        secondView.height
       );
       this.renderer.clearColor(255, 255, 0);
       this.renderer.render(this.scene, this.camera2);
@@ -1006,18 +1024,19 @@ figcaption {
   position: relative;
   margin-top: 2rem;
   flex: 1;
-  width: 800px;
+  width: 100%;
   overflow: scroll;
-  height: 400px;
+  /* height: 400px; */
+  aspect-ratio: 2/1;
 }
 
-@media only screen and (max-width: 768px) {
+/* @media only screen and (max-width: 768px) {
   #container {
     height: 800px;
     width: 400px;
     background-color: pink;
   }
-}
+} */
 
 .newimages {
   width: 200px;
