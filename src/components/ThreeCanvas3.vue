@@ -1,7 +1,7 @@
 <template>
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
-      <p>
+      <p class="intro_title__width">
         The moment vector <math-jax latex="$$\vec{M}$$"></math-jax> of the force
         <math-jax latex="$$\vec{F}$$"></math-jax> about point P will be equal to
         the cross products of the
@@ -187,12 +187,12 @@ export default {
       };
 
       const resizeCanvasToDisplaySize = () => {
-        console.log("canvas size changed");
+        // console.log("canvas size changed");
         // const canvas = this.renderer.domElement;
         // look up the size the canvas is being displayed
         this.width = container.clientWidth;
         this.height = container.clientHeight;
-        console.log("width", this.width, "height", this.height);
+        // console.log("width", this.width, "height", this.height);
         this.labelRenderer.setSize(this.width / 2, this.height);
         this.labelRenderer2.setSize(this.width / 2, this.height);
         this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
@@ -1015,8 +1015,11 @@ export default {
 <style src="@vueform/slider/themes/default.css">
 </style>
 <style scoped  >
+.intro_title__width {
+  width: clamp(20ch, 70%, 75ch);
+}
 figcaption {
-  width: clamp(45ch, 70%, 75ch);
+  width: clamp(20ch, 70%, 75ch);
   margin: 0 auto;
   margin-top: 2rem;
 }
@@ -1062,9 +1065,9 @@ figcaption {
 .viz-wrap {
   max-width: 900px;
   width: 100vw;
-
   background-color: #ebeeee;
   padding: 1.5rem;
+  box-sizing: border-box;
 }
 .biggerlate {
   font-size: 3rem;
