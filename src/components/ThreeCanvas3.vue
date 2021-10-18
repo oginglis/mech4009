@@ -31,7 +31,12 @@
     </div>
 
     <div id="container"></div>
-    <img src="@/assets/rhr.png" class="newimages" width="200px" />
+    <img
+      src="@/assets/rhr.png"
+      class="newimages"
+      width="200px"
+      alt="image of Right Hand Rule"
+    />
     <figcaption>
       The result of <img src="@/assets/rVector.svg" alt="r Vector" /> cross
       <img src="@/assets/fVector.svg" alt="F Vector" /> will give us the moment
