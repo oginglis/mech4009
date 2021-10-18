@@ -3,6 +3,6 @@ module.exports = {
   configureWebpack: {
     devtool: 'source-map'
   },
-  publicPath: '/mech4009/'
+  publicPath: '/mech4009/',
 
 }

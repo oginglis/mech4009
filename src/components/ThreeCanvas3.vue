@@ -2,21 +2,16 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector <math-jax latex="$$\vec{M}$$"></math-jax> of the force
-        <math-jax latex="$$\vec{F}$$"></math-jax> about point P will be equal to
-        the cross products of the
-        <math-jax latex="$$\vec{r}$$"></math-jax> vector and the force vector
-        <math-jax latex="$$\vec{F}$$"></math-jax>. The
-        <math-jax latex="$$\vec{r}$$"></math-jax> vector is a vector from point
-        P to any point along the line of action of the force.
+        The moment vector <img src="@/assets/mVector.svg" /> of the force
+        <img src="@/assets/fVector.svg" /> about point P will be equal to the
+        cross products of the <img src="@/assets/rVector.svg" /> vector and the
+        force vector <img src="@/assets/fVector.svg" />. The
+        <img src="@/assets/rVector.svg" /> vector is a vector from point P to
+        any point along the line of action of the force.
       </p>
-      <math-jax
-        class="biggerlate"
-        latex="$$\vec{M} = \vec{r} \times \vec{F}$$"
-      ></math-jax>
+      <img src="@/assets/equation.svg" width="230" />
       <h3>
-        Angle between <math-jax latex="$$\vec{r}$$"></math-jax> and Line of
-        Action:
+        Angle between <img src="@/assets/rVector.svg" /> and Line of Action:
       </h3>
       <Slider
         v-model="length"
@@ -31,12 +26,12 @@
     <div id="container"></div>
     <img src="@/assets/rhr.png" class="newimages" width="200px" height="auto" />
     <figcaption>
-      The result of <math-jax latex="$$\vec{r}$$"></math-jax> cross
-      <math-jax latex="$$\vec{F}$$"></math-jax> will give us the moment vector
-      <math-jax latex="$$\vec{M}$$"></math-jax>. We can use the right hand rule
-      to determine the direction of rotation from the moment (line our right
-      thumb up with the moment vector
-      <math-jax latex="$$\vec{M}$$"></math-jax>
+      The result of <img src="@/assets/rVector.svg" /> cross
+      <img src="@/assets/fVector.svg" /> will give us the moment vector
+      <img src="@/assets/mVector.svg" />. We can use the right hand rule to
+      determine the direction of rotation from the moment (line our right thumb
+      up with the moment vector
+      <img src="@/assets/mVector.svg" />
       and our curled fingers will point in the direction of rotation from the
       moment).
     </figcaption>
@@ -1075,7 +1070,7 @@ figcaption {
 
 .disclaimer {
   margin-top: 3rem;
-  opacity: 0.5;
+  opacity: 0.9;
   font-size: 0.5rem;
 }
 </style>
