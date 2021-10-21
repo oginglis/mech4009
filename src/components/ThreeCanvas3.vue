@@ -59,10 +59,6 @@
 <script >
 import * as Three from "three";
 
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// import { GUI } from "three/examples/jsm/libs/dat.gui.module";
-
-// import "../assets/mathjax/es5/tex-chtml.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Slider from "@vueform/slider";
 import {
@@ -190,7 +186,34 @@ export default {
 
           obj.rotateOnAxis(axis, theta);
         }
-        // rotate the OBJECT
+      };
+
+      const createText = (
+        content,
+        name,
+        color,
+        bgcolor,
+        x,
+        y,
+        z,
+        sceneList,
+        scene
+      ) => {
+        let newText3 = document.createElement("div");
+        newText3.className = "label";
+
+        newText3.style.padding = `0px 2px 0px 2px`;
+        newText3.style.fontWeight = "700";
+        newText3.style.color = color;
+        newText3.style.fontStyle = "italic";
+        newText3.style.backgroundColor = bgcolor;
+        newText3.style.fontFamily = "Times New Roman";
+        newText3.textContent = content;
+        let label3 = new CSS2DObject(newText3);
+        label3.name = name;
+        sceneList.push(label3.name);
+        label3.position.set(x, y, z);
+        scene.add(label3);
       };
 
       const resizeCanvasToDisplaySize = () => {
@@ -321,133 +344,226 @@ export default {
 
         sceneObjects.push(cone.name);
 
-        let text3 = document.createElement("div");
-        text3.className = "label";
-        text3.style.color = "rgb(0,0,0)";
+        createText(
+          `r`,
+          "angle2",
+          "#85CB33",
+          `rgba(255, 255, 255, 0.9)`,
+          -1.2,
+          -0.8,
+          0,
+          sceneObjects,
+          this.scene
+        );
 
-        text3.style.padding = `0px 2px 0px 2px`;
-        text3.style.fontWeight = "700";
-        text3.style.color = "#85CB33";
-        text3.style.fontStyle = "italic";
-        text3.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // let text3 = document.createElement("div");
+        // text3.className = "label";
+        // text3.style.color = "rgb(0,0,0)";
 
-        text3.style.fontFamily = "Times New Roman";
-        text3.textContent = `r`;
-        let label3 = new CSS2DObject(text3);
-        label3.name = "angle2";
-        sceneObjects.push(label3.name);
+        // text3.style.padding = `0px 2px 0px 2px`;
+        // text3.style.fontWeight = "700";
+        // text3.style.color = "#85CB33";
+        // text3.style.fontStyle = "italic";
+        // text3.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
 
-        label3.position.set(-1.2, -0.8, 0);
+        // text3.style.fontFamily = "Times New Roman";
+        // text3.textContent = `r`;
+        // let label3 = new CSS2DObject(text3);
+        // label3.name = "angle2";
+        // sceneObjects.push(label3.name);
 
-        this.scene.add(label3);
+        // label3.position.set(-1.2, -0.8, 0);
 
-        let text3_5 = document.createElement("div");
-        text3_5.className = "label";
-        text3_5.style.color = "rgb(0,0,0)";
-        text3_5.style.backgroundColor = `#ffffff`;
-        text3_5.style.padding = `0px 2px 0px 2px`;
-        text3_5.style.fontWeight = "700";
-        text3_5.style.color = "#85CB33";
-        text3_5.style.fontFamily = "Times New Roman";
-        text3_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        text3_5.style.fontStyle = "italic";
-        text3_5.textContent = `r`;
-        let label3_5 = new CSS2DObject(text3_5);
-        label3_5.name = "angle2";
-        label3_5.position.set(-1.2, -0.8, 0);
-        sceneObjects2.push(label3_5.name);
-        this.scene2.add(label3_5);
+        // this.scene.add(label3);
+
+        createText(
+          `r`,
+          "angle2",
+          "#85CB33",
+          `rgba(255, 255, 255, 0.9)`,
+          -1.2,
+          -0.8,
+          0,
+          sceneObjects2,
+          this.scene2
+        );
+        // let text3_5 = document.createElement("div");
+        // text3_5.className = "label";
+        // text3_5.style.color = "rgb(0,0,0)";
+        // text3_5.style.backgroundColor = `#ffffff`;
+        // text3_5.style.padding = `0px 2px 0px 2px`;
+        // text3_5.style.fontWeight = "700";
+        // text3_5.style.color = "#85CB33";
+        // text3_5.style.fontFamily = "Times New Roman";
+        // text3_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // text3_5.style.fontStyle = "italic";
+        // text3_5.textContent = `r`;
+        // let label3_5 = new CSS2DObject(text3_5);
+        // label3_5.name = "angle2";
+        // label3_5.position.set(-1.2, -0.8, 0);
+        // sceneObjects2.push(label3_5.name);
+        // this.scene2.add(label3_5);
       };
-      let text8 = document.createElement("div");
-      text8.className = "label";
-      text8.style.color = "rgb(0,0,0)";
-      // text8.style.backgroundColor = `#ffffff`;
-      // text8.style.fontWeight = "900";
-      text8.style.padding = `.5px 1px 2px 3px`;
-      text8.style.fontFamily = "Times New Roman";
-      text8.textContent = `P`;
-      let label8 = new CSS2DObject(text8);
-      label8.name = "P";
+      createText(
+        `P`,
+        "P",
+        "rgb(0,0,0)",
+        `rgba(255, 255, 255, 0)`,
+        -2.7,
+        -2.5,
+        0,
+        sceneObjects,
+        this.scene
+      );
 
-      label8.position.set(-2.7, -2.5, 0);
-      this.scene.add(label8);
+      // let text8 = document.createElement("div");
+      // text8.className = "label";
+      // text8.style.color = "rgb(0,0,0)";
+      // // text8.style.backgroundColor = `#ffffff`;
+      // // text8.style.fontWeight = "900";
+      // text8.style.padding = `.5px 1px 2px 3px`;
+      // text8.style.fontFamily = "Times New Roman";
+      // text8.textContent = `P`;
+      // let label8 = new CSS2DObject(text8);
+      // label8.name = "P";
 
-      let text8_5 = document.createElement("div");
-      text8_5.className = "label";
-      text8_5.style.color = "rgb(0,0,0)";
-      text8_5.style.fontFamily = "Times New Roman";
-      // text8_5.style.backgroundColor = `#ffffff`;
-      // text8_5.style.fontWeight = "900";
+      // label8.position.set(-2.7, -2.5, 0);
+      // this.scene.add(label8);
 
-      text8_5.style.padding = `.5px 1px 2px 3px`;
-      text8_5.textContent = `P`;
-      let label8_5 = new CSS2DObject(text8_5);
-      label8_5.name = "P";
-      sceneObjects2.push(label8_5.name);
-      label8_5.position.set(-2.6, -2.5, 0);
-      // label8.position.set(0, 0, 0);
-      this.scene2.add(label8_5);
+      createText(
+        `P`,
+        "P",
+        "rgb(0,0,0)",
+        `rgba(255, 255, 255, 0)`,
+        -2.7,
+        -2.5,
+        0,
+        sceneObjects2,
+        this.scene2
+      );
+      // let text8_5 = document.createElement("div");
+      // text8_5.className = "label";
+      // text8_5.style.color = "rgb(0,0,0)";
+      // text8_5.style.fontFamily = "Times New Roman";
+      // // text8_5.style.backgroundColor = `#ffffff`;
+      // // text8_5.style.fontWeight = "900";
 
-      label8_5.name = "angle44";
+      // text8_5.style.padding = `.5px 1px 2px 3px`;
+      // text8_5.textContent = `P`;
+      // let label8_5 = new CSS2DObject(text8_5);
+      // label8_5.name = "P";
+      // sceneObjects2.push(label8_5.name);
+      // label8_5.position.set(-2.6, -2.5, 0);
+      // // label8.position.set(0, 0, 0);
+      // this.scene2.add(label8_5);
 
-      let text8_5ylabel = document.createElement("div");
-      text8_5ylabel.className = "label";
-      text8_5ylabel.style.color = " #d3d3d3";
-      // text8_5ylabel.style.backgroundColor = `#ffffff`;
-      // text8_5ylabel.style.fontWeight = "900";
-      text8_5ylabel.style.padding = `.5px 1px 2px 3px`;
-      text8_5ylabel.style.fontFamily = "Times New Roman";
-      text8_5ylabel.style.fontStyle = "italic";
-      text8_5ylabel.textContent = `y`;
-      let label8_5ylabel = new CSS2DObject(text8_5ylabel);
-      label8_5ylabel.name = "y";
-      sceneObjects2.push(label8_5ylabel.name);
-      label8_5ylabel.position.set(-3, 3.5, 0);
-      // label8.position.set(0, 0, 0);
-      this.scene.add(label8_5ylabel);
+      // label8_5.name = "angle44";
 
-      let ytext2 = document.createElement("div");
-      ytext2.className = "label";
-      ytext2.style.color = " #d3d3d3";
-      // ytext2.style.backgroundColor = `#ffffff`;
-      // ytext2.style.fontWeight = "900";
-      ytext2.style.padding = `.5px 1px 2px 3px`;
-      ytext2.style.fontFamily = "Times New Roman";
-      ytext2.textContent = `y`;
-      let ylabel2 = new CSS2DObject(ytext2);
-      ylabel2.name = "2y";
+      createText(
+        `y`,
+        "y",
+        " #d3d3d3",
+        `rgba(255, 255, 255, 0)`,
+        -3,
+        3.5,
+        0,
+        sceneObjects,
+        this.scene
+      );
 
-      ylabel2.position.set(-3, 3.5, 0);
-      // label8.position.set(0, 0, 0);
-      this.scene2.add(ylabel2);
+      // let text8_5ylabel = document.createElement("div");
+      // text8_5ylabel.className = "label";
+      // text8_5ylabel.style.color = " #d3d3d3";
+      // // text8_5ylabel.style.backgroundColor = `#ffffff`;
+      // // text8_5ylabel.style.fontWeight = "900";
+      // text8_5ylabel.style.padding = `.5px 1px 2px 3px`;
+      // text8_5ylabel.style.fontFamily = "Times New Roman";
+      // text8_5ylabel.style.fontStyle = "italic";
+      // text8_5ylabel.textContent = `y`;
+      // let label8_5ylabel = new CSS2DObject(text8_5ylabel);
+      // label8_5ylabel.name = "y";
+      // sceneObjects2.push(label8_5ylabel.name);
+      // label8_5ylabel.position.set(-3, 3.5, 0);
+      // // label8.position.set(0, 0, 0);
+      // this.scene.add(label8_5ylabel);
 
-      let xtext = document.createElement("div");
-      xtext.className = "label";
-      xtext.style.color = " #d3d3d3";
-      // xtext.style.backgroundColor = `#ffffff`;
-      // xtext.style.fontWeight = "900";
-      xtext.style.padding = `.5px 1px 2px 3px`;
-      xtext.style.fontFamily = "Times New Roman";
-      xtext.textContent = `x`;
-      let xlabel = new CSS2DObject(xtext);
-      xlabel.name = "xy";
-      xlabel.position.set(2.3, -1.9, 0);
-      // label8.position.set(0, 0, 0);
-      this.scene.add(xlabel);
+      createText(
+        `y`,
+        "2y",
+        " #d3d3d3",
+        `rgba(255, 255, 255, 0)`,
+        -3,
+        3.5,
+        0,
+        sceneObjects2,
+        this.scene2
+      );
 
-      let xtext2 = document.createElement("div");
-      xtext2.className = "label";
-      xtext2.style.color = " #d3d3d3";
-      // xtext2.style.backgroundColor = `#ffffff`;
-      // xtext2.style.fontWeight = "900";
-      xtext2.style.padding = `.5px 1px 2px 3px`;
-      xtext2.style.fontFamily = "Times New Roman";
-      xtext2.textContent = `x`;
-      let xlabel2 = new CSS2DObject(xtext2);
-      xlabel2.name = "x2y";
-      xlabel2.position.set(2.3, -1.9, 0);
-      // label8.position.set(0, 0, 0);
-      this.scene2.add(xlabel2);
+      // let ytext2 = document.createElement("div");
+      // ytext2.className = "label";
+      // ytext2.style.color = " #d3d3d3";
+      // // ytext2.style.backgroundColor = `#ffffff`;
+      // // ytext2.style.fontWeight = "900";
+      // ytext2.style.padding = `.5px 1px 2px 3px`;
+      // ytext2.style.fontFamily = "Times New Roman";
+      // ytext2.textContent = `y`;
+      // let ylabel2 = new CSS2DObject(ytext2);
+      // ylabel2.name = "2y";
+
+      // ylabel2.position.set(-3, 3.5, 0);
+      // // label8.position.set(0, 0, 0);
+      // this.scene2.add(ylabel2);
+      createText(
+        `x`,
+        "xy",
+        " #d3d3d3",
+        `rgba(255, 255, 255, 0)`,
+        2.3,
+        -1.9,
+        0,
+        sceneObjects,
+        this.scene
+      );
+
+      // let xtext = document.createElement("div");
+      // xtext.className = "label";
+      // xtext.style.color = " #d3d3d3";
+      // // xtext.style.backgroundColor = `#ffffff`;
+      // // xtext.style.fontWeight = "900";
+      // xtext.style.padding = `.5px 1px 2px 3px`;
+      // xtext.style.fontFamily = "Times New Roman";
+      // xtext.textContent = `x`;
+      // let xlabel = new CSS2DObject(xtext);
+      // xlabel.name = "xy";
+      // xlabel.position.set(2.3, -1.9, 0);
+      // // label8.position.set(0, 0, 0);
+      // this.scene.add(xlabel);
+
+      createText(
+        `x`,
+        "x2y",
+        " #d3d3d3",
+        `rgba(255, 255, 255, 0)`,
+        2.3,
+        -1.9,
+        0,
+        sceneObjects2,
+        this.scene2
+      );
+
+      // let xtext2 = document.createElement("div");
+      // xtext2.className = "label";
+      // xtext2.style.color = " #d3d3d3";
+      // // xtext2.style.backgroundColor = `#ffffff`;
+      // // xtext2.style.fontWeight = "900";
+      // xtext2.style.padding = `.5px 1px 2px 3px`;
+      // xtext2.style.fontFamily = "Times New Roman";
+      // xtext2.textContent = `x`;
+      // let xlabel2 = new CSS2DObject(xtext2);
+      // xlabel2.name = "x2y";
+      // xlabel2.position.set(2.3, -1.9, 0);
+      // // label8.position.set(0, 0, 0);
+      // this.scene2.add(xlabel2);
 
       const createMomentVector = (
         vecBottom,
@@ -542,46 +658,70 @@ export default {
 
         sceneObjects.push(cone.name);
 
-        let text5 = document.createElement("div");
-        text5.className = "label";
-        text5.style.color = "rgb(0,0,0)";
-        text5.style.fontFamily = "Times New Roman";
-        text5.style.fontStyle = "italic";
-        text5.textContent = `M`;
-        text5.style.color = "hsl(344, 100%, 51%)";
-        text5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        text5.style.borderRadius = "25%";
-        text5.style.padding = `0px 2px 0px 2px`;
-        text5.fontWeight = `bold`;
-        text5.style.fontWeight = "600";
-        text5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
-        let label5 = new CSS2DObject(text5);
-        label5.name = "M";
-        sceneObjects.push(label5.name);
-        label5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
-        this.scene.add(label5);
+        createText(
+          "M",
+          "m",
+          "hsl(344, 100%, 51%)",
+          `rgba(255, 255, 255, 0.9)`,
+          vecTop.x,
+          vecTop.y + 1,
+          vecTop.z,
+          sceneObjects,
+          this.scene
+        );
 
-        let text5_5 = document.createElement("div");
-        text5_5.className = "label";
-        text5_5.style.color = "rgb(0,0,0)";
-        text5_5.textContent = `M`;
-        text5_5.style.color = "hsl(344, 100%, 51%)";
-        text5_5.style.fontFamily = "Times New Roman";
-        text5_5.style.fontStyle = "italic";
+        // let text5 = document.createElement("div");
+        // text5.className = "label";
+        // text5.style.color = "rgb(0,0,0)";
+        // text5.style.fontFamily = "Times New Roman";
+        // text5.style.fontStyle = "italic";
+        // text5.textContent = `M`;
+        // text5.style.color = "hsl(344, 100%, 51%)";
+        // text5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // text5.style.borderRadius = "25%";
+        // text5.style.padding = `0px 2px 0px 2px`;
+        // text5.fontWeight = `bold`;
+        // text5.style.fontWeight = "600";
+        // text5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
+        // let label5 = new CSS2DObject(text5);
+        // label5.name = "M";
+        // sceneObjects.push(label5.name);
+        // label5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
+        // this.scene.add(label5);
 
-        text5_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        text5_5.style.borderRadius = "25%";
-        text5_5.style.padding = `0px 2px 0px 2px`;
-        text5_5.fontWeight = `bold`;
-        text5_5.style.fontWeight = "600";
-        text5_5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
-        let label5_5 = new CSS2DObject(text5_5);
-        label5_5.name = "M";
-        sceneObjects.push(label5_5.name);
-        label5_5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
-        this.scene2.add(label5_5);
-        label5_5.name = "angle4324";
-        sceneObjects2.push(label5_5.name);
+        createText(
+          "M",
+          "m",
+          "hsl(344, 100%, 51%)",
+          `rgba(255, 255, 255, 0.9)`,
+          vecTop.x,
+          vecTop.y + 1,
+          vecTop.z,
+          sceneObjects2,
+          this.scene2
+        );
+
+        // let text5_5 = document.createElement("div");
+        // text5_5.className = "label";
+        // text5_5.style.color = "rgb(0,0,0)";
+        // text5_5.textContent = `M`;
+        // text5_5.style.color = "hsl(344, 100%, 51%)";
+        // text5_5.style.fontFamily = "Times New Roman";
+        // text5_5.style.fontStyle = "italic";
+
+        // text5_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // text5_5.style.borderRadius = "25%";
+        // text5_5.style.padding = `0px 2px 0px 2px`;
+        // text5_5.fontWeight = `bold`;
+        // text5_5.style.fontWeight = "600";
+        // text5_5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
+        // let label5_5 = new CSS2DObject(text5_5);
+        // label5_5.name = "M";
+        // sceneObjects.push(label5_5.name);
+        // label5_5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
+        // this.scene2.add(label5_5);
+        // label5_5.name = "angle4324";
+        // sceneObjects2.push(label5_5.name);
       };
 
       let fVector;
@@ -605,7 +745,7 @@ export default {
 
         let line = new Three.Line(tubeGeometry, lineMaterial);
         line.renderOrder = 1000;
-        line.name = "Ollie thick line";
+        line.name = "thick line";
         // line.position.set(vecBottom);
         line.rotateZ(-this.length);
         this.scene.add(line);
@@ -672,40 +812,61 @@ export default {
         cone.position.copy(newTopVector);
 
         newVecBetweenPoints.multiplyScalar(0.5);
-
-        let text4 = document.createElement("div");
-        text4.className = "label";
-        text4.style.color = "rgb(0,0,0)";
-        text4.textContent = `F`;
-        text4.style.color = "hsl(189, 92%, 49%)";
-        text4.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // text4.style.padding = `3px 2px 3px 2px`;
-        text4.style.fontFamily = "Times New Roman";
-        text4.style.fontStyle = "italic";
-        text4.style.fontWeight = "700";
-        let label4 = new CSS2DObject(text4);
-        label4.name = "F";
-        sceneObjects.push(label4.name);
         let newPosition = newBottomVector.add(newTopVector).divideScalar(2);
-        label4.position.set(newPosition.x, newPosition.y, newPosition.z);
-        this.scene.add(label4);
+        createText(
+          "F",
+          "F",
+          "hsl(189, 92%, 49%)",
+          `rgba(255, 255, 255, 0.9)`,
+          newPosition.x,
+          newPosition.y,
+          newPosition.z,
+          sceneObjects,
+          this.scene
+        );
+        // let text4 = document.createElement("div");
+        // text4.className = "label";
+        // text4.style.color = "rgb(0,0,0)";
+        // text4.textContent = `F`;
+        // text4.style.color = "hsl(189, 92%, 49%)";
+        // text4.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // // text4.style.padding = `3px 2px 3px 2px`;
+        // text4.style.fontFamily = "Times New Roman";
+        // text4.style.fontStyle = "italic";
+        // text4.style.fontWeight = "700";
+        // let label4 = new CSS2DObject(text4);
+        // label4.name = "F";
+        // sceneObjects.push(label4.name);
 
-        let text4_5 = document.createElement("div");
-        text4_5.className = "label";
-        text4_5.style.color = "rgb(0,0,0)";
-        text4_5.textContent = `F`;
-        text4_5.style.color = "hsl(189, 92%, 49%)";
-        text4_5.style.fontFamily = "Times New Roman";
-        text4_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // text4_5.style.padding = `3px 2px 3px 2px`;
-        text4_5.style.fontWeight = "900";
-        let label4_5 = new CSS2DObject(text4_5);
-        label4_5.name = "F";
-        sceneObjects.push(label4_5.name);
-        label4_5.position.set(newPosition.x, newPosition.y, newPosition.z);
-        this.scene2.add(label4_5);
-        label4_5.name = "angwele4324";
-        sceneObjects2.push(label4_5.name);
+        // label4.position.set(newPosition.x, newPosition.y, newPosition.z);
+        // this.scene.add(label4);
+        createText(
+          "F",
+          "F",
+          "hsl(189, 92%, 49%)",
+          `rgba(255, 255, 255, 0.9)`,
+          newPosition.x,
+          newPosition.y,
+          newPosition.z,
+          sceneObjects2,
+          this.scene2
+        );
+        // let text4_5 = document.createElement("div");
+        // text4_5.className = "label";
+        // text4_5.style.color = "rgb(0,0,0)";
+        // text4_5.textContent = `F`;
+        // text4_5.style.color = "hsl(189, 92%, 49%)";
+        // text4_5.style.fontFamily = "Times New Roman";
+        // text4_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
+        // // text4_5.style.padding = `3px 2px 3px 2px`;
+        // text4_5.style.fontWeight = "900";
+        // let label4_5 = new CSS2DObject(text4_5);
+        // label4_5.name = "F";
+        // sceneObjects.push(label4_5.name);
+        // label4_5.position.set(newPosition.x, newPosition.y, newPosition.z);
+        // this.scene2.add(label4_5);
+        // label4_5.name = "angwele4324";
+        // sceneObjects2.push(label4_5.name);
 
         // cone.position.set((0, 1, 1));
         cone.name = "arrow head";
@@ -806,44 +967,72 @@ export default {
         sceneObjects.push(torus.name);
         this.scene.add(torus);
 
-        let text2 = document.createElement("div");
-        text2.className = "label";
-        text2.style.color = "rgb(0,0,0)";
-        text2.style.fontFamily = "Times New Roman";
-        text2.textContent = `${Math.round(
-          ((this.length + 2.158638) * 180) / Math.PI
-        )}°`;
-        let label2 = new CSS2DObject(text2);
-        text2.style.fontWeight = "900";
-        label2.name = "angle";
-        sceneObjects.push(label2.name);
+        let positionObject = {};
         if (((this.length + 2.158638) * 180) / Math.PI > 0) {
-          label2.position.set(0.3, 0.3, 0);
+          // label2.position.set(0.3, 0.3, 0);
+          positionObject = { x: 0.3, y: 0.3, z: 0 };
         } else {
-          label2.position.set(0.3, -0.5, 0);
+          // label2.position.set(0.3, -0.5, 0);
+          positionObject = { x: 0.3, y: -0.5, z: 0 };
         }
-        this.scene.add(label2);
+        createText(
+          `${Math.round(((this.length + 2.158638) * 180) / Math.PI)}°`,
+          "angle",
+          "rgb(0,0,0)",
+          `rgba(255, 255, 255, 0.9)`,
+          positionObject.x,
+          positionObject.y,
+          positionObject.z,
+          sceneObjects,
+          this.scene
+        );
 
-        let text2_5 = document.createElement("div");
-        text2_5.className = "label";
-        text2_5.style.color = "rgb(0,0,0)";
-        text2_5.style.fontFamily = "Times New Roman";
-        text2_5.textContent = `${Math.round(
-          ((this.length + 2.158638) * 180) / Math.PI
-        )}°`;
-        let label2_5 = new CSS2DObject(text2_5);
-        text2_5.style.fontWeight = "900";
-        label2_5.name = "angle";
-        sceneObjects.push(label2_5.name);
-        if (((this.length + 2.158638) * 180) / Math.PI > 0) {
-          label2_5.position.set(0.3, 0.3, 0);
-        } else {
-          label2_5.position.set(0.3, -0.5, 0);
-        }
+        // let text2 = document.createElement("div");
+        // text2.className = "label";
+        // text2.style.color = "rgb(0,0,0)";
+        // text2.style.fontFamily = "Times New Roman";
+        // text2.textContent = `${Math.round(
+        //   ((this.length + 2.158638) * 180) / Math.PI
+        // )}°`;
+        // let label2 = new CSS2DObject(text2);
+        // text2.style.fontWeight = "900";
+        // label2.name = "angle";
+        // sceneObjects.push(label2.name);
 
-        this.scene2.add(label2_5);
-        label2_5.name = "angwwerwele4324";
-        sceneObjects2.push(label2_5.name);
+        // this.scene.add(label2);
+
+        createText(
+          `${Math.round(((this.length + 2.158638) * 180) / Math.PI)}°`,
+          "angle",
+          "rgb(0,0,0)",
+          `rgba(255, 255, 255, 0.9)`,
+          positionObject.x,
+          positionObject.y,
+          positionObject.z,
+          sceneObjects2,
+          this.scene2
+        );
+
+        // let text2_5 = document.createElement("div");
+        // text2_5.className = "label";
+        // text2_5.style.color = "rgb(0,0,0)";
+        // text2_5.style.fontFamily = "Times New Roman";
+        // text2_5.textContent = `${Math.round(
+        //   ((this.length + 2.158638) * 180) / Math.PI
+        // )}°`;
+        // let label2_5 = new CSS2DObject(text2_5);
+        // text2_5.style.fontWeight = "900";
+        // label2_5.name = "angle";
+        // sceneObjects.push(label2_5.name);
+        // if (((this.length + 2.158638) * 180) / Math.PI > 0) {
+        //   label2_5.position.set(0.3, 0.3, 0);
+        // } else {
+        //   label2_5.position.set(0.3, -0.5, 0);
+        // }
+
+        // this.scene2.add(label2_5);
+        // label2_5.name = "angwwerwele4324";
+        // sceneObjects2.push(label2_5.name);
       };
       createAngleArcGeometry();
       let vec11 = new Three.Vector3(0, 1, 0);
