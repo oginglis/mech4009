@@ -59,7 +59,7 @@
 <script >
 import * as Three from "three";
 
-import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
+// import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Slider from "@vueform/slider";
 import {
   CSS2DRenderer,
@@ -650,78 +650,78 @@ export default {
         sceneObjects.push(cone.name);
       };
 
-      const loadSVG = () => {
-        // instantiate a loader
-        const loader = new SVGLoader();
+      // const loadSVG = () => {
+      //   // instantiate a loader
+      //   const loader = new SVGLoader();
 
-        // load a SVG resource
-        let self = this;
-        loader.load(
-          // resource URL
-          "./rotatearrow.svg",
-          // called when the resource is loaded
-          function (data) {
-            const paths = data.paths;
-            const group = new Three.Group();
-            group.scale.multiplyScalar(0.008);
+      //   // load a SVG resource
+      //   let self = this;
+      //   loader.load(
+      //     // resource URL
+      //     "./rotatearrow.svg",
+      //     // called when the resource is loaded
+      //     function (data) {
+      //       const paths = data.paths;
+      //       const group = new Three.Group();
+      //       group.scale.multiplyScalar(0.008);
 
-            for (let i = 0; i < paths.length; i++) {
-              const path = paths[i];
+      //       for (let i = 0; i < paths.length; i++) {
+      //         const path = paths[i];
 
-              const material = new Three.MeshBasicMaterial({
-                color: 0xff0548,
-                side: Three.DoubleSide,
-                depthWrite: false,
-              });
+      //         const material = new Three.MeshBasicMaterial({
+      //           color: 0xff0548,
+      //           side: Three.DoubleSide,
+      //           depthWrite: false,
+      //         });
 
-              const shapes = SVGLoader.createShapes(path);
+      //         const shapes = SVGLoader.createShapes(path);
 
-              for (let j = 0; j < shapes.length; j++) {
-                const shape = shapes[j];
-                const geometry = new Three.ShapeGeometry(shape);
+      //         for (let j = 0; j < shapes.length; j++) {
+      //           const shape = shapes[j];
+      //           const geometry = new Three.ShapeGeometry(shape);
 
-                const mesh = new Three.Mesh(geometry, material);
-                mesh.renderOrder = 999;
-                group.add(mesh);
-              }
-            }
+      //           const mesh = new Three.Mesh(geometry, material);
+      //           mesh.renderOrder = 999;
+      //           group.add(mesh);
+      //         }
+      //       }
 
-            group.position.set(-5, -4, 0.1);
-            group.name = "arrowss";
-            // group.rotateX(3.14159)
-            // group.translate(1, 1, 0);
+      //       group.position.set(-5, -4, 0.1);
+      //       group.name = "arrowss";
+      //       // group.rotateX(3.14159)
+      //       // group.translate(1, 1, 0);
 
-            self.scene.add(group);
+      //       self.scene.add(group);
 
-            // point - the point of rotation (THREE.Vector3)
-            let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
-            // axis - the axis of rotation (normalized THREE.Vector3)
-            let svgAxis = new Three.Vector3(0, 1, 0).normalize();
-            // theta - radian value of rotation
-            let theta = Math.PI;
-            // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
-            let pointIsWorld = true;
+      //       // point - the point of rotation (THREE.Vector3)
+      //       let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
+      //       // axis - the axis of rotation (normalized THREE.Vector3)
+      //       let svgAxis = new Three.Vector3(0, 1, 0).normalize();
+      //       // theta - radian value of rotation
+      //       let theta = Math.PI;
+      //       // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+      //       let pointIsWorld = true;
 
-            rotateAboutPoint(
-              group,
-              rotateSVGaxis,
-              svgAxis,
-              theta,
-              pointIsWorld
-            );
-          },
+      //       rotateAboutPoint(
+      //         group,
+      //         rotateSVGaxis,
+      //         svgAxis,
+      //         theta,
+      //         pointIsWorld
+      //       );
+      //     },
 
-          // called when loading is in progresses
-          function () {},
-          // called when loading has errors
-          function (error) {
-            console.log("An error happened");
-            console.log(error);
-          }
-        );
-      };
+      //     // called when loading is in progresses
+      //     function () {},
+      //     // called when loading has errors
+      //     function (error) {
+      //       console.log("An error happened");
+      //       console.log(error);
+      //     }
+      //   );
+      // };
 
-      loadSVG();
+      // loadSVG();
 
       const createAngleArcGeometry = () => {
         const geometryTorus = new Three.TorusGeometry(
