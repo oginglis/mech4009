@@ -1,16 +1,4 @@
 <template>
-  <iframe
-    src="https://tulip781.github.io/ic-engine/#/"
-    style="border: 0px #ffffff none"
-    name="myiFrame"
-    scrolling="no"
-    frameborder="1"
-    marginheight="0px"
-    marginwidth="0px"
-    height="400px"
-    width="600px"
-    allowfullscreen
-  ></iframe>
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
@@ -901,7 +889,7 @@ export default {
     },
     animate: function () {
       requestAnimationFrame(this.animate);
-      this.updateSceneLoop();
+      // this.updateSceneLoop();
       this.renderCamera(
         this.ollieViewports[0],
         this.scene,
