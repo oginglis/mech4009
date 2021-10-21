@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector TEST
+        The moment vector TEST O
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
