@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector
+        The moment vector TEST
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -135,7 +135,7 @@ export default {
       arrowHelper.name = "first arrow";
       this.scene.add(arrowHelper);
 
-      this.renderer = new Three.WebGLRenderer({ antialias: true });
+      this.renderer = new Three.WebGLRenderer();
       this.renderer.setSize(container.clientWidth, container.clientHeight);
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -166,23 +166,11 @@ export default {
       this.axesHelper = new Three.AxesHelper(1);
       container.appendChild(this.renderer.domElement);
 
-      // obj - your object (THREE.Object3D or derived)
-      // point - the point of rotation (THREE.Vector3)
-      // axis - the axis of rotation (normalized THREE.Vector3)
-      // theta - radian value of rotation
-      // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
       const rotateAboutPoint = (obj, point, axis, theta) => {
-        // if (pointIsWorld) {
-        //   obj.parent.localToWorld(obj.position); // compensate for world coordinate
-        // }
         if (obj) {
           obj.position.sub(point); // remove the offset
           obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
           obj.position.add(point); // re-add the offset
-
-          // if (pointIsWorld) {
-          //   obj.parent.worldToLocal(obj.position); // undo world coordinates compensation
-          // }
 
           obj.rotateOnAxis(axis, theta);
         }
@@ -217,9 +205,6 @@ export default {
       };
 
       const resizeCanvasToDisplaySize = () => {
-        // console.log("canvas size changed");
-        // const canvas = this.renderer.domElement;
-        // look up the size the canvas is being displayed
         this.width = container.clientWidth;
         this.height = container.clientHeight;
         // console.log("width", this.width, "height", this.height);
@@ -242,19 +227,7 @@ export default {
             height: this.height,
           },
         ];
-        // if (this.mq.current === "md") {
-        //   this.ollieViewports[0].x = 0;
-        //   this.ollieViewports[0].y = 0;
-        //   this.ollieViewports[1].x = this.width / 2;
-        //   this.ollieViewports[1].y = 0;
-        // } else {
-        //   this.ollieViewports[0].x = 0;
-        //   this.ollieViewports[0].y = 400;
-        //   this.ollieViewports[1].x = 0;
-        //   this.ollieViewports[1].y = 0;
-        // }
 
-        // you must pass false here or three.js sadly fights the browser
         this.renderer.setSize(this.width, this.height);
         this.camera.aspect = this.width / 2 / this.height;
         this.camera2.aspect = this.width / 2 / this.height;
@@ -262,13 +235,11 @@ export default {
         this.labelRenderer.render(this.scene2, this.camera2, false);
         this.camera.updateProjectionMatrix();
         this.camera2.updateProjectionMatrix();
-
-        // update any render target sizes here
       };
 
       resizeCanvasToDisplaySize();
-      const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
-      resizeObserver.observe(container, { box: "content-box" });
+      // const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
+      // resizeObserver.observe(container, { box: "content-box" });
 
       const removeObjectFromScene = (objectName) => {
         objectName.forEach((object) => {
@@ -356,26 +327,6 @@ export default {
           this.scene
         );
 
-        // let text3 = document.createElement("div");
-        // text3.className = "label";
-        // text3.style.color = "rgb(0,0,0)";
-
-        // text3.style.padding = `0px 2px 0px 2px`;
-        // text3.style.fontWeight = "700";
-        // text3.style.color = "#85CB33";
-        // text3.style.fontStyle = "italic";
-        // text3.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-
-        // text3.style.fontFamily = "Times New Roman";
-        // text3.textContent = `r`;
-        // let label3 = new CSS2DObject(text3);
-        // label3.name = "angle2";
-        // sceneObjects.push(label3.name);
-
-        // label3.position.set(-1.2, -0.8, 0);
-
-        // this.scene.add(label3);
-
         createText(
           `r`,
           "angle2",
@@ -387,22 +338,6 @@ export default {
           sceneObjects2,
           this.scene2
         );
-        // let text3_5 = document.createElement("div");
-        // text3_5.className = "label";
-        // text3_5.style.color = "rgb(0,0,0)";
-        // text3_5.style.backgroundColor = `#ffffff`;
-        // text3_5.style.padding = `0px 2px 0px 2px`;
-        // text3_5.style.fontWeight = "700";
-        // text3_5.style.color = "#85CB33";
-        // text3_5.style.fontFamily = "Times New Roman";
-        // text3_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // text3_5.style.fontStyle = "italic";
-        // text3_5.textContent = `r`;
-        // let label3_5 = new CSS2DObject(text3_5);
-        // label3_5.name = "angle2";
-        // label3_5.position.set(-1.2, -0.8, 0);
-        // sceneObjects2.push(label3_5.name);
-        // this.scene2.add(label3_5);
       };
       createText(
         `P`,
@@ -416,20 +351,6 @@ export default {
         this.scene
       );
 
-      // let text8 = document.createElement("div");
-      // text8.className = "label";
-      // text8.style.color = "rgb(0,0,0)";
-      // // text8.style.backgroundColor = `#ffffff`;
-      // // text8.style.fontWeight = "900";
-      // text8.style.padding = `.5px 1px 2px 3px`;
-      // text8.style.fontFamily = "Times New Roman";
-      // text8.textContent = `P`;
-      // let label8 = new CSS2DObject(text8);
-      // label8.name = "P";
-
-      // label8.position.set(-2.7, -2.5, 0);
-      // this.scene.add(label8);
-
       createText(
         `P`,
         "P",
@@ -441,23 +362,6 @@ export default {
         sceneObjects2,
         this.scene2
       );
-      // let text8_5 = document.createElement("div");
-      // text8_5.className = "label";
-      // text8_5.style.color = "rgb(0,0,0)";
-      // text8_5.style.fontFamily = "Times New Roman";
-      // // text8_5.style.backgroundColor = `#ffffff`;
-      // // text8_5.style.fontWeight = "900";
-
-      // text8_5.style.padding = `.5px 1px 2px 3px`;
-      // text8_5.textContent = `P`;
-      // let label8_5 = new CSS2DObject(text8_5);
-      // label8_5.name = "P";
-      // sceneObjects2.push(label8_5.name);
-      // label8_5.position.set(-2.6, -2.5, 0);
-      // // label8.position.set(0, 0, 0);
-      // this.scene2.add(label8_5);
-
-      // label8_5.name = "angle44";
 
       createText(
         `y`,
@@ -471,22 +375,6 @@ export default {
         this.scene
       );
 
-      // let text8_5ylabel = document.createElement("div");
-      // text8_5ylabel.className = "label";
-      // text8_5ylabel.style.color = " #d3d3d3";
-      // // text8_5ylabel.style.backgroundColor = `#ffffff`;
-      // // text8_5ylabel.style.fontWeight = "900";
-      // text8_5ylabel.style.padding = `.5px 1px 2px 3px`;
-      // text8_5ylabel.style.fontFamily = "Times New Roman";
-      // text8_5ylabel.style.fontStyle = "italic";
-      // text8_5ylabel.textContent = `y`;
-      // let label8_5ylabel = new CSS2DObject(text8_5ylabel);
-      // label8_5ylabel.name = "y";
-      // sceneObjects2.push(label8_5ylabel.name);
-      // label8_5ylabel.position.set(-3, 3.5, 0);
-      // // label8.position.set(0, 0, 0);
-      // this.scene.add(label8_5ylabel);
-
       createText(
         `y`,
         "2y",
@@ -499,20 +387,6 @@ export default {
         this.scene2
       );
 
-      // let ytext2 = document.createElement("div");
-      // ytext2.className = "label";
-      // ytext2.style.color = " #d3d3d3";
-      // // ytext2.style.backgroundColor = `#ffffff`;
-      // // ytext2.style.fontWeight = "900";
-      // ytext2.style.padding = `.5px 1px 2px 3px`;
-      // ytext2.style.fontFamily = "Times New Roman";
-      // ytext2.textContent = `y`;
-      // let ylabel2 = new CSS2DObject(ytext2);
-      // ylabel2.name = "2y";
-
-      // ylabel2.position.set(-3, 3.5, 0);
-      // // label8.position.set(0, 0, 0);
-      // this.scene2.add(ylabel2);
       createText(
         `x`,
         "xy",
@@ -525,20 +399,6 @@ export default {
         this.scene
       );
 
-      // let xtext = document.createElement("div");
-      // xtext.className = "label";
-      // xtext.style.color = " #d3d3d3";
-      // // xtext.style.backgroundColor = `#ffffff`;
-      // // xtext.style.fontWeight = "900";
-      // xtext.style.padding = `.5px 1px 2px 3px`;
-      // xtext.style.fontFamily = "Times New Roman";
-      // xtext.textContent = `x`;
-      // let xlabel = new CSS2DObject(xtext);
-      // xlabel.name = "xy";
-      // xlabel.position.set(2.3, -1.9, 0);
-      // // label8.position.set(0, 0, 0);
-      // this.scene.add(xlabel);
-
       createText(
         `x`,
         "x2y",
@@ -550,20 +410,6 @@ export default {
         sceneObjects2,
         this.scene2
       );
-
-      // let xtext2 = document.createElement("div");
-      // xtext2.className = "label";
-      // xtext2.style.color = " #d3d3d3";
-      // // xtext2.style.backgroundColor = `#ffffff`;
-      // // xtext2.style.fontWeight = "900";
-      // xtext2.style.padding = `.5px 1px 2px 3px`;
-      // xtext2.style.fontFamily = "Times New Roman";
-      // xtext2.textContent = `x`;
-      // let xlabel2 = new CSS2DObject(xtext2);
-      // xlabel2.name = "x2y";
-      // xlabel2.position.set(2.3, -1.9, 0);
-      // // label8.position.set(0, 0, 0);
-      // this.scene2.add(xlabel2);
 
       const createMomentVector = (
         vecBottom,
@@ -670,25 +516,6 @@ export default {
           this.scene
         );
 
-        // let text5 = document.createElement("div");
-        // text5.className = "label";
-        // text5.style.color = "rgb(0,0,0)";
-        // text5.style.fontFamily = "Times New Roman";
-        // text5.style.fontStyle = "italic";
-        // text5.textContent = `M`;
-        // text5.style.color = "hsl(344, 100%, 51%)";
-        // text5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // text5.style.borderRadius = "25%";
-        // text5.style.padding = `0px 2px 0px 2px`;
-        // text5.fontWeight = `bold`;
-        // text5.style.fontWeight = "600";
-        // text5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
-        // let label5 = new CSS2DObject(text5);
-        // label5.name = "M";
-        // sceneObjects.push(label5.name);
-        // label5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
-        // this.scene.add(label5);
-
         createText(
           "M",
           "m",
@@ -700,28 +527,6 @@ export default {
           sceneObjects2,
           this.scene2
         );
-
-        // let text5_5 = document.createElement("div");
-        // text5_5.className = "label";
-        // text5_5.style.color = "rgb(0,0,0)";
-        // text5_5.textContent = `M`;
-        // text5_5.style.color = "hsl(344, 100%, 51%)";
-        // text5_5.style.fontFamily = "Times New Roman";
-        // text5_5.style.fontStyle = "italic";
-
-        // text5_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // text5_5.style.borderRadius = "25%";
-        // text5_5.style.padding = `0px 2px 0px 2px`;
-        // text5_5.fontWeight = `bold`;
-        // text5_5.style.fontWeight = "600";
-        // text5_5.style.boxShadow = `1px 2px 3px rgba(0,0,0,.5)`;
-        // let label5_5 = new CSS2DObject(text5_5);
-        // label5_5.name = "M";
-        // sceneObjects.push(label5_5.name);
-        // label5_5.position.set(vecTop.x, vecTop.y + 1, vecTop.z);
-        // this.scene2.add(label5_5);
-        // label5_5.name = "angle4324";
-        // sceneObjects2.push(label5_5.name);
       };
 
       let fVector;
@@ -824,22 +629,7 @@ export default {
           sceneObjects,
           this.scene
         );
-        // let text4 = document.createElement("div");
-        // text4.className = "label";
-        // text4.style.color = "rgb(0,0,0)";
-        // text4.textContent = `F`;
-        // text4.style.color = "hsl(189, 92%, 49%)";
-        // text4.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // // text4.style.padding = `3px 2px 3px 2px`;
-        // text4.style.fontFamily = "Times New Roman";
-        // text4.style.fontStyle = "italic";
-        // text4.style.fontWeight = "700";
-        // let label4 = new CSS2DObject(text4);
-        // label4.name = "F";
-        // sceneObjects.push(label4.name);
 
-        // label4.position.set(newPosition.x, newPosition.y, newPosition.z);
-        // this.scene.add(label4);
         createText(
           "F",
           "F",
@@ -851,24 +641,7 @@ export default {
           sceneObjects2,
           this.scene2
         );
-        // let text4_5 = document.createElement("div");
-        // text4_5.className = "label";
-        // text4_5.style.color = "rgb(0,0,0)";
-        // text4_5.textContent = `F`;
-        // text4_5.style.color = "hsl(189, 92%, 49%)";
-        // text4_5.style.fontFamily = "Times New Roman";
-        // text4_5.style.backgroundColor = `rgba(255, 255, 255, 0.9)`;
-        // // text4_5.style.padding = `3px 2px 3px 2px`;
-        // text4_5.style.fontWeight = "900";
-        // let label4_5 = new CSS2DObject(text4_5);
-        // label4_5.name = "F";
-        // sceneObjects.push(label4_5.name);
-        // label4_5.position.set(newPosition.x, newPosition.y, newPosition.z);
-        // this.scene2.add(label4_5);
-        // label4_5.name = "angwele4324";
-        // sceneObjects2.push(label4_5.name);
 
-        // cone.position.set((0, 1, 1));
         cone.name = "arrow head";
         // cone.rotateZ(-this.length);
         cone.renderOrder = 1002;
@@ -986,21 +759,6 @@ export default {
           sceneObjects,
           this.scene
         );
-
-        // let text2 = document.createElement("div");
-        // text2.className = "label";
-        // text2.style.color = "rgb(0,0,0)";
-        // text2.style.fontFamily = "Times New Roman";
-        // text2.textContent = `${Math.round(
-        //   ((this.length + 2.158638) * 180) / Math.PI
-        // )}°`;
-        // let label2 = new CSS2DObject(text2);
-        // text2.style.fontWeight = "900";
-        // label2.name = "angle";
-        // sceneObjects.push(label2.name);
-
-        // this.scene.add(label2);
-
         createText(
           `${Math.round(((this.length + 2.158638) * 180) / Math.PI)}°`,
           "angle",
@@ -1012,63 +770,31 @@ export default {
           sceneObjects2,
           this.scene2
         );
-
-        // let text2_5 = document.createElement("div");
-        // text2_5.className = "label";
-        // text2_5.style.color = "rgb(0,0,0)";
-        // text2_5.style.fontFamily = "Times New Roman";
-        // text2_5.textContent = `${Math.round(
-        //   ((this.length + 2.158638) * 180) / Math.PI
-        // )}°`;
-        // let label2_5 = new CSS2DObject(text2_5);
-        // text2_5.style.fontWeight = "900";
-        // label2_5.name = "angle";
-        // sceneObjects.push(label2_5.name);
-        // if (((this.length + 2.158638) * 180) / Math.PI > 0) {
-        //   label2_5.position.set(0.3, 0.3, 0);
-        // } else {
-        //   label2_5.position.set(0.3, -0.5, 0);
-        // }
-
-        // this.scene2.add(label2_5);
-        // label2_5.name = "angwwerwele4324";
-        // sceneObjects2.push(label2_5.name);
       };
+
       createAngleArcGeometry();
       let vec11 = new Three.Vector3(0, 1, 0);
       let vec22 = new Three.Vector3(0, 3, 0);
       let vecColor3 = 0x0acbee;
       createVectorGeometry(vec11, vec22, vecColor3, true);
-      // Draw Force Vector
-      // let vec1 = new Three.Vector3(0, this.length, 0);
-      // let vec2 = new Three.Vector3(0, 0, 0);
-      // let vecColor = 0x0acbee;
       let createAction = true;
-      // createVectorGeometry(vec1, vec2, vecColor, true);
-
       let oldValue = -1;
-      // let finishedSpin = false;
-      // let theta2 = 0.01;
       let oldSlider = this.length;
-
       let rVec2 = new Three.Vector3(3, 2, 0);
       let momentVec2 = rVec2.cross(fVector);
-
       createMomentVector(
         new Three.Vector3(-3, -2, 0),
         new Three.Vector3(-3, -2, 1.8 * momentVec2.z),
         0xff064a,
         false
       );
-
       createStillLine(
         new Three.Vector3(-3, -2, 0),
         new Three.Vector3(-0.15, -0.15, 0),
         0x85cb33,
         false
       );
-
-      this.updateSlider = () => {
+      this.updateSceneLoop = () => {
         if (oldSlider !== this.length) {
           removeObjectFromScene(sceneObjects);
           removeObjectFromScene2(sceneObjects2);
@@ -1085,7 +811,6 @@ export default {
             false
           );
         }
-
         let rVec = new Three.Vector3(3, 2, 0);
         let momentVec = rVec.cross(fVector);
 
@@ -1135,68 +860,91 @@ export default {
         }
         oldSlider = this.length;
       };
+      this.renderCamera = (
+        firstView,
+        scene,
+        camera,
+        renderer,
+        labelRenderer
+      ) => {
+        renderer.setScissorTest(true);
+        renderer.setViewport(
+          firstView.x,
+          firstView.y,
+          firstView.width,
+          firstView.height
+        );
+        renderer.setScissor(
+          firstView.x,
+          firstView.y,
+          firstView.width,
+          firstView.height
+        );
 
-      // Add action line to Vector Geometry
-      // Add Label to vectors
-
-      //
+        camera.aspect = firstView.width / firstView.height;
+        camera.updateProjectionMatrix();
+        renderer.render(scene, camera);
+        labelRenderer.render(scene, camera);
+      };
     },
     animate: function () {
       requestAnimationFrame(this.animate);
-      this.updateSlider();
-
-      this.renderer.setScissorTest(true);
-      let firstView = this.ollieViewports[0];
-      this.renderer.setViewport(
-        firstView.x,
-        firstView.y,
-        firstView.width,
-        firstView.height
+      this.updateSceneLoop();
+      this.renderCamera(
+        this.ollieViewports[0],
+        this.scene,
+        this.camera,
+        this.renderer,
+        this.labelRenderer
       );
-      this.renderer.setScissor(
-        firstView.x,
-        firstView.y,
-        firstView.width,
-        firstView.height
+      this.renderCamera(
+        this.ollieViewports[1],
+        this.scene,
+        this.camera2,
+        this.renderer,
+        this.labelRenderer2
       );
-      this.renderer.render(this.scene, this.camera);
-      this.camera.aspect = firstView.width / firstView.height;
-      this.camera.updateProjectionMatrix();
-      this.renderer.render(this.scene, this.camera);
-
-      this.labelRenderer.render(this.scene, this.camera);
-
-      this.renderer.setScissorTest(true);
-      let secondView = this.ollieViewports[1];
-      this.renderer.setViewport(
-        secondView.x,
-        secondView.y,
-        secondView.width,
-        secondView.height
-      );
-      this.renderer.setScissor(
-        secondView.x,
-        secondView.y,
-        secondView.width,
-        secondView.height
-      );
+      // this.renderer.setScissorTest(true);
+      // let firstView = this.ollieViewports[0];
+      // this.renderer.setViewport(
+      //   firstView.x,
+      //   firstView.y,
+      //   firstView.width,
+      //   firstView.height
+      // );
+      // this.renderer.setScissor(
+      //   firstView.x,
+      //   firstView.y,
+      //   firstView.width,
+      //   firstView.height
+      // );
+      // this.renderer.render(this.scene, this.camera);
+      // this.camera.aspect = firstView.width / firstView.height;
+      // this.camera.updateProjectionMatrix();
+      // this.renderer.render(this.scene, this.camera);
+      // this.labelRenderer.render(this.scene, this.camera);
+      // // this.renderer.setScissorTest(true);
+      // let secondView = this.ollieViewports[1];
+      // this.renderer.setViewport(
+      //   secondView.x,
+      //   secondView.y,
+      //   secondView.width,
+      //   secondView.height
+      // );
+      // this.renderer.setScissor(
+      //   secondView.x,
+      //   secondView.y,
+      //   secondView.width,
+      //   secondView.height
+      // );
       this.renderer.clearColor(255, 255, 0);
+      // this.renderer.render(this.scene, this.camera2);
+      // this.camera2.aspect = secondView.width / secondView.height;
+      // this.camera2.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera2);
-      this.camera2.aspect = secondView.width / secondView.height;
-      this.camera2.updateProjectionMatrix();
-      this.renderer.render(this.scene, this.camera2);
-
       this.labelRenderer.render(this.scene, this.camera);
-      // this.rendlabelRenderererer.setViewport(450, 0, 450, 500);
-
       this.labelRenderer2.render(this.scene2, this.camera2);
     },
-    // onWindowResize: function () {
-    //   this.renderer.setSize(window.innerWidth, window.innerHeight);
-    //   this.camera.aspect = window.innerWidth / window.innerHeight;
-    //   this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
-    //   this.camera.updateProjectionMatrix();
-    // },
   },
   created() {
     window.addEventListener("resize", this.onWindowResize, false);
