@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector SET SIZE ON CONTAINER
+        The moment vector ANIMATION RESET CHECKING CONTAINER
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -137,7 +137,7 @@ export default {
 
       this.renderer = new Three.WebGLRenderer({ antialias: true });
 
-      this.renderer.setSize(500, 500);
+      this.renderer.setSize(container.clientWidth, container.clientHeight);
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.sortObjects = true;
@@ -239,21 +239,21 @@ export default {
       };
 
       resizeCanvasToDisplaySize();
-      // const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
-      // resizeObserver.observe(container, { box: "content-box" });
+      const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
+      resizeObserver.observe(container, { box: "content-box" });
 
-      // const removeObjectFromScene = (objectName) => {
-      //   objectName.forEach((object) => {
-      //     let selectedObject = this.scene.getObjectByName(object);
-      //     this.scene.remove(selectedObject);
-      //   });
-      // };
-      // const removeObjectFromScene2 = (objectName) => {
-      //   objectName.forEach((object) => {
-      //     let selectedObject = this.scene2.getObjectByName(object);
-      //     this.scene2.remove(selectedObject);
-      //   });
-      // };
+      const removeObjectFromScene = (objectName) => {
+        objectName.forEach((object) => {
+          let selectedObject = this.scene.getObjectByName(object);
+          this.scene.remove(selectedObject);
+        });
+      };
+      const removeObjectFromScene2 = (objectName) => {
+        objectName.forEach((object) => {
+          let selectedObject = this.scene2.getObjectByName(object);
+          this.scene2.remove(selectedObject);
+        });
+      };
 
       const createStillLine = (vecBottom, vecTop, color) => {
         let points2 = [];
@@ -778,9 +778,9 @@ export default {
       let vec22 = new Three.Vector3(0, 3, 0);
       let vecColor3 = 0x0acbee;
       createVectorGeometry(vec11, vec22, vecColor3, true);
-      // let createAction = true;
-      // let oldValue = -1;
-      // let oldSlider = this.length;
+      let createAction = true;
+      let oldValue = -1;
+      let oldSlider = this.length;
       let rVec2 = new Three.Vector3(3, 2, 0);
       let momentVec2 = rVec2.cross(fVector);
       createMomentVector(
@@ -795,72 +795,72 @@ export default {
         0x85cb33,
         false
       );
-      // this.updateSceneLoop = () => {
-      //   if (oldSlider !== this.length) {
-      //     removeObjectFromScene(sceneObjects);
-      //     removeObjectFromScene2(sceneObjects2);
-      //     sceneObjects = [];
-      //     sceneObjects2 = [];
-      //     let vec1 = new Three.Vector3(0, 1, 0);
-      //     let vec2 = new Three.Vector3(0, 3, 0);
-      //     let vecColor = 0x0acbee;
-      //     createVectorGeometry(vec1, vec2, vecColor, createAction);
-      //     createStillLine(
-      //       new Three.Vector3(-3, -2, 0),
-      //       new Three.Vector3(-0.15, -0.15, 0),
-      //       0x85cb33,
-      //       false
-      //     );
-      //   }
-      //   let rVec = new Three.Vector3(3, 2, 0);
-      //   let momentVec = rVec.cross(fVector);
+      this.updateSceneLoop = () => {
+        if (oldSlider !== this.length) {
+          removeObjectFromScene(sceneObjects);
+          removeObjectFromScene2(sceneObjects2);
+          sceneObjects = [];
+          sceneObjects2 = [];
+          let vec1 = new Three.Vector3(0, 1, 0);
+          let vec2 = new Three.Vector3(0, 3, 0);
+          let vecColor = 0x0acbee;
+          createVectorGeometry(vec1, vec2, vecColor, createAction);
+          createStillLine(
+            new Three.Vector3(-3, -2, 0),
+            new Three.Vector3(-0.15, -0.15, 0),
+            0x85cb33,
+            false
+          );
+        }
+        let rVec = new Three.Vector3(3, 2, 0);
+        let momentVec = rVec.cross(fVector);
 
-      //   if (oldSlider !== this.length) {
-      //     createAngleArcGeometry();
-      //   }
-      //   if (oldSlider !== this.length) {
-      //     if (
-      //       (oldValue >= 0 && momentVec.z <= 0) ||
-      //       (oldValue <= 0 && momentVec.z >= 0)
-      //     ) {
-      //       let arrowsSVG = this.scene.getObjectByName("arrowss");
-      //       // point - the point of rotation (THREE.Vector3)
-      //       let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
-      //       // axis - the axis of rotation (normalized THREE.Vector3)
-      //       let svgAxis = new Three.Vector3(0, 1, 0).normalize();
-      //       // theta - radian value of rotation
-      //       let theta = Math.PI;
-      //       // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
-      //       let pointIsWorld = true;
+        if (oldSlider !== this.length) {
+          createAngleArcGeometry();
+        }
+        if (oldSlider !== this.length) {
+          if (
+            (oldValue >= 0 && momentVec.z <= 0) ||
+            (oldValue <= 0 && momentVec.z >= 0)
+          ) {
+            let arrowsSVG = this.scene.getObjectByName("arrowss");
+            // point - the point of rotation (THREE.Vector3)
+            let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
+            // axis - the axis of rotation (normalized THREE.Vector3)
+            let svgAxis = new Three.Vector3(0, 1, 0).normalize();
+            // theta - radian value of rotation
+            let theta = Math.PI;
+            // pointIsWorld - boolean indicating the point is in world coordinates (default = false)
+            let pointIsWorld = true;
 
-      //       rotateAboutPoint(
-      //         arrowsSVG,
-      //         rotateSVGaxis,
-      //         svgAxis,
-      //         theta,
-      //         pointIsWorld
-      //       );
+            rotateAboutPoint(
+              arrowsSVG,
+              rotateSVGaxis,
+              svgAxis,
+              theta,
+              pointIsWorld
+            );
 
-      //       // rotateAboutPoint(
-      //       //   arrowsSVG,
-      //       //   rotateSVGaxis,
-      //       //   new Three.Vector3(0, 0, 1).normalize(),
-      //       //   -theta,
-      //       //   pointIsWorld
-      //       // );
-      //     }
-      //   }
-      //   oldValue = momentVec.z;
-      //   if (oldSlider !== this.length) {
-      //     createMomentVector(
-      //       new Three.Vector3(-3, -2, 0),
-      //       new Three.Vector3(-3, -2, 1.8 * momentVec.z),
-      //       0xff064a,
-      //       false
-      //     );
-      //   }
-      //   oldSlider = this.length;
-      // };
+            // rotateAboutPoint(
+            //   arrowsSVG,
+            //   rotateSVGaxis,
+            //   new Three.Vector3(0, 0, 1).normalize(),
+            //   -theta,
+            //   pointIsWorld
+            // );
+          }
+        }
+        oldValue = momentVec.z;
+        if (oldSlider !== this.length) {
+          createMomentVector(
+            new Three.Vector3(-3, -2, 0),
+            new Three.Vector3(-3, -2, 1.8 * momentVec.z),
+            0xff064a,
+            false
+          );
+        }
+        oldSlider = this.length;
+      };
       this.renderCamera = (
         firstView,
         scene,
@@ -890,8 +890,8 @@ export default {
     },
     animate: function () {
       requestAnimationFrame(this.animate);
-      // this.renderer.clearColor(255, 255, 0);
-      // this.updateSceneLoop();
+      this.renderer.clearColor(255, 255, 0);
+      this.updateSceneLoop();
 
       this.renderCamera(
         this.ollieViewports[0],
@@ -976,8 +976,8 @@ figcaption {
   flex: 1;
   width: 100%;
   overflow: scroll;
-  /* height: 400px; */
-  aspect-ratio: 2/1;
+  height: 400px;
+  /* aspect-ratio: 2/1; */
 }
 
 /* @media only screen and (max-width: 768px) {
