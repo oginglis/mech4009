@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector With Conosole Log Added
+        The moment vector With Resize observer added
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -58,7 +58,7 @@
 
 <script >
 import * as Three from "three";
-
+import ResizeObserver from "resize-observer-polyfill";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Slider from "@vueform/slider";
 import {
@@ -238,6 +238,18 @@ export default {
         this.camera.updateProjectionMatrix();
         this.camera2.updateProjectionMatrix();
       };
+
+      // const ro = new ResizeObserver((entries, observer) => {
+      //   for (const entry of entries) {
+      //     const { left, top, width, height } = entry.contentRect;
+
+      //     console.log("Element:", entry.target);
+      //     console.log(`Element's size: ${width}px x ${height}px`);
+      //     console.log(`Element's paddings: ${top}px ; ${left}px`);
+      //   }
+      // });
+
+      // ro.observe(document.body);
 
       resizeCanvasToDisplaySize();
       const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
