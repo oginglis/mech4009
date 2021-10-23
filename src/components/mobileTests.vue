@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector With Resize observer with POLYFILL
+        The moment vector With Resize observer with PADDIGN ADDED LISTE
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -29,8 +29,9 @@
         :step="0.5"
       />
     </div>
-
+    <!-- <div id="container_wrapper"> -->
     <div id="container"></div>
+    <!-- </div> -->
     <img
       src="@/assets/rhr.png"
       class="newimages"
@@ -94,6 +95,7 @@ export default {
     init: function () {
       // Find Container To Mount To
       let container = document.getElementById("container");
+      let containerWrapper = document.getElementById("container");
       this.width = container.clientWidth;
       this.height = container.clientHeight;
       // Create a scene
@@ -209,9 +211,9 @@ export default {
       const resizeCanvasToDisplaySize = () => {
         this.width = container.clientWidth;
         this.height = container.clientHeight;
-        console.log("resize obsever called");
-        this.labelRenderer.setSize(this.width / 2, 400);
-        this.labelRenderer2.setSize(this.width / 2, 400);
+        console.log("height", this.height, "width", this.width);
+        this.labelRenderer.setSize(this.width / 2, this.height);
+        this.labelRenderer2.setSize(this.width / 2, this.height);
         this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
         this.ollieViewports = [
           {
@@ -219,20 +221,20 @@ export default {
             x: 0,
             y: 0,
             width: this.width / 2,
-            height: 400,
+            height: this.height,
           },
           {
             view: 2,
             x: this.width / 2,
             y: 0,
             width: this.width / 2,
-            height: 400,
+            height: this.height,
           },
         ];
 
-        this.renderer.setSize(this.width, 400);
-        this.camera.aspect = this.width / 2 / 400;
-        this.camera2.aspect = this.width / 2 / 400;
+        this.renderer.setSize(this.width, this.height);
+        this.camera.aspect = this.width / 2 / this.height;
+        this.camera2.aspect = this.width / 2 / this.height;
         this.labelRenderer.render(this.scene, this.camera, false);
         this.labelRenderer.render(this.scene2, this.camera2, false);
         this.camera.updateProjectionMatrix();
@@ -253,7 +255,7 @@ export default {
 
       resizeCanvasToDisplaySize();
       const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
-      resizeObserver.observe(container, { box: "content-box" });
+      resizeObserver.observe(containerWrapper, { box: "content-box" });
 
       const removeObjectFromScene = (objectName) => {
         objectName.forEach((object) => {
@@ -766,7 +768,7 @@ export default {
           `${Math.round(((this.length + 2.158638) * 180) / Math.PI)}°`,
           "angle",
           "rgb(0,0,0)",
-          `rgba(255, 255, 255, 0.9)`,
+          `rgba(255, 255, 255, 0)`,
           positionObject.x,
           positionObject.y,
           positionObject.z,
@@ -777,7 +779,7 @@ export default {
           `${Math.round(((this.length + 2.158638) * 180) / Math.PI)}°`,
           "angle",
           "rgb(0,0,0)",
-          `rgba(255, 255, 255, 0.9)`,
+          `rgba(255, 255, 255, 0)`,
           positionObject.x,
           positionObject.y,
           positionObject.z,
@@ -983,14 +985,23 @@ figcaption {
   margin: 0 auto;
   margin-top: 2rem;
 }
+
+/* #container_wrapper {
+  overflow: auto;
+  height: 500px;
+  max-width: 100%;
+} */
 #container {
   position: relative;
   margin-top: 2rem;
   flex: 1;
   width: 100%;
-  overflow: scroll;
-  height: 400px;
-  /* aspect-ratio: 2/1; */
+  /* overflow: scroll; */
+  /* height: 100%;
+  /* height: 400px; */
+  /* padding-bottom: 50%;
+  box-sizing: border-box; */
+  aspect-ratio: 2/1;
 }
 
 /* @media only screen and (max-width: 768px) {
