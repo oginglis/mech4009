@@ -1,14 +1,14 @@
 <template>
   <div class="page">
-    <ThreeCanvas3 />
+    <MobileTests />
   </div>
 </template>
 
 <script >
-import ThreeCanvas3 from "./ThreeCanvas3.vue";
+import MobileTests from "./mobileTests.vue";
 export default {
   name: "TitleSection",
-  components: { ThreeCanvas3 },
+  components: { MobileTests },
   data: function () {
     return {
       formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",
