@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector Test 1
+        The moment vector SET SIZE ON CONTAINER
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -137,7 +137,7 @@ export default {
 
       this.renderer = new Three.WebGLRenderer({ antialias: true });
 
-      this.renderer.setSize(container.clientWidth, container.clientHeight);
+      this.renderer.setSize(500, 500);
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.sortObjects = true;
