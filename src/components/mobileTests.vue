@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector With Resize observer added
+        The moment vector With Resize observer with POLYFILL
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -209,9 +209,9 @@ export default {
       const resizeCanvasToDisplaySize = () => {
         this.width = container.clientWidth;
         this.height = container.clientHeight;
-        // console.log("width", this.width, "height", this.height);
-        this.labelRenderer.setSize(this.width / 2, this.height);
-        this.labelRenderer2.setSize(this.width / 2, this.height);
+        console.log("resize obsever called");
+        this.labelRenderer.setSize(this.width / 2, 400);
+        this.labelRenderer2.setSize(this.width / 2, 400);
         this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
         this.ollieViewports = [
           {
@@ -219,20 +219,20 @@ export default {
             x: 0,
             y: 0,
             width: this.width / 2,
-            height: this.height,
+            height: 400,
           },
           {
             view: 2,
             x: this.width / 2,
             y: 0,
             width: this.width / 2,
-            height: this.height,
+            height: 400,
           },
         ];
 
-        this.renderer.setSize(this.width, this.height);
-        this.camera.aspect = this.width / 2 / this.height;
-        this.camera2.aspect = this.width / 2 / this.height;
+        this.renderer.setSize(this.width, 400);
+        this.camera.aspect = this.width / 2 / 400;
+        this.camera2.aspect = this.width / 2 / 400;
         this.labelRenderer.render(this.scene, this.camera, false);
         this.labelRenderer.render(this.scene2, this.camera2, false);
         this.camera.updateProjectionMatrix();
