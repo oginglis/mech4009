@@ -2,7 +2,7 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector With Resize observer with PADDIGN ADDED LISTE
+        The moment vector Removing Aspect Ratio
         <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
         <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
         equal to the cross products of the
@@ -29,9 +29,9 @@
         :step="0.5"
       />
     </div>
-    <!-- <div id="container_wrapper"> -->
+
     <div id="container"></div>
-    <!-- </div> -->
+
     <img
       src="@/assets/rhr.png"
       class="newimages"
@@ -59,7 +59,7 @@
 
 <script >
 import * as Three from "three";
-import ResizeObserver from "resize-observer-polyfill";
+// import ResizeObserver from "resize-observer-polyfill";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Slider from "@vueform/slider";
 import {
@@ -95,7 +95,7 @@ export default {
     init: function () {
       // Find Container To Mount To
       let container = document.getElementById("container");
-      let containerWrapper = document.getElementById("container");
+      // let containerWrapper = document.getElementById("container__wrapper");
       this.width = container.clientWidth;
       this.height = container.clientHeight;
       // Create a scene
@@ -208,13 +208,20 @@ export default {
         scene.add(label3);
       };
 
-      const resizeCanvasToDisplaySize = () => {
+      this.resizeCanvasToDisplaySize = () => {
+        var computedStyle = getComputedStyle(container);
+
         this.width = container.clientWidth;
         this.height = container.clientHeight;
+        this.height -=
+          parseFloat(computedStyle.paddingTop) +
+          parseFloat(computedStyle.paddingBottom);
         console.log("height", this.height, "width", this.width);
         this.labelRenderer.setSize(this.width / 2, this.height);
         this.labelRenderer2.setSize(this.width / 2, this.height);
         this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
+        this.labelRenderer2.domElement.style.top = `0 px`;
+        this.labelRenderer.domElement.style.top = `0 px`;
         this.ollieViewports = [
           {
             view: 1,
@@ -231,8 +238,15 @@ export default {
             height: this.height,
           },
         ];
-
+        // console.log("Called Set Size) with width and height", this.width, this.height)
         this.renderer.setSize(this.width, this.height);
+        console.log(this.renderer.getSize(new Three.Vector2()));
+        console.log(
+          "Called Set Size) with width and height",
+          this.width,
+          this.height,
+          this.ollieViewports[0]
+        );
         this.camera.aspect = this.width / 2 / this.height;
         this.camera2.aspect = this.width / 2 / this.height;
         this.labelRenderer.render(this.scene, this.camera, false);
@@ -253,9 +267,9 @@ export default {
 
       // ro.observe(document.body);
 
-      resizeCanvasToDisplaySize();
-      const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
-      resizeObserver.observe(containerWrapper, { box: "content-box" });
+      this.resizeCanvasToDisplaySize();
+      // const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
+      // resizeObserver.observe(containerWrapper, { box: "content-box" });
 
       const removeObjectFromScene = (objectName) => {
         objectName.forEach((object) => {
@@ -905,6 +919,7 @@ export default {
     },
     animate: function () {
       requestAnimationFrame(this.animate);
+      this.resizeCanvasToDisplaySize();
       this.renderer.clearColor(255, 255, 0);
       this.updateSceneLoop();
 
@@ -987,9 +1002,9 @@ figcaption {
 }
 
 /* #container_wrapper {
-  overflow: auto;
-  height: 500px;
-  max-width: 100%;
+  overflow: hidden;
+  /* height: 500px; */
+/* max-width: 100%;
 } */
 #container {
   position: relative;
@@ -997,11 +1012,11 @@ figcaption {
   flex: 1;
   width: 100%;
   /* overflow: scroll; */
-  /* height: 100%;
+  /* height: 100%; */
   /* height: 400px; */
-  /* padding-bottom: 50%;
-  box-sizing: border-box; */
-  aspect-ratio: 2/1;
+  padding-bottom: 50%;
+  /* box-sizing: border-box; */
+  /* aspect-ratio: 2/1; */
 }
 
 /* @media only screen and (max-width: 768px) {
