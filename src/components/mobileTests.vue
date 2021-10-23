@@ -1017,9 +1017,9 @@ figcaption {
   width: 200px;
   margin-top: 4rem;
 
-  --slider-tooltip-bg: #0acbee;
+  /* --slider-tooltip-bg: #0acbee;
   --slider-connect-bg: #0acbee;
-  --slider-tooltip-color: rgb(0, 0, 0);
+  --slider-tooltip-color: rgb(0, 0, 0); */
 }
 
 .viz-wrap {
