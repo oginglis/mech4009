@@ -29,8 +29,9 @@
         :step="0.5"
       />
     </div>
-
-    <div id="container"></div>
+    <div id="containerWrapper">
+      <div id="container"></div>
+    </div>
 
     <img
       src="@/assets/rhr.png"
@@ -98,6 +99,7 @@ export default {
       // let containerWrapper = document.getElementById("container__wrapper");
       this.width = container.clientWidth;
       this.height = container.clientHeight;
+
       // Create a scene
       this.scene = new Three.Scene();
       this.scene2 = new Three.Scene();
@@ -148,7 +150,7 @@ export default {
       this.labelRenderer = new CSS2DRenderer();
       this.labelRenderer.setSize(this.width / 2, this.height);
       this.labelRenderer.domElement.style.position = "absolute";
-      this.labelRenderer.domElement.style.bottom = "0px";
+
       this.labelRenderer.domElement.style.left = "0px";
       this.labelRenderer.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer.domElement);
@@ -156,7 +158,7 @@ export default {
       this.labelRenderer2 = new CSS2DRenderer();
       this.labelRenderer2.setSize(this.width / 2, this.height);
       this.labelRenderer2.domElement.style.position = "absolute";
-      this.labelRenderer2.domElement.style.bottom = "0px";
+
       this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
       this.labelRenderer2.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer2.domElement);
@@ -212,10 +214,11 @@ export default {
         var computedStyle = getComputedStyle(container);
 
         this.width = container.clientWidth;
-        this.height = container.clientHeight;
+        this.height = container.clientWidth / 2;
         this.height -=
           parseFloat(computedStyle.paddingTop) +
           parseFloat(computedStyle.paddingBottom);
+
         console.log("height", this.height, "width", this.width);
         this.labelRenderer.setSize(this.width / 2, this.height);
         this.labelRenderer2.setSize(this.width / 2, this.height);
@@ -1006,26 +1009,27 @@ figcaption {
   /* height: 500px; */
 /* max-width: 100%;
 } */
+
+#containerWrapper {
+  margin-top: 2rem;
+  padding: 10px;
+  background: white;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+#testContainer {
+  width: 100%;
+  padding-bottom: 50%;
+  background: gold; /** <-- For the demo **/
+}
 #container {
   position: relative;
   margin-top: 2rem;
-  flex: 1;
-  width: 100%;
-  /* overflow: scroll; */
-  /* height: 100%; */
-  /* height: 400px; */
-  padding-bottom: 50%;
-  /* box-sizing: border-box; */
-  /* aspect-ratio: 2/1; */
-}
 
-/* @media only screen and (max-width: 768px) {
-  #container {
-    height: 800px;
-    width: 400px;
-    background-color: pink;
-  }
-} */
+  width: 100%;
+}
 
 .newimages {
   width: 200px;
