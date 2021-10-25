@@ -2,10 +2,9 @@
   <div class="viz-wrap">
     <div class="viz-controls-wrap">
       <p class="intro_title__width">
-        The moment vector Removing Aspect Ratio
-        <img src="@/assets/mVector.svg" alt="M Vector" /> of the force
-        <img src="@/assets/fVector.svg" alt="F Vector" /> about point P will be
-        equal to the cross products of the
+        The moment vector <img src="@/assets/mVector.svg" alt="M Vector" /> of
+        the force <img src="@/assets/fVector.svg" alt="F Vector" /> about point
+        P will be equal to the cross products of the
         <img src="@/assets/rVector.svg" alt="r Vector" /> vector and the force
         vector <img src="@/assets/fVector.svg" alt="F Vector" />. The
         <img src="@/assets/rVector.svg" alt="r Vector" /> vector is a vector
@@ -60,7 +59,6 @@
 
 <script >
 import * as Three from "three";
-// import ResizeObserver from "resize-observer-polyfill";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Slider from "@vueform/slider";
 import {
@@ -94,27 +92,19 @@ export default {
       ).toFixed(2)} Radians`;
     },
     init: function () {
-      // Find Container To Mount To
       let container = document.getElementById("container");
-      // let containerWrapper = document.getElementById("container__wrapper");
       this.width = container.clientWidth;
       this.height = container.clientHeight;
-
-      // Create a scene
       this.scene = new Three.Scene();
       this.scene2 = new Three.Scene();
       let sceneObjects = [];
       let sceneObjects2 = [];
-      // Create a camera and set its position
       this.camera = new Three.PerspectiveCamera(70, 2, 0.01, 50);
       this.camera2 = new Three.PerspectiveCamera(70, 2, 0.01, 50);
-      // Position Camera and point it to the origin
       this.camera.position.set(-2, -2, 10);
       this.camera2.position.set(4, 5, 8);
       this.camera2.lookAt(-2, -1.5, 0);
-      // this.camera2.rotateY(0.8);
-      // this.camera.lookAt(this.scene.position);
-      this.ollieViewports = [
+      this.customViewports = [
         { view: 1, x: 0, y: 0, width: this.width / 2, height: this.height / 2 },
         {
           view: 2,
@@ -124,64 +114,44 @@ export default {
           height: this.height / 2,
         },
       ];
-
-      // Arrow Helper
       const dir = new Three.Vector3(0, 1, 0);
-
-      //normalize the direction vector (convert to vector of length 1)
       dir.normalize();
-
       const origin = new Three.Vector3(0, 3, 0);
-
       const hex = 0x003e74;
-
       const arrowHelper = new Three.ArrowHelper(dir, origin, this.length, hex);
       arrowHelper.name = "first arrow";
       this.scene.add(arrowHelper);
-
       this.renderer = new Three.WebGLRenderer({ antialias: true });
-
       this.renderer.setSize(container.clientWidth, container.clientHeight);
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.sortObjects = true;
-      // console.log(this.renderer, "Init function called");
-
       this.labelRenderer = new CSS2DRenderer();
       this.labelRenderer.setSize(this.width / 2, this.height);
       this.labelRenderer.domElement.style.position = "absolute";
-
       this.labelRenderer.domElement.style.left = "0px";
       this.labelRenderer.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer.domElement);
-
       this.labelRenderer2 = new CSS2DRenderer();
       this.labelRenderer2.setSize(this.width / 2, this.height);
       this.labelRenderer2.domElement.style.position = "absolute";
-
       this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
       this.labelRenderer2.domElement.style.pointerEvents = "none";
       container.appendChild(this.labelRenderer2.domElement);
-
-      // Create a grid
       this.gridHelper = new Three.GridHelper(10, 10, 0x444444, 0xd3d3d3);
       this.gridHelper.rotateX((90 * Math.PI) / 180);
       this.gridHelper.position.set(-3, -2, 0);
       this.scene.add(this.gridHelper);
-      // Create an axis helper
       this.axesHelper = new Three.AxesHelper(1);
       container.appendChild(this.renderer.domElement);
-
       const rotateAboutPoint = (obj, point, axis, theta) => {
         if (obj) {
           obj.position.sub(point); // remove the offset
           obj.position.applyAxisAngle(axis, theta); // rotate the POSITION
           obj.position.add(point); // re-add the offset
-
           obj.rotateOnAxis(axis, theta);
         }
       };
-
       const createText = (
         content,
         name,
@@ -195,7 +165,6 @@ export default {
       ) => {
         let newText3 = document.createElement("div");
         newText3.className = "label";
-
         newText3.style.padding = `0px 2px 0px 2px`;
         newText3.style.fontWeight = "700";
         newText3.style.color = color;
@@ -212,20 +181,18 @@ export default {
 
       this.resizeCanvasToDisplaySize = () => {
         var computedStyle = getComputedStyle(container);
-
         this.width = container.clientWidth;
         this.height = container.clientWidth / 2;
         this.height -=
           parseFloat(computedStyle.paddingTop) +
           parseFloat(computedStyle.paddingBottom);
-
         // console.log("height", this.height, "width", this.width);
         this.labelRenderer.setSize(this.width / 2, this.height);
         this.labelRenderer2.setSize(this.width / 2, this.height);
         this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
         this.labelRenderer2.domElement.style.top = `0 px`;
         this.labelRenderer.domElement.style.top = `0 px`;
-        this.ollieViewports = [
+        this.customViewports = [
           {
             view: 1,
             x: 0,
@@ -241,15 +208,7 @@ export default {
             height: this.height,
           },
         ];
-        // console.log("Called Set Size) with width and height", this.width, this.height)
         this.renderer.setSize(this.width, this.height);
-        // console.log(this.renderer.getSize(new Three.Vector2()));
-        // console.log(
-        //   "Called Set Size) with width and height",
-        //   this.width,
-        //   this.height,
-        //   this.ollieViewports[0]
-        // );
         this.camera.aspect = this.width / 2 / this.height;
         this.camera2.aspect = this.width / 2 / this.height;
         this.labelRenderer.render(this.scene, this.camera, false);
@@ -258,22 +217,7 @@ export default {
         this.camera2.updateProjectionMatrix();
       };
 
-      // const ro = new ResizeObserver((entries, observer) => {
-      //   for (const entry of entries) {
-      //     const { left, top, width, height } = entry.contentRect;
-
-      //     console.log("Element:", entry.target);
-      //     console.log(`Element's size: ${width}px x ${height}px`);
-      //     console.log(`Element's paddings: ${top}px ; ${left}px`);
-      //   }
-      // });
-
-      // ro.observe(document.body);
-
       this.resizeCanvasToDisplaySize();
-      // const resizeObserver = new ResizeObserver(resizeCanvasToDisplaySize);
-      // resizeObserver.observe(containerWrapper, { box: "content-box" });
-
       const removeObjectFromScene = (objectName) => {
         objectName.forEach((object) => {
           let selectedObject = this.scene.getObjectByName(object);
@@ -301,8 +245,6 @@ export default {
         );
         let line = new Three.Line(tubeGeometry, lineMaterial);
         line.name = "r";
-        // line.position.set(vecBottom);
-
         const geometrySphere = new Three.SphereGeometry(0.3, 32, 16);
         const materialSphere = new Three.MeshBasicMaterial({ color: 0x000000 });
         const sphere = new Three.Mesh(geometrySphere, materialSphere);
@@ -311,7 +253,6 @@ export default {
         line.renderOrder = 1005;
         this.scene.add(line);
         sceneObjects.push(line.name);
-
         let newVec2 = new Three.Vector3();
         newVec2.subVectors(vecTop, vecBottom);
         let materialcone = new Three.MeshBasicMaterial({ color: color });
@@ -319,13 +260,11 @@ export default {
         let cone = new Three.Mesh(conegeometry, materialcone);
         var axis = new Three.Vector3(0, 1, 0);
         cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
-
         let rotatedFXTOP =
           Math.cos(this.length) * vecTop.x - Math.sin(this.length) * vecTop.y;
         let rotateFYTOP =
           Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
         let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
-
         let rotatedFXBOTTOM =
           Math.cos(this.length) * vecBottom.x -
           Math.sin(this.length) * vecBottom.y;
@@ -338,16 +277,10 @@ export default {
         );
         let newVecBetweenPoints = new Three.Vector3();
         newVecBetweenPoints.subVectors(newTopVector, newBottomVector);
-
         cone.position.copy(vecTop);
-
-        // cone.position.set((0, 1, 1));
         cone.name = "arrow head";
-        // cone.rotateZ(-this.length);
         this.scene.add(cone);
-
         sceneObjects.push(cone.name);
-
         createText(
           `r`,
           "angle2",
@@ -359,7 +292,6 @@ export default {
           sceneObjects,
           this.scene
         );
-
         createText(
           `r`,
           "angle2",
@@ -383,7 +315,6 @@ export default {
         sceneObjects,
         this.scene
       );
-
       createText(
         `P`,
         "P",
@@ -395,7 +326,6 @@ export default {
         sceneObjects2,
         this.scene2
       );
-
       createText(
         `y`,
         "y",
@@ -407,7 +337,6 @@ export default {
         sceneObjects,
         this.scene
       );
-
       createText(
         `y`,
         "2y",
@@ -419,7 +348,6 @@ export default {
         sceneObjects2,
         this.scene2
       );
-
       createText(
         `x`,
         "xy",
@@ -431,7 +359,6 @@ export default {
         sceneObjects,
         this.scene
       );
-
       createText(
         `x`,
         "x2y",
@@ -443,7 +370,6 @@ export default {
         sceneObjects2,
         this.scene2
       );
-
       const createMomentVector = (
         vecBottom,
         vecTop,
@@ -463,27 +389,19 @@ export default {
         );
         let line = new Three.Line(tubeGeometry, lineMaterial);
         line.name = "r";
-        // line.position.set(vecBottom);
-
         const geometrySphere = new Three.SphereGeometry(0.1, 32, 16);
         const materialSphere = new Three.MeshBasicMaterial({ color: 0x000000 });
         const sphere = new Three.Mesh(geometrySphere, materialSphere);
         sphere.position.set(vecBottom.x, vecBottom.y, 0);
         this.scene.add(sphere);
-
         this.scene.add(line);
-
         sceneObjects.push(line.name);
-
         if (hasLineOfAction == true) {
           let newVec = new Three.Vector3();
           newVec.subVectors(vecTop, vecBottom);
           let lineofaction = [];
-          // let clone = Object.assign({}, newVec);
           let clone2 = Object.assign({}, newVec);
-          // let cloneVec = new Three.Vector3(...Object.values(clone));
           let cloneVec2 = new Three.Vector3(...Object.values(clone2));
-          // lineofaction.push(cloneVec);
           lineofaction.push(cloneVec2.multiplyScalar(-200));
           lineofaction.push(newVec.multiplyScalar(200));
           const dashedmaterial = new Three.LineDashedMaterial({
@@ -508,13 +426,11 @@ export default {
         let cone = new Three.Mesh(conegeometry, materialcone);
         var axis = new Three.Vector3(0, 1, 0);
         cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
-
         let rotatedFXTOP =
           Math.cos(this.length) * vecTop.x - Math.sin(this.length) * vecTop.y;
         let rotateFYTOP =
           Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
         let newTopVector = new Three.Vector3(rotatedFXTOP, rotateFYTOP);
-
         let rotatedFXBOTTOM =
           Math.cos(this.length) * vecBottom.x -
           Math.sin(this.length) * vecBottom.y;
@@ -527,16 +443,10 @@ export default {
         );
         let newVecBetweenPoints = new Three.Vector3();
         newVecBetweenPoints.subVectors(newBottomVector, newTopVector);
-
         cone.position.copy(vecTop);
-
-        // cone.position.set((0, 1, 1));
         cone.name = "arrow head";
-        // cone.rotateZ(-this.length);
         this.scene.add(cone);
-
         sceneObjects.push(cone.name);
-
         createText(
           "M",
           "m",
@@ -548,7 +458,6 @@ export default {
           sceneObjects,
           this.scene
         );
-
         createText(
           "M",
           "m",
@@ -561,7 +470,6 @@ export default {
           this.scene2
         );
       };
-
       let fVector;
       const createVectorGeometry = (
         vecBottom,
@@ -580,24 +488,18 @@ export default {
           30, //Roundness of Tube
           true //closed
         );
-
         let line = new Three.Line(tubeGeometry, lineMaterial);
         line.renderOrder = 1000;
         line.name = "thick line";
-        // line.position.set(vecBottom);
         line.rotateZ(-this.length);
         this.scene.add(line);
         sceneObjects.push(line.name);
-
         if (hasLineOfAction == true) {
           let newVec = new Three.Vector3();
           newVec.subVectors(vecTop, vecBottom);
           let lineofaction = [];
-          // let clone = Object.assign({}, newVec);
           let clone2 = Object.assign({}, newVec);
-          // let cloneVec = new Three.Vector3(...Object.values(clone));
           let cloneVec2 = new Three.Vector3(...Object.values(clone2));
-          // lineofaction.push(cloneVec);
           lineofaction.push(cloneVec2.multiplyScalar(-200));
           lineofaction.push(newVec.multiplyScalar(200));
           const dashedmaterial = new Three.LineDashedMaterial({
@@ -623,13 +525,11 @@ export default {
         let cone = new Three.Mesh(conegeometry, materialcone);
         var axis = new Three.Vector3(0, 1, 0);
         cone.quaternion.setFromUnitVectors(axis, newVec2.clone().normalize());
-
         let rotatedFXTOP =
           Math.cos(this.length) * vecTop.x - Math.sin(this.length) * vecTop.y;
         let rotateFYTOP =
           Math.sin(this.length) * vecTop.x - Math.cos(this.length) * vecTop.y;
         let newTopVector = new Three.Vector3(-rotatedFXTOP, -rotateFYTOP);
-
         let rotatedFXBOTTOM =
           Math.cos(this.length) * vecBottom.x -
           Math.sin(this.length) * vecBottom.y;
@@ -648,7 +548,6 @@ export default {
           newVecBetweenPoints.clone().normalize()
         );
         cone.position.copy(newTopVector);
-
         newVecBetweenPoints.multiplyScalar(0.5);
         let newPosition = newBottomVector.add(newTopVector).divideScalar(2);
         createText(
@@ -662,7 +561,6 @@ export default {
           sceneObjects,
           this.scene
         );
-
         createText(
           "F",
           "F",
@@ -674,19 +572,16 @@ export default {
           sceneObjects2,
           this.scene2
         );
-
         cone.name = "arrow head";
         // cone.rotateZ(-this.length);
         cone.renderOrder = 1002;
         this.scene.add(cone);
-
         sceneObjects.push(cone.name);
       };
 
       const loadSVG = () => {
         // instantiate a loader
         const loader = new SVGLoader();
-
         // load a SVG resource
         let self = this;
         loader.load(
@@ -721,12 +616,7 @@ export default {
 
             group.position.set(-5, -4, 0.1);
             group.name = "arrowss";
-            // group.rotateX(3.14159)
-            // group.translate(1, 1, 0);
-
             self.scene.add(group);
-
-            // point - the point of rotation (THREE.Vector3)
             let rotateSVGaxis = new Three.Vector3(-3, -2, 0);
             // axis - the axis of rotation (normalized THREE.Vector3)
             let svgAxis = new Three.Vector3(0, 1, 0).normalize();
@@ -872,14 +762,6 @@ export default {
               theta,
               pointIsWorld
             );
-
-            // rotateAboutPoint(
-            //   arrowsSVG,
-            //   rotateSVGaxis,
-            //   new Three.Vector3(0, 0, 1).normalize(),
-            //   -theta,
-            //   pointIsWorld
-            // );
           }
         }
         oldValue = momentVec.z;
@@ -927,64 +809,24 @@ export default {
       this.updateSceneLoop();
 
       this.renderCamera(
-        this.ollieViewports[0],
+        this.customViewports[0],
         this.scene,
         this.camera,
         this.renderer,
         this.labelRenderer
       );
       this.renderCamera(
-        this.ollieViewports[1],
+        this.customViewports[1],
         this.scene,
         this.camera2,
         this.renderer,
         this.labelRenderer2
       );
-      // this.renderer.setScissorTest(true);
-      // let firstView = this.ollieViewports[0];
-      // this.renderer.setViewport(
-      //   firstView.x,
-      //   firstView.y,
-      //   firstView.width,
-      //   firstView.height
-      // );
-      // this.renderer.setScissor(
-      //   firstView.x,
-      //   firstView.y,
-      //   firstView.width,
-      //   firstView.height
-      // );
-      // this.renderer.render(this.scene, this.camera);
-      // this.camera.aspect = firstView.width / firstView.height;
-      // this.camera.updateProjectionMatrix();
-      // this.renderer.render(this.scene, this.camera);
-      // this.labelRenderer.render(this.scene, this.camera);
-      // // this.renderer.setScissorTest(true);
-      // let secondView = this.ollieViewports[1];
-      // this.renderer.setViewport(
-      //   secondView.x,
-      //   secondView.y,
-      //   secondView.width,
-      //   secondView.height
-      // );
-      // this.renderer.setScissor(
-      //   secondView.x,
-      //   secondView.y,
-      //   secondView.width,
-      //   secondView.height
-      // );
-
-      // this.renderer.render(this.scene, this.camera2);
-      // this.camera2.aspect = secondView.width / secondView.height;
-      // this.camera2.updateProjectionMatrix();
-      // this.renderer.render(this.scene, this.camera2);
       this.labelRenderer.render(this.scene, this.camera);
       this.labelRenderer2.render(this.scene2, this.camera2);
     },
   },
-  created() {
-    window.addEventListener("resize", this.onWindowResize, false);
-  },
+  created() {},
   mounted() {
     this.init();
     this.animate();
@@ -1004,12 +846,6 @@ figcaption {
   margin-top: 2rem;
 }
 
-/* #container_wrapper {
-  overflow: hidden;
-  /* height: 500px; */
-/* max-width: 100%;
-} */
-
 #containerWrapper {
   margin-top: 2rem;
   padding: 10px;
@@ -1019,15 +855,9 @@ figcaption {
   max-width: 100%;
 }
 
-#testContainer {
-  width: 100%;
-  padding-bottom: 50%;
-  background: gold; /** <-- For the demo **/
-}
 #container {
   position: relative;
   margin-top: 2rem;
-
   width: 100%;
 }
 
@@ -1046,12 +876,7 @@ figcaption {
 .slider-styling {
   width: 200px;
   margin-top: 4rem;
-
-  /* --slider-tooltip-bg: #0acbee;
-  --slider-connect-bg: #0acbee;
-  --slider-tooltip-color: rgb(0, 0, 0); */
 }
-
 .viz-wrap {
   max-width: 900px;
   width: 100vw;
@@ -1059,10 +884,6 @@ figcaption {
   padding: 1.5rem;
   box-sizing: border-box;
 }
-.biggerlate {
-  font-size: 3rem;
-}
-
 .disclaimer {
   margin-top: 3rem;
   opacity: 0.9;
