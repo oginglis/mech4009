@@ -145,7 +145,7 @@ export default {
       this.renderer.setClearColor("#FFFFFF");
       this.renderer.setPixelRatio(window.devicePixelRatio);
       this.renderer.sortObjects = true;
-      console.log(this.renderer, "Init function called");
+      // console.log(this.renderer, "Init function called");
 
       this.labelRenderer = new CSS2DRenderer();
       this.labelRenderer.setSize(this.width / 2, this.height);
@@ -219,7 +219,7 @@ export default {
           parseFloat(computedStyle.paddingTop) +
           parseFloat(computedStyle.paddingBottom);
 
-        console.log("height", this.height, "width", this.width);
+        // console.log("height", this.height, "width", this.width);
         this.labelRenderer.setSize(this.width / 2, this.height);
         this.labelRenderer2.setSize(this.width / 2, this.height);
         this.labelRenderer2.domElement.style.left = `${this.width / 2}px`;
@@ -243,13 +243,13 @@ export default {
         ];
         // console.log("Called Set Size) with width and height", this.width, this.height)
         this.renderer.setSize(this.width, this.height);
-        console.log(this.renderer.getSize(new Three.Vector2()));
-        console.log(
-          "Called Set Size) with width and height",
-          this.width,
-          this.height,
-          this.ollieViewports[0]
-        );
+        // console.log(this.renderer.getSize(new Three.Vector2()));
+        // console.log(
+        //   "Called Set Size) with width and height",
+        //   this.width,
+        //   this.height,
+        //   this.ollieViewports[0]
+        // );
         this.camera.aspect = this.width / 2 / this.height;
         this.camera2.aspect = this.width / 2 / this.height;
         this.labelRenderer.render(this.scene, this.camera, false);
